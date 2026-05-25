@@ -1,43 +1,3941 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>CRC & SIB JCC Facility Manager</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      /* Custom Scrollbar for nicer UI */
-      ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #f1f1f1;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
-      }
-    </style>
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.3",
-    "react-dom/client": "https://esm.sh/react-dom@^19.2.3/client",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "date-fns": "https://esm.sh/date-fns@^4.1.0",
-    "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chabad Russian Center — Room Calendar</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet">
+
+<style>
+:root {
+  --navy:       #0f1535;
+  --navy-mid:   #1a2252;
+  --navy-light: #253070;
+  --gold:       #c9a84c;
+  --gold-light: #e2c47a;
+  --gold-pale:  #f5e9c4;
+  --gold-dim:   rgba(201,168,76,0.15);
+  --cream:      #faf6ef;
+  --cream-mid:  #f0e8d8;
+  --white:      #ffffff;
+  --text-dark:  #12173a;
+  --text-mid:   #454a6e;
+  --text-light: #8a90b0;
+  --border:     #e0dace;
+  --border-mid: #ccc4b2;
+  --danger:     #b91c1c;
+  --success:    #166534;
+  --warn:       #92400e;
+  --r-sm:  6px;
+  --r-md:  12px;
+  --r-lg:  18px;
+  --sh-sm: 0 1px 4px rgba(15,21,53,.08);
+  --sh-md: 0 4px 18px rgba(15,21,53,.13);
+  --sh-lg: 0 8px 40px rgba(15,21,53,.2);
+  --t: .17s ease;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:'DM Sans',system-ui,sans-serif;
+  background:var(--cream);
+  color:var(--text-dark);
+  font-size:14px;
+  line-height:1.5;
+}
+
+/* ── TOP NAV ─────────────────────────────────────── */
+.top-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  height:58px;padding:0 22px;
+  background:var(--navy);
+  border-bottom:2px solid var(--gold);
+  position:relative;z-index:100;
+  flex-shrink:0;
+}
+.nav-brand{display:flex;align-items:center;gap:13px}
+.brand-star{
+  font-size:26px;color:var(--gold);line-height:1;
+  text-shadow:0 0 20px rgba(201,168,76,.55);
+  animation:pulse-star 3s ease-in-out infinite;
+}
+@keyframes pulse-star{0%,100%{text-shadow:0 0 20px rgba(201,168,76,.5)} 50%{text-shadow:0 0 32px rgba(201,168,76,.9)}}
+.brand-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:19px;font-weight:600;color:#fff;
+  letter-spacing:.02em;line-height:1.15;display:block;
+}
+.brand-sub{
+  font-size:9.5px;color:var(--gold-light);
+  text-transform:uppercase;letter-spacing:.14em;display:block;
+}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:var(--r-sm);
+  font-size:12.5px;font-weight:500;
+  background:var(--gold);color:var(--navy);
+  border:none;cursor:pointer;text-decoration:none;
+  transition:background var(--t);font-family:'DM Sans',sans-serif;
+}
+.nav-btn:hover{background:var(--gold-light);color:var(--navy)}
+.nav-btn.ghost{background:rgba(255,255,255,.1);color:#fff}
+.nav-btn.ghost:hover{background:rgba(255,255,255,.2)}
+
+/* ── APP SHELL ───────────────────────────────────── */
+.app-shell{display:flex;height:calc(100vh - 58px);overflow:hidden}
+
+/* ── SIDEBAR ─────────────────────────────────────── */
+.sidebar{
+  width:250px;min-width:250px;
+  background:var(--white);
+  border-right:1px solid var(--border);
+  overflow-y:auto;overflow-x:hidden;
+  transition:width .28s cubic-bezier(.4,0,.2,1),min-width .28s cubic-bezier(.4,0,.2,1);
+  flex-shrink:0;
+}
+.sidebar.closed{width:0;min-width:0;border-right:none}
+.sidebar-inner{padding:16px 13px;min-width:224px}
+
+.btn-new{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  width:100%;padding:11px;border-radius:var(--r-md);
+  background:var(--navy);color:#fff;border:none;
+  font-family:'DM Sans',sans-serif;font-size:13.5px;font-weight:600;
+  cursor:pointer;transition:all var(--t);margin-bottom:20px;
+  box-shadow:var(--sh-sm);
+}
+.btn-new:hover{background:var(--navy-light);transform:translateY(-1px);box-shadow:var(--sh-md)}
+
+.sec-label{
+  font-size:9.5px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.13em;
+  color:var(--text-light);margin-bottom:7px;
+}
+.sidebar-sec{margin-bottom:20px}
+
+/* View pills */
+.view-pills{display:grid;grid-template-columns:1fr 1fr;gap:4px}
+.vpill{
+  padding:7px 4px;text-align:center;
+  border:1.5px solid var(--border);border-radius:var(--r-sm);
+  background:transparent;color:var(--text-mid);
+  font-size:12px;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;transition:all var(--t);
+}
+.vpill:hover{background:var(--cream);border-color:var(--border-mid)}
+.vpill.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* Room filters */
+.room-filters{display:flex;flex-direction:column;gap:2px}
+.room-filter{
+  display:flex;align-items:center;gap:8px;
+  padding:6px 8px;border-radius:var(--r-sm);
+  cursor:pointer;user-select:none;transition:background var(--t);
+}
+.room-filter:hover{background:var(--cream)}
+.room-filter input{display:none}
+.rf-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;transition:opacity var(--t)}
+.room-filter input:not(:checked) ~ .rf-dot{opacity:.25}
+.rf-name{flex:1;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rf-cap{font-size:10px;color:var(--text-light);background:var(--cream-mid);padding:1px 5px;border-radius:10px}
+
+.toggle-all{font-size:9.5px;color:var(--gold);font-weight:600;cursor:pointer;letter-spacing:.06em}
+.toggle-all:hover{color:var(--navy)}
+
+/* Status legend */
+.leg-item{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--text-mid);margin-bottom:5px}
+.leg-dot{width:9px;height:9px;border-radius:50%}
+.leg-dot.confirmed{background:#166534}
+.leg-dot.pending{background:transparent;border:2px dashed #92400e}
+.leg-dot.cancelled{background:#b91c1c}
+
+/* ── CALENDAR MAIN ───────────────────────────────── */
+.cal-main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.cal-toolbar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 18px;background:var(--white);
+  border-bottom:1px solid var(--border);flex-shrink:0;gap:12px;
+}
+.cal-nav-group{display:flex;align-items:center;gap:6px}
+.cnav{
+  width:32px;height:32px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+  background:transparent;color:var(--text-dark);font-size:13px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all var(--t);
+}
+.cnav:hover,.ctoday:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.ctoday{
+  padding:7px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+  background:transparent;color:var(--text-dark);font-size:12.5px;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;transition:all var(--t);
+}
+.cal-title-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:21px;font-weight:600;color:var(--navy);
+  flex:1;text-align:center;
+}
+.cal-toolbar-right{display:flex;gap:8px}
+.icon-btn{
+  width:32px;height:32px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+  background:transparent;color:var(--text-mid);font-size:15px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--t);
+}
+.icon-btn:hover{background:var(--cream-mid);color:var(--navy)}
+
+#calendar{flex:1;padding:14px;overflow:hidden}
+
+/* ── FULLCALENDAR OVERRIDES ──────────────────────── */
+.fc{font-family:'DM Sans',sans-serif;font-size:13px}
+.fc .fc-col-header-cell-cushion{
+  font-weight:600;font-size:11.5px;text-transform:uppercase;
+  letter-spacing:.07em;color:var(--text-mid);padding:8px 4px;text-decoration:none;
+}
+.fc .fc-timegrid-slot-label-cushion{font-size:10.5px;color:var(--text-light)}
+.fc .fc-day-today{background:rgba(201,168,76,.07)!important}
+.fc .fc-day-today .fc-col-header-cell-cushion{color:var(--gold)!important}
+.fc .fc-timegrid-now-indicator-line{border-color:var(--gold)!important}
+.fc .fc-timegrid-now-indicator-arrow{border-top-color:var(--gold)!important}
+.fc .fc-timegrid-event{border-radius:6px!important;border:none!important;box-shadow:0 2px 8px rgba(0,0,0,.15)!important}
+.fc .fc-timegrid-event .fc-event-main{padding:0!important}
+.fc .fc-daygrid-event{border-radius:4px!important;border:none!important}
+.fc .fc-highlight{background:var(--gold-dim)!important}
+.fc .fc-scroller::-webkit-scrollbar{width:5px}
+.fc .fc-scroller::-webkit-scrollbar-thumb{background:var(--border-mid);border-radius:10px}
+.fc .fc-list-event:hover td{background:var(--cream)!important}
+
+/* Custom event rendering */
+.ev-inner{padding:4px 7px;height:100%;overflow:hidden;cursor:pointer;position:relative}
+.ev-inner.pending{opacity:.78}
+.ev-inner.pending::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(45deg,transparent,transparent 5px,rgba(255,255,255,.07) 5px,rgba(255,255,255,.07) 10px);
+}
+.ev-time{font-size:10px;opacity:.82;font-weight:500;color:#fff;line-height:1.2}
+.ev-title{font-size:12px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev-room{font-size:10px;color:rgba(255,255,255,.8);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ev-org{font-size:10px;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:3px}
+.ev-month{
+  display:flex;align-items:center;gap:4px;
+  padding:2px 6px;border-radius:3px;color:#fff;
+  font-size:11.5px;font-weight:500;overflow:hidden;
+}
+.ev-dot-sm{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.65);flex-shrink:0}
+
+/* ── EVENT POPOVER ───────────────────────────────── */
+.ev-popover{
+  position:fixed;width:292px;
+  background:var(--white);border:1px solid var(--border);
+  border-radius:var(--r-md);box-shadow:var(--sh-lg);z-index:3000;
+  animation:pop-in .14s ease;display:none;
+}
+@keyframes pop-in{from{opacity:0;transform:scale(.95) translateY(4px)} to{opacity:1;transform:none}}
+.pop-head{
+  padding:14px 14px 10px;background:var(--navy);
+  border-radius:var(--r-md) var(--r-md) 0 0;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:8px;
+}
+.pop-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:16px;font-weight:600;color:#fff;
+  border-left:4px solid var(--gold);padding-left:9px;flex:1;line-height:1.3;
+}
+.pop-x{
+  width:24px;height:24px;background:transparent;border:none;
+  color:rgba(255,255,255,.5);font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  border-radius:4px;transition:all var(--t);flex-shrink:0;
+}
+.pop-x:hover{background:rgba(255,255,255,.1);color:#fff}
+.pop-body{padding:12px 14px}
+.pop-row{display:flex;align-items:flex-start;gap:8px;font-size:13px;margin-bottom:7px}
+.pop-row i{color:var(--gold);flex-shrink:0;font-size:13px;margin-top:1px}
+.pop-badge{
+  display:inline-block;padding:3px 10px;border-radius:20px;
+  font-size:10.5px;font-weight:600;color:#fff;text-transform:uppercase;letter-spacing:.07em;
+}
+.pop-foot{padding:10px 14px;border-top:1px solid var(--border);background:var(--cream);border-radius:0 0 var(--r-md) var(--r-md);display:flex;gap:8px}
+.pop-edit-btn,.pop-del-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:var(--r-sm);
+  font-size:12.5px;font-weight:500;font-family:'DM Sans',sans-serif;
+  cursor:pointer;transition:all var(--t);border:none;
+}
+.pop-edit-btn{background:var(--navy);color:#fff}
+.pop-edit-btn:hover{background:var(--navy-light)}
+.pop-del-btn{background:transparent;color:var(--danger);border:1px solid #fca5a5}
+.pop-del-btn:hover{background:#fff0f0;border-color:var(--danger)}
+.pop-backdrop{position:fixed;inset:0;z-index:2999;display:none}
+
+/* ── MODAL ───────────────────────────────────────── */
+.modal-content{border:none;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-lg)}
+.m-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:18px 22px 14px;background:var(--navy);border-bottom:2px solid var(--gold);
+}
+.m-head-left{display:flex;align-items:center;gap:11px}
+.m-icon{
+  width:36px;height:36px;background:var(--gold-dim);border:1px solid var(--gold);
+  border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-size:16px;
+}
+.m-title{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:#fff;letter-spacing:.01em;margin:0}
+.m-close{
+  width:30px;height:30px;border:1px solid rgba(255,255,255,.15);border-radius:var(--r-sm);
+  background:transparent;color:rgba(255,255,255,.55);font-size:14px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--t);
+}
+.m-close:hover{background:rgba(255,255,255,.1);color:#fff}
+.m-body{padding:20px 22px;background:#fff;max-height:66vh;overflow-y:auto}
+.m-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:13px 22px;background:var(--cream);border-top:1px solid var(--border);
+}
+.m-footer-right{display:flex;gap:9px}
+
+/* Form */
+.frow2{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:13px}
+.frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:13px;margin-bottom:13px}
+.fgrp{display:flex;flex-direction:column;gap:4px;margin-bottom:13px}
+.flabel{
+  font-size:10.5px;font-weight:600;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--text-mid);
+  display:flex;align-items:center;gap:5px;
+}
+.flabel i{color:var(--gold);font-size:11px}
+.req{color:var(--danger);font-style:normal}
+.finput,.fselect,.ftextarea{
+  width:100%;padding:8px 11px;
+  border:1.5px solid var(--border);border-radius:var(--r-sm);
+  background:var(--cream);color:var(--text-dark);
+  font-family:'DM Sans',sans-serif;font-size:13.5px;outline:none;
+  transition:border-color var(--t),box-shadow var(--t);
+}
+.finput:focus,.fselect:focus,.ftextarea:focus{
+  border-color:var(--gold);background:#fff;
+  box-shadow:0 0 0 3px rgba(201,168,76,.15);
+}
+.ftextarea{resize:vertical;min-height:58px}
+.ferr{font-size:11px;color:var(--danger);min-height:14px}
+.fdivider{
+  position:relative;text-align:center;margin:16px 0 13px;
+}
+.fdivider::before{content:'';position:absolute;left:0;right:0;top:50%;height:1px;background:var(--border)}
+.fdivider span{position:relative;background:#fff;padding:0 10px;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text-light)}
+
+/* Room radio grid */
+.room-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(134px,1fr));gap:6px;margin-bottom:4px}
+.room-card{
+  display:flex;align-items:center;gap:7px;
+  padding:8px 9px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+  cursor:pointer;transition:all var(--t);user-select:none;position:relative;
+}
+.room-card:hover{border-color:var(--gold);background:var(--gold-pale)}
+.room-card input{display:none}
+.room-card.selected{border-color:var(--navy);background:var(--navy)}
+.room-card.selected .rc-name{color:#fff}
+.room-card.selected .rc-cap{color:rgba(255,255,255,.65)}
+.room-card.selected .rc-dot{box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+/* Checkmark badge on selected cards */
+.room-card.selected::after{
+  content:'\F26B';font-family:'bootstrap-icons';
+  position:absolute;top:4px;right:5px;
+  font-size:10px;color:var(--gold);line-height:1;
+}
+.rc-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.rc-name{font-size:12px;font-weight:500;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc-cap{font-size:10px;color:var(--text-light);display:flex;align-items:center;gap:2px}
+
+/* Selected rooms summary strip */
+.rooms-summary{
+  margin-top:7px;padding:7px 11px;
+  background:var(--cream);border:1px solid var(--border);border-radius:var(--r-sm);
+  font-size:12px;color:var(--text-mid);display:none;
+  flex-wrap:wrap;gap:5px;align-items:center;
+}
+.rooms-summary-tag{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 8px;border-radius:10px;
+  font-size:11px;font-weight:500;color:#fff;
+}
+.rooms-summary-tag .rm-x{
+  font-size:10px;opacity:.75;cursor:pointer;margin-left:1px;
+}
+.rooms-summary-tag .rm-x:hover{opacity:1}
+
+/* Availability */
+.avail-box{
+  padding:8px 12px;border-radius:var(--r-sm);font-size:12.5px;
+  margin-bottom:13px;display:flex;align-items:flex-start;gap:8px;display:none;
+}
+.avail-box.ok{background:#f0fdf4;border:1px solid #bbf7d0;color:var(--success)}
+.avail-box.conflict{background:#fff0f0;border:1px solid #fecaca;color:var(--danger)}
+
+.alert-err{
+  padding:10px 13px;background:#fff0f0;border:1px solid #fecaca;
+  border-radius:var(--r-sm);color:var(--danger);font-size:13px;margin-top:10px;display:none;
+}
+
+/* Buttons */
+.btn-save{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:9px 20px;background:var(--navy);color:#fff;
+  border:none;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;
+  font-size:13.5px;font-weight:600;cursor:pointer;transition:background var(--t);
+}
+.btn-save:hover{background:var(--navy-light)}
+.btn-save:disabled{opacity:.6;cursor:not-allowed}
+.btn-cancel{
+  padding:9px 15px;background:transparent;color:var(--text-mid);
+  border:1.5px solid var(--border);border-radius:var(--r-sm);
+  font-family:'DM Sans',sans-serif;font-size:13.5px;cursor:pointer;transition:all var(--t);
+}
+.btn-cancel:hover{background:var(--cream-mid);border-color:var(--border-mid)}
+.btn-danger{
+  display:inline-flex;align-items:center;gap:7px;
+  padding:9px 15px;background:transparent;color:var(--danger);
+  border:1.5px solid #fca5a5;border-radius:var(--r-sm);
+  font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;transition:all var(--t);
+}
+.btn-danger:hover{background:#fff0f0;border-color:var(--danger)}
+
+/* ── ROOM MANAGER MODAL ──────────────────────────── */
+.rooms-list{display:flex;flex-direction:column;gap:8px;max-height:55vh;overflow-y:auto}
+.room-row{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;background:var(--cream);border:1.5px solid var(--border);
+  border-radius:var(--r-sm);transition:border-color var(--t);
+}
+.room-row:hover{border-color:var(--border-mid)}
+.rr-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.rr-info{flex:1}
+.rr-name{font-size:13.5px;font-weight:500}
+.rr-meta{font-size:11px;color:var(--text-light)}
+.rr-actions{display:flex;gap:6px}
+.rr-btn{
+  width:28px;height:28px;border:1px solid var(--border);border-radius:var(--r-sm);
+  background:#fff;color:var(--text-mid);font-size:12px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all var(--t);
+}
+.rr-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.rr-btn.del:hover{background:var(--danger);border-color:var(--danger)}
+.color-swatch{width:36px;height:30px;border:1.5px solid var(--border);border-radius:var(--r-sm);cursor:pointer;padding:2px}
+
+/* Inline room editor */
+.room-edit-form{
+  display:none;padding:12px;margin-top:6px;
+  background:#fff;border:1.5px solid var(--gold);border-radius:var(--r-sm);
+}
+.room-edit-form.open{display:block}
+.room-edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.room-edit-actions{display:flex;justify-content:flex-end;gap:7px;margin-top:4px}
+
+/* User inline edit form — same pattern as room edit */
+.user-edit-form{
+  display:none;padding:12px;margin-top:6px;
+  background:#fff;border:1.5px solid var(--gold);border-radius:var(--r-sm);
+}
+.user-edit-form.open{display:block}
+.user-edit-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.btn-save-sm{
+  padding:6px 14px;background:var(--navy);color:#fff;border:none;
+  border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:12.5px;
+  font-weight:600;cursor:pointer;transition:background var(--t);
+}
+.btn-save-sm:hover{background:var(--navy-light)}
+.btn-cancel-sm{
+  padding:6px 12px;background:transparent;color:var(--text-mid);
+  border:1.5px solid var(--border);border-radius:var(--r-sm);
+  font-family:'DM Sans',sans-serif;font-size:12.5px;cursor:pointer;transition:all var(--t);
+}
+.btn-cancel-sm:hover{background:var(--cream-mid)}
+
+/* ── TOAST ───────────────────────────────────────── */
+.toast-wrap{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast-item{
+  padding:11px 18px;border-radius:var(--r-sm);color:#fff;
+  font-size:13px;font-weight:500;box-shadow:var(--sh-md);
+  animation:toast-in .2s ease;min-width:200px;max-width:320px;
+}
+@keyframes toast-in{from{opacity:0;transform:translateY(8px) scale(.97)} to{opacity:1;transform:none}}
+.toast-item.success{background:#15803d}
+.toast-item.error{background:var(--danger)}
+.toast-item.info{background:var(--navy-mid)}
+
+/* ── RECURRING SECTION ───────────────────────────── */
+.recur-toggle-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 14px;background:var(--cream);border:1.5px solid var(--border);
+  border-radius:var(--r-sm);margin-bottom:0;cursor:pointer;
+  transition:border-color var(--t),background var(--t);
+}
+.recur-toggle-row:hover{border-color:var(--border-mid);background:var(--cream-mid)}
+.recur-toggle-row.active{border-color:var(--gold);background:var(--gold-pale)}
+.recur-label{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--text-dark);cursor:pointer}
+.recur-label i{color:var(--gold);font-size:15px}
+.recur-badge{font-size:10px;background:var(--gold);color:var(--navy);padding:2px 7px;border-radius:10px;font-weight:600;letter-spacing:.04em}
+
+/* Toggle switch */
+.toggle-switch{position:relative;width:40px;height:22px;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{
+  position:absolute;inset:0;border-radius:22px;
+  background:var(--border-mid);transition:background .2s;cursor:pointer;
+}
+.toggle-switch input:checked + .toggle-track{background:var(--navy)}
+.toggle-thumb{
+  position:absolute;top:3px;left:3px;width:16px;height:16px;
+  border-radius:50%;background:#fff;transition:transform .2s;pointer-events:none;
+  box-shadow:0 1px 3px rgba(0,0,0,.2);
+}
+.toggle-switch input:checked ~ .toggle-thumb{transform:translateX(18px)}
+
+.recur-panel{
+  background:var(--cream);border:1.5px solid var(--gold);
+  border-top:none;border-radius:0 0 var(--r-sm) var(--r-sm);
+  padding:14px;display:none;
+}
+.recur-panel.open{display:block}
+
+.freq-pills{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.fpill{
+  padding:6px 13px;border:1.5px solid var(--border);border-radius:20px;
+  background:#fff;color:var(--text-mid);font-size:12px;font-weight:500;
+  font-family:'DM Sans',sans-serif;cursor:pointer;transition:all var(--t);
+}
+.fpill:hover{border-color:var(--gold);color:var(--navy)}
+.fpill.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+.day-pills{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px}
+.daypill{
+  width:34px;height:34px;border:1.5px solid var(--border);border-radius:50%;
+  background:#fff;color:var(--text-mid);font-size:11px;font-weight:600;
+  font-family:'DM Sans',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all var(--t);
+}
+.daypill:hover{border-color:var(--gold)}
+.daypill.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+.end-opts{display:flex;gap:8px;margin-bottom:10px}
+.end-opt{
+  flex:1;display:flex;align-items:center;gap:7px;
+  padding:8px 11px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+  cursor:pointer;transition:all var(--t);font-size:12.5px;
+}
+.end-opt:hover{border-color:var(--border-mid);background:#fff}
+.end-opt.active{border-color:var(--navy);background:#fff}
+.end-opt input[type=radio]{accent-color:var(--navy)}
+
+.recur-summary{
+  margin-top:10px;padding:8px 11px;background:#fff;border:1px solid var(--border);
+  border-radius:var(--r-sm);font-size:12px;color:var(--text-mid);
+  display:flex;align-items:center;gap:7px;
+}
+.recur-summary i{color:var(--gold)}
+
+/* Recurring event indicator on calendar */
+.ev-recur-dot{
+  position:absolute;top:3px;right:4px;
+  font-size:9px;color:rgba(255,255,255,.75);
+}
+
+/* Delete series modal */
+.del-choice{
+  display:flex;flex-direction:column;gap:8px;margin:14px 0 4px;
+}
+.del-opt{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:11px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+  cursor:pointer;transition:all var(--t);
+}
+.del-opt:hover{border-color:var(--danger);background:#fff8f8}
+.del-opt input{accent-color:var(--danger);margin-top:2px;flex-shrink:0}
+.del-opt-label{font-size:13px;font-weight:500}
+.del-opt-sub{font-size:11.5px;color:var(--text-light);margin-top:1px}
+
+/* ── CSV IMPORT ──────────────────────────────────── */
+.drop-zone{
+  border:2px dashed var(--border-mid);border-radius:var(--r-md);
+  padding:32px 20px;text-align:center;cursor:pointer;
+  transition:all var(--t);background:var(--cream);position:relative;
+}
+.drop-zone:hover,.drop-zone.drag-over{
+  border-color:var(--gold);background:var(--gold-pale);
+}
+.drop-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop-icon{font-size:36px;color:var(--gold);margin-bottom:10px;display:block}
+.drop-title{font-size:15px;font-weight:600;color:var(--text-dark);margin-bottom:4px}
+.drop-sub{font-size:12.5px;color:var(--text-light)}
+.drop-filename{
+  margin-top:10px;padding:6px 14px;background:#fff;
+  border:1px solid var(--border);border-radius:var(--r-sm);
+  font-size:12.5px;color:var(--navy);font-weight:500;display:inline-flex;align-items:center;gap:6px;
+}
+
+.csv-template-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 13px;background:var(--navy);border-radius:var(--r-sm);
+  margin-bottom:14px;
+}
+.csv-template-bar span{font-size:12.5px;color:rgba(255,255,255,.75)}
+.btn-template{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 13px;background:var(--gold);color:var(--navy);
+  border:none;border-radius:var(--r-sm);font-size:12px;font-weight:600;
+  font-family:'DM Sans',sans-serif;cursor:pointer;transition:background var(--t);
+}
+.btn-template:hover{background:var(--gold-light)}
+
+.import-preview{margin-top:16px}
+.preview-header{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:8px;
+}
+.preview-title{font-size:13px;font-weight:600;color:var(--text-dark)}
+.preview-stats{display:flex;gap:8px}
+.pstat{
+  font-size:11px;font-weight:600;padding:3px 9px;border-radius:10px;
+}
+.pstat.ok{background:#dcfce7;color:#166534}
+.pstat.warn{background:#fef9c3;color:#854d0e}
+.pstat.err{background:#fee2e2;color:#991b1b}
+
+.preview-table-wrap{
+  max-height:280px;overflow-y:auto;
+  border:1px solid var(--border);border-radius:var(--r-sm);
+}
+.preview-table{width:100%;border-collapse:collapse;font-size:12px}
+.preview-table th{
+  position:sticky;top:0;background:var(--navy);color:#fff;
+  padding:8px 10px;text-align:left;font-weight:600;font-size:11px;
+  text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;
+}
+.preview-table td{
+  padding:7px 10px;border-bottom:1px solid var(--border);
+  vertical-align:top;max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.preview-table tr:last-child td{border-bottom:none}
+.preview-table tr:hover td{background:var(--cream)}
+.preview-table tr.row-err td{background:#fff5f5}
+.preview-table tr.row-warn td{background:#fffbeb}
+
+.row-badge{
+  display:inline-block;padding:2px 7px;border-radius:10px;
+  font-size:10px;font-weight:600;white-space:nowrap;
+}
+.row-badge.ok{background:#dcfce7;color:#166534}
+.row-badge.warn{background:#fef9c3;color:#854d0e}
+.row-badge.err{background:#fee2e2;color:#991b1b}
+.row-badge.skip{background:#f1f5f9;color:#64748b}
+
+.import-progress{
+  margin-top:12px;padding:12px 14px;background:var(--cream);
+  border:1px solid var(--border);border-radius:var(--r-sm);
+  font-size:13px;display:none;
+}
+.progress-bar-track{
+  height:6px;background:var(--border);border-radius:10px;margin-top:8px;overflow:hidden;
+}
+.progress-bar-fill{
+  height:100%;background:var(--navy);border-radius:10px;
+  transition:width .3s ease;width:0%;
+}
+
+.col-format-guide{
+  margin-top:14px;
+  border:1px solid var(--border);border-radius:var(--r-sm);overflow:hidden;
+}
+.col-format-guide summary{
+  padding:9px 13px;background:var(--cream);
+  font-size:12px;font-weight:600;color:var(--text-mid);
+  cursor:pointer;list-style:none;display:flex;align-items:center;gap:7px;
+}
+.col-format-guide summary::-webkit-details-marker{display:none}
+.col-format-guide summary i{color:var(--gold)}
+.col-format-guide[open] summary{border-bottom:1px solid var(--border)}
+.col-guide-body{padding:12px 13px}
+.col-row{
+  display:grid;grid-template-columns:130px 1fr;gap:8px;
+  padding:5px 0;border-bottom:1px solid var(--border);font-size:12px;
+}
+.col-row:last-child{border-bottom:none}
+.col-name{font-weight:600;color:var(--text-dark)}
+.col-req{color:var(--danger);font-size:10px}
+.col-desc{color:var(--text-mid)}
+
+/* ── SETUP REQUIREMENTS ──────────────────────────── */
+.setup-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(145px, 1fr));
+  gap:6px;
+  margin-top:2px;
+}
+.setup-item{
+  display:flex;align-items:center;gap:8px;
+  padding:8px 11px;
+  border:1.5px solid var(--border);border-radius:var(--r-sm);
+  cursor:pointer;user-select:none;transition:all var(--t);
+}
+.setup-item:hover{border-color:var(--gold);background:var(--gold-pale)}
+.setup-item input[type=checkbox]{display:none}
+.setup-item.checked{border-color:var(--navy);background:var(--navy)}
+.setup-item.checked .si-icon,
+.setup-item.checked .si-label{color:#fff}
+.si-icon{font-size:15px;color:var(--gold);flex-shrink:0;transition:color var(--t)}
+.si-label{font-size:12.5px;font-weight:500;color:var(--text-dark);transition:color var(--t)}
+.setup-summary{
+  margin-top:8px;padding:7px 11px;
+  background:var(--cream);border:1px solid var(--border);border-radius:var(--r-sm);
+  font-size:12px;color:var(--text-mid);display:none;
+  flex-wrap:wrap;gap:5px;align-items:center;
+}
+.setup-tag{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 8px;background:var(--navy);color:#fff;
+  border-radius:10px;font-size:11px;font-weight:500;
+}
+
+.sidebar::-webkit-scrollbar-thumb,.m-body::-webkit-scrollbar-thumb,.rooms-list::-webkit-scrollbar-thumb{background:var(--border-mid);border-radius:10px}
+
+/* ── FIREBASE LOADING OVERLAY ────────────────────── */
+#loadingOverlay{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--navy);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
+}
+.load-star{font-size:52px;color:var(--gold);animation:pulse-star 1.5s ease-in-out infinite}
+.load-title{font-family:'Cormorant Garamond',serif;font-size:24px;color:#fff;font-weight:600}
+.load-sub{font-size:13px;color:rgba(255,255,255,.55);letter-spacing:.04em}
+.load-bar{width:200px;height:4px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden}
+.load-bar-fill{height:100%;background:var(--gold);border-radius:4px;animation:load-slide 1.4s ease-in-out infinite}
+@keyframes load-slide{0%{width:0%;margin-left:0} 50%{width:70%;margin-left:15%} 100%{width:0%;margin-left:100%}}
+.load-err{font-size:13px;color:#fca5a5;display:none;text-align:center;max-width:300px;line-height:1.5}
+#authScreen{
+  position:fixed;inset:0;z-index:9000;
+  background:var(--navy);
+  display:flex;align-items:center;justify-content:center;
+  animation:fadeIn .3s ease;
+}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.auth-card{
+  background:#fff;border-radius:var(--r-lg);
+  box-shadow:var(--sh-lg);
+  width:100%;max-width:400px;padding:40px 36px;
+  text-align:center;
+}
+.auth-star{font-size:42px;color:var(--gold);margin-bottom:8px;display:block;text-shadow:0 0 24px rgba(201,168,76,.4)}
+.auth-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;color:var(--navy);margin-bottom:4px}
+.auth-sub{font-size:13px;color:var(--text-light);margin-bottom:28px}
+.auth-field{margin-bottom:14px;text-align:left}
+.auth-field label{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text-mid);margin-bottom:5px}
+.auth-input{
+  width:100%;padding:10px 13px;
+  border:1.5px solid var(--border);border-radius:var(--r-sm);
+  background:var(--cream);font-family:'DM Sans',sans-serif;font-size:14px;
+  color:var(--text-dark);outline:none;transition:border-color var(--t),box-shadow var(--t);
+}
+.auth-input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,168,76,.15);background:#fff}
+.auth-err{color:var(--danger);font-size:12.5px;margin-bottom:12px;min-height:18px}
+.btn-login{
+  width:100%;padding:11px;background:var(--navy);color:#fff;border:none;
+  border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;
+  cursor:pointer;transition:background var(--t);margin-top:4px;
+}
+.btn-login:hover{background:var(--navy-light)}
+
+/* ── USER BADGE IN NAV ───────────────────────────── */
+.nav-user-badge{
+  display:flex;align-items:center;gap:8px;
+  padding:5px 12px 5px 8px;
+  background:rgba(255,255,255,.1);border-radius:20px;
+  font-size:12.5px;color:#fff;
+}
+.nav-avatar{
+  width:26px;height:26px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;color:var(--navy);
+  flex-shrink:0;
+}
+.role-pill{
+  font-size:9.5px;font-weight:700;padding:1px 6px;
+  border-radius:8px;letter-spacing:.05em;
+  text-transform:uppercase;margin-left:2px;
+}
+.role-pill.admin{background:var(--gold);color:var(--navy)}
+.role-pill.staff{background:rgba(255,255,255,.2);color:#fff}
+
+/* ── PENDING APPROVAL BANNER ─────────────────────── */
+.pending-banner{
+  background:#7c2d12;color:#fff;
+  padding:9px 18px;font-size:12.5px;
+  display:none;align-items:center;justify-content:space-between;gap:12px;
+  border-bottom:1px solid #9a3412;flex-shrink:0;
+}
+.pending-banner.visible{display:flex}
+.pending-count{font-weight:700;color:#fed7aa}
+.btn-review{
+  padding:5px 14px;background:var(--gold);color:var(--navy);
+  border:none;border-radius:var(--r-sm);font-size:12px;font-weight:600;
+  font-family:'DM Sans',sans-serif;cursor:pointer;transition:background var(--t);white-space:nowrap;
+}
+.btn-review:hover{background:var(--gold-light)}
+
+/* ── APPROVE EVENTS MODAL ────────────────────────── */
+.approve-list{display:flex;flex-direction:column;gap:8px;max-height:60vh;overflow-y:auto}
+.approve-row{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:12px 14px;background:var(--cream);
+  border:1.5px solid var(--border);border-radius:var(--r-sm);
+  transition:border-color var(--t);
+}
+.approve-row:hover{border-color:var(--border-mid)}
+.approve-info{flex:1;min-width:0}
+.approve-title{font-size:13.5px;font-weight:600;color:var(--text-dark);margin-bottom:2px}
+.approve-meta{font-size:11.5px;color:var(--text-mid);display:flex;flex-wrap:wrap;gap:6px}
+.approve-meta span{display:flex;align-items:center;gap:3px}
+.approve-actions{display:flex;gap:6px;flex-shrink:0;align-items:center}
+.btn-approve{
+  padding:6px 13px;background:#166534;color:#fff;border:none;
+  border-radius:var(--r-sm);font-size:12px;font-weight:600;
+  font-family:'DM Sans',sans-serif;cursor:pointer;transition:background var(--t);
+  display:flex;align-items:center;gap:5px;
+}
+.btn-approve:hover{background:#14532d}
+.btn-reject{
+  padding:6px 13px;background:transparent;color:var(--danger);
+  border:1.5px solid #fca5a5;border-radius:var(--r-sm);
+  font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;
+  cursor:pointer;transition:all var(--t);display:flex;align-items:center;gap:5px;
+}
+.btn-reject:hover{background:#fff0f0;border-color:var(--danger)}
+
+/* ── USER MANAGER ────────────────────────────────── */
+.user-list{display:flex;flex-direction:column;gap:7px;max-height:40vh;overflow-y:auto;margin-bottom:16px}
+.user-row{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 13px;background:var(--cream);
+  border:1.5px solid var(--border);border-radius:var(--r-sm);
+}
+.user-avatar-sm{
+  width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:700;color:var(--navy);flex-shrink:0;
+}
+.user-info{flex:1}
+.user-name{font-size:13.5px;font-weight:600}
+.user-username{font-size:11px;color:var(--text-light)}
+.user-role-badge{
+  font-size:10px;font-weight:700;padding:2px 8px;border-radius:8px;
+  text-transform:uppercase;letter-spacing:.05em;
+}
+.user-role-badge.admin{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.user-role-badge.staff{background:#f0f9ff;color:#0369a1;border:1px solid #bae6fd}
+
+/* Invite button */
+.btn-invite{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 10px;background:transparent;
+  color:var(--gold);border:1.5px solid var(--gold);
+  border-radius:var(--r-sm);font-size:11.5px;font-weight:600;
+  font-family:'DM Sans',sans-serif;cursor:pointer;
+  transition:all var(--t);white-space:nowrap;
+}
+.btn-invite:hover{background:var(--gold);color:var(--navy)}
+
+@media(max-width:768px){
+  /* Nav */
+  .top-nav{padding:0 12px;height:52px}
+  .brand-sub{display:none}
+  .brand-title{font-size:15px}
+  .brand-star{font-size:20px}
+  .nav-user-badge .role-pill,.nav-user-badge .nav-uname{display:none}
+  .nav-right{gap:5px}
+  .nav-btn{padding:5px 9px;font-size:12px}
+  .btn-nav-text{display:none}
+
+  /* App shell */
+  .app-shell{height:calc(100vh - 52px)}
+
+  /* Sidebar hidden by default on mobile, shown as overlay */
+  .sidebar{
+    width:0;min-width:0;overflow:hidden;
+    position:fixed;top:52px;left:0;bottom:0;
+    z-index:800;box-shadow:none;transition:width .25s ease,box-shadow .25s ease;
+  }
+  .sidebar.mobile-open{
+    width:260px;min-width:260px;
+    box-shadow:4px 0 24px rgba(0,0,0,.22);
+  }
+  .sidebar.closed{width:0;min-width:0}
+
+  /* Calendar */
+  #calendar{padding:6px}
+  .cal-toolbar{padding:8px 10px;gap:8px}
+  .cal-title-text{font-size:15px}
+  .ctoday{padding:5px 9px;font-size:12px}
+  .cnav{width:28px;height:28px}
+
+  /* Modals full-screen on mobile */
+  .modal-dialog{margin:0!important;max-width:100%!important;height:100%}
+  .modal-content{border-radius:0!important;height:100%;display:flex;flex-direction:column}
+  .m-body{flex:1;overflow-y:auto}
+  .modal-dialog.modal-lg,.modal-dialog.modal-xl{max-width:100%!important}
+
+  /* Form grids collapse to single column */
+  .frow2,.frow3{grid-template-columns:1fr!important}
+  .room-grid{grid-template-columns:1fr 1fr!important}
+  .setup-grid{grid-template-columns:1fr 1fr!important}
+
+  /* Popover full-width on mobile */
+  .ev-popover{width:calc(100vw - 24px)!important;left:12px!important;right:12px!important}
+
+  /* Pending banner */
+  .pending-banner{padding:7px 12px;font-size:12px}
+
+  /* Approve rows stack on mobile */
+  .approve-row{flex-direction:column;gap:8px}
+  .approve-actions{width:100%;justify-content:flex-end}
+
+  /* User rows */
+  .user-row{flex-wrap:wrap}
+}
+</style>
+</head>
+<body>
+
+<!-- FIREBASE LOADING OVERLAY -->
+<div id="loadingOverlay">
+  <div class="load-star">✡</div>
+  <div class="load-title">Chabad Russian Center</div>
+  <div class="load-sub" id="loadStatus">Connecting to database…</div>
+  <div class="load-bar"><div class="load-bar-fill"></div></div>
+  <div class="load-err" id="loadErr"></div>
+</div>
+
+<!-- LOGIN SCREEN -->
+<div id="authScreen">
+  <div class="auth-card">
+    <span class="auth-star">✡</span>
+    <div class="auth-title">Chabad Russian Center</div>
+    <div class="auth-sub">Facility Management — Please sign in</div>
+    <div class="auth-field">
+      <label>Username</label>
+      <input class="auth-input" type="text" id="loginUser" placeholder="Enter your username" autocomplete="username" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="auth-field">
+      <label>Password</label>
+      <input class="auth-input" type="password" id="loginPass" placeholder="Enter your password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <div class="auth-err" id="loginErr"></div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;text-align:left">
+      <input type="checkbox" id="rememberMe" style="width:15px;height:15px;accent-color:var(--navy);cursor:pointer;flex-shrink:0">
+      <label for="rememberMe" style="font-size:13px;color:var(--text-mid);cursor:pointer;user-select:none">Stay signed in on this device</label>
+    </div>
+    <button class="btn-login" onclick="doLogin()"><i class="bi bi-box-arrow-in-right"></i> Sign In</button>
+  </div>
+</div>
+
+<!-- TOP NAV -->
+<nav class="top-nav">
+  <div class="nav-brand">
+    <div class="brand-star">✡</div>
+    <div>
+      <span class="brand-title">Chabad Russian Center</span>
+      <span class="brand-sub">Facility Management</span>
+    </div>
+  </div>
+  <div class="nav-right">
+    <div class="nav-user-badge" id="navUserBadge" style="display:none">
+      <div class="nav-avatar" id="navAvatar" style="background:var(--gold)">?</div>
+      <span class="nav-uname" id="navUname"></span>
+      <span class="role-pill" id="navRolePill"></span>
+    </div>
+    <button class="nav-btn ghost admin-only" id="btnManageUsers" onclick="openUsersModal()" style="display:none"><i class="bi bi-people"></i> <span class="btn-nav-text">Users</span></button>
+    <button class="nav-btn ghost admin-only" id="btnManageRooms" onclick="openRoomsManager()" style="display:none"><i class="bi bi-door-open"></i> <span class="btn-nav-text">Rooms</span></button>
+    <button class="nav-btn ghost admin-only" id="btnImportNav" onclick="openImportModal()" style="display:none"><i class="bi bi-upload"></i> <span class="btn-nav-text">Import</span></button>
+    <button class="nav-btn ghost admin-only" id="btnExportNav" onclick="openExportModal()" style="display:none"><i class="bi bi-download"></i> <span class="btn-nav-text">Export</span></button>
+    <button class="nav-btn" id="btnNewBooking" onclick="openCreateModal()" style="display:none"><i class="bi bi-plus-lg"></i> <span class="btn-nav-text">New Booking</span></button>
+    <button class="nav-btn ghost" onclick="doLogout()" id="btnLogout" style="display:none"><i class="bi bi-box-arrow-right"></i> <span class="btn-nav-text">Sign Out</span></button>
+    <button class="nav-btn ghost" onclick="toggleSidebar()" id="btnSidebarToggle" style="display:none"><i class="bi bi-layout-sidebar"></i></button>
+  </div>
+</nav>
+
+<!-- PENDING APPROVAL BANNER (admin only) -->
+<div class="pending-banner" id="pendingBanner">
+  <span><i class="bi bi-clock-history" style="margin-right:6px"></i><span id="pendingBannerText">0 events awaiting approval</span></span>
+  <button class="btn-review" onclick="openApproveModal()"><i class="bi bi-check2-circle"></i> Review Now</button>
+</div>
+
+<!-- SIDEBAR MOBILE BACKDROP -->
+<div id="sidebarBackdrop" onclick="closeSidebar()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:799"></div>
+
+<!-- APP SHELL -->
+<div class="app-shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-inner">
+      <button class="btn-new" onclick="openCreateModal()">
+        <i class="bi bi-plus-lg"></i> New Booking
+      </button>
+
+      <!-- Views -->
+      <div class="sidebar-sec">
+        <div class="sec-label">View</div>
+        <div class="view-pills">
+          <button class="vpill" data-v="dayGridMonth" onclick="setView(this,'dayGridMonth')">Month</button>
+          <button class="vpill active" data-v="timeGridWeek" onclick="setView(this,'timeGridWeek')">Week</button>
+          <button class="vpill" data-v="timeGridDay" onclick="setView(this,'timeGridDay')">Day</button>
+          <button class="vpill" data-v="listWeek" onclick="setView(this,'listWeek')">List</button>
+        </div>
+      </div>
+
+      <!-- Room Filters -->
+      <div class="sidebar-sec">
+        <div class="sec-label d-flex justify-content-between">
+          <span>Rooms</span>
+          <span class="toggle-all" onclick="toggleAllRooms()">Toggle All</span>
+        </div>
+        <div class="room-filters" id="roomFilters"></div>
+      </div>
+
+      <!-- Legend -->
+      <div class="sidebar-sec">
+        <div class="sec-label">Status Key</div>
+        <div class="leg-item"><span class="leg-dot confirmed"></span> Confirmed</div>
+        <div class="leg-item"><span class="leg-dot pending"></span> Pending</div>
+        <div class="leg-item"><span class="leg-dot cancelled"></span> Cancelled</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- CALENDAR -->
+  <div class="cal-main">
+    <div class="cal-toolbar">
+      <div class="cal-nav-group">
+        <button class="cnav" onclick="cal.prev()"><i class="bi bi-chevron-left"></i></button>
+        <button class="ctoday" onclick="cal.today()">Today</button>
+        <button class="cnav" onclick="cal.next()"><i class="bi bi-chevron-right"></i></button>
+      </div>
+      <div class="cal-title-text" id="calTitle"></div>
+      <div class="cal-toolbar-right">
+        <button class="icon-btn" title="Toggle sidebar" onclick="toggleSidebar()"><i class="bi bi-layout-sidebar"></i></button>
+      </div>
+    </div>
+    <div id="calendar"></div>
+  </div>
+</div>
+
+<!-- EVENT POPOVER -->
+<div class="pop-backdrop" id="popBackdrop" onclick="closePop()"></div>
+<div class="ev-popover" id="evPopover">
+  <div class="pop-head">
+    <div class="pop-title" id="popTitle"></div>
+    <button class="pop-x" onclick="closePop()"><i class="bi bi-x-lg"></i></button>
+  </div>
+  <div class="pop-body">
+    <div class="pop-row" id="popRoom"></div>
+    <div class="pop-row" id="popTime"></div>
+    <div class="pop-row" id="popOrg" style="display:none"></div>
+    <div class="pop-row" id="popAtt" style="display:none"></div>
+    <div class="pop-row" id="popDesc" style="display:none"></div>
+    <div class="pop-row" id="popSetup" style="display:none"></div>
+    <div style="margin-top:8px"><span class="pop-badge" id="popBadge"></span></div>
+  </div>
+  <div class="pop-foot">
+    <button class="pop-edit-btn" onclick="editFromPop()"><i class="bi bi-pencil"></i> Edit</button>
+    <button class="pop-del-btn" onclick="deleteFromPop()"><i class="bi bi-trash3"></i> Delete</button>
+  </div>
+</div>
+
+<!-- EVENT MODAL -->
+<div class="modal fade" id="evModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="m-head">
+        <div class="m-head-left">
+          <div class="m-icon" id="mIcon"><i class="bi bi-calendar-plus"></i></div>
+          <h5 class="m-title" id="mTitle">New Booking</h5>
+        </div>
+        <button class="m-close" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="m-body">
+        <input type="hidden" id="fId">
+        <div class="frow2">
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel"><i class="bi bi-card-heading"></i> Event Title <span class="req">*</span></label>
+            <input type="text" class="finput" id="fTitle" placeholder="e.g. Morning Prayers, Board Meeting…">
+            <div class="ferr" id="errTitle"></div>
+          </div>
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel"><i class="bi bi-tag"></i> Event Type <span class="req">*</span></label>
+            <select class="fselect" id="fType"></select>
+            <div class="ferr" id="errType"></div>
+          </div>
+        </div>
+
+        <div class="fgrp">
+          <label class="flabel"><i class="bi bi-door-open"></i> Rooms <span class="req">*</span> <span style="font-weight:400;font-size:10px;text-transform:none;letter-spacing:0;color:var(--text-light);margin-left:4px">(select one or more)</span></label>
+          <div class="room-grid" id="roomGrid"></div>
+          <div class="rooms-summary" id="roomsSummary"></div>
+          <div class="ferr" id="errRoom"></div>
+        </div>
+
+        <div class="frow2" style="margin-bottom:0">
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel"><i class="bi bi-play-circle"></i> Start <span class="req">*</span></label>
+            <input type="datetime-local" class="finput" id="fStart" onchange="checkAvail();if(document.getElementById('fRecurOn').checked)preselectStartDay()">
+            <div class="ferr" id="errStart"></div>
+          </div>
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel"><i class="bi bi-stop-circle"></i> End <span class="req">*</span></label>
+            <input type="datetime-local" class="finput" id="fEnd" onchange="checkAvail()">
+            <div class="ferr" id="errEnd"></div>
+          </div>
+        </div>
+        <div class="avail-box" id="availBox"></div>
+
+        <!-- ── RECURRING ─────────────────────────── -->
+        <div style="margin-bottom:13px">
+          <div class="recur-toggle-row" id="recurToggleRow" onclick="toggleRecur()">
+            <label class="recur-label" onclick="event.preventDefault()">
+              <i class="bi bi-arrow-repeat"></i>
+              Recurring Event
+              <span class="recur-badge" id="recurBadge" style="display:none">ON</span>
+            </label>
+            <div class="toggle-switch">
+              <input type="checkbox" id="fRecurOn" onchange="toggleRecur()">
+              <div class="toggle-track"></div>
+              <div class="toggle-thumb"></div>
+            </div>
+          </div>
+
+          <div class="recur-panel" id="recurPanel">
+            <!-- Frequency -->
+            <div class="sec-label" style="margin-bottom:7px">Repeat every</div>
+            <div class="freq-pills" id="freqPills">
+              <button class="fpill" data-freq="daily"   onclick="setFreq('daily',this)">Daily</button>
+              <button class="fpill active" data-freq="weekly" onclick="setFreq('weekly',this)">Weekly</button>
+              <button class="fpill" data-freq="biweekly" onclick="setFreq('biweekly',this)">Every 2 Weeks</button>
+              <button class="fpill" data-freq="monthly" onclick="setFreq('monthly',this)">Monthly</button>
+              <button class="fpill" data-freq="yearly"  onclick="setFreq('yearly',this)">Yearly</button>
+            </div>
+
+            <!-- Days of week (weekly/biweekly only) -->
+            <div id="dayPickerWrap" style="margin-bottom:12px">
+              <div class="sec-label" style="margin-bottom:7px">On days</div>
+              <div class="day-pills" id="dayPills">
+                <button class="daypill" data-d="0" onclick="toggleDay(this)">Su</button>
+                <button class="daypill" data-d="1" onclick="toggleDay(this)">Mo</button>
+                <button class="daypill" data-d="2" onclick="toggleDay(this)">Tu</button>
+                <button class="daypill" data-d="3" onclick="toggleDay(this)">We</button>
+                <button class="daypill" data-d="4" onclick="toggleDay(this)">Th</button>
+                <button class="daypill" data-d="5" onclick="toggleDay(this)">Fr</button>
+                <button class="daypill" data-d="6" onclick="toggleDay(this)">Sa</button>
+              </div>
+            </div>
+
+            <!-- End condition -->
+            <div class="sec-label" style="margin-bottom:7px">Ends</div>
+            <div class="end-opts">
+              <label class="end-opt active" id="endOptDate" onclick="setEndOpt('date')">
+                <input type="radio" name="endOpt" value="date" checked> On date
+              </label>
+              <label class="end-opt" id="endOptCount" onclick="setEndOpt('count')">
+                <input type="radio" name="endOpt" value="count"> After occurrences
+              </label>
+            </div>
+            <div id="endDateWrap">
+              <label class="flabel" style="margin-bottom:4px"><i class="bi bi-calendar-x"></i> End Date</label>
+              <input type="date" class="finput" id="fRecurEnd" onchange="updateRecurSummary()">
+            </div>
+            <div id="endCountWrap" style="display:none">
+              <label class="flabel" style="margin-bottom:4px"><i class="bi bi-hash"></i> Number of Occurrences</label>
+              <input type="number" class="finput" id="fRecurCount" min="2" max="104" value="10" placeholder="e.g. 10" oninput="updateRecurSummary()">
+            </div>
+
+            <div class="recur-summary" id="recurSummary">
+              <i class="bi bi-info-circle"></i>
+              <span id="recurSummaryText">Will create weekly events.</span>
+            </div>
+          </div>
+        </div>
+        <div class="fdivider"><span>Organizer</span></div>
+        <div class="frow3">
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel"><i class="bi bi-person"></i> Name</label>
+            <select class="fselect" id="fOrgNameSelect" onchange="handleOrgNameSelect(this)">
+              <option value="">— Select user —</option>
+            </select>
+            <input type="text" class="finput" id="fOrgName" placeholder="Type a name…" style="display:none;margin-top:5px">
+          </div>
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel"><i class="bi bi-envelope"></i> Email</label>
+            <input type="email" class="finput" id="fOrgEmail" placeholder="email@…">
+          </div>
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel"><i class="bi bi-telephone"></i> Phone</label>
+            <input type="text" class="finput" id="fOrgPhone" placeholder="+972…">
+          </div>
+        </div>
+
+        <div class="frow2" style="margin-top:13px;margin-bottom:0">
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel"><i class="bi bi-people"></i> Expected Attendees</label>
+            <input type="number" class="finput" id="fAttendees" min="0" value="0">
+          </div>
+          <div class="fgrp" style="margin-bottom:0" id="statusFieldWrap">
+            <label class="flabel"><i class="bi bi-check-circle"></i> Status</label>
+            <select class="fselect" id="fStatus">
+              <option value="confirmed">✅ Confirmed</option>
+              <option value="pending">⏳ Pending</option>
+              <option value="cancelled">❌ Cancelled</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="fgrp" style="margin-top:13px;margin-bottom:0">
+          <label class="flabel"><i class="bi bi-text-paragraph"></i> Description / Notes</label>
+          <textarea class="ftextarea" id="fDesc" rows="2" placeholder="Any additional details…"></textarea>
+        </div>
+
+        <!-- ── SETUP REQUIREMENTS ─────────────────── -->
+        <div class="fgrp" style="margin-top:13px;margin-bottom:0">
+          <label class="flabel"><i class="bi bi-tools"></i> Setup Requirements</label>
+          <div class="setup-grid" id="setupGrid">
+            <label class="setup-item" onclick="toggleSetup(this)">
+              <input type="checkbox" value="Chairs">
+              <span class="si-icon"><i class="bi bi-people"></i></span>
+              <span class="si-label">Chairs</span>
+            </label>
+            <label class="setup-item" onclick="toggleSetup(this)">
+              <input type="checkbox" value="Tables">
+              <span class="si-icon"><i class="bi bi-table"></i></span>
+              <span class="si-label">Tables</span>
+            </label>
+            <label class="setup-item" onclick="toggleSetup(this)">
+              <input type="checkbox" value="Projector/Screen">
+              <span class="si-icon"><i class="bi bi-projector"></i></span>
+              <span class="si-label">Projector/Screen</span>
+            </label>
+            <label class="setup-item" onclick="toggleSetup(this)">
+              <input type="checkbox" value="Microphone/Sound">
+              <span class="si-icon"><i class="bi bi-mic"></i></span>
+              <span class="si-label">Microphone/Sound</span>
+            </label>
+            <label class="setup-item" onclick="toggleSetup(this)">
+              <input type="checkbox" value="Catering Setup">
+              <span class="si-icon"><i class="bi bi-cup-hot"></i></span>
+              <span class="si-label">Catering Setup</span>
+            </label>
+            <label class="setup-item" onclick="toggleSetup(this)">
+              <input type="checkbox" value="Podium">
+              <span class="si-icon"><i class="bi bi-person-raised-hand"></i></span>
+              <span class="si-label">Podium</span>
+            </label>
+            <label class="setup-item" onclick="toggleSetup(this)">
+              <input type="checkbox" value="Dance Floor">
+              <span class="si-icon"><i class="bi bi-music-note-beamed"></i></span>
+              <span class="si-label">Dance Floor</span>
+            </label>
+            <label class="setup-item" onclick="toggleSetup(this)">
+              <input type="checkbox" value="Stage">
+              <span class="si-icon"><i class="bi bi-camera-video"></i></span>
+              <span class="si-label">Stage</span>
+            </label>
+            <label class="setup-item" onclick="toggleSetup(this)">
+              <input type="checkbox" value="Lighting">
+              <span class="si-icon"><i class="bi bi-lightbulb"></i></span>
+              <span class="si-label">Lighting</span>
+            </label>
+          </div>
+          <div class="setup-summary" id="setupSummary"></div>
+        </div>
+
+        <div class="alert-err" id="formErr"></div>
+      </div>
+      <div class="m-footer">
+        <div id="delSection" style="display:none">
+          <button class="btn-danger" onclick="deleteEvent()"><i class="bi bi-trash3"></i> Delete</button>
+        </div>
+        <div class="m-footer-right">
+          <button class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn-save" id="btnSave" onclick="saveEvent()">
+            <i class="bi bi-check-lg"></i> <span id="btnSaveTxt">Create Booking</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE SERIES MODAL -->
+<div class="modal fade" id="delSeriesModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:420px">
+    <div class="modal-content">
+      <div class="m-head" style="background:#7f1d1d;border-bottom-color:#ef4444">
+        <div class="m-head-left">
+          <div class="m-icon" style="background:rgba(239,68,68,.2);border-color:#ef4444;color:#ef4444"><i class="bi bi-trash3"></i></div>
+          <h5 class="m-title">Delete Recurring Event</h5>
+        </div>
+        <button class="m-close" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="m-body" style="padding:18px 20px">
+        <p style="font-size:13px;color:var(--text-mid);margin-bottom:4px">This event is part of a recurring series. What would you like to delete?</p>
+        <div class="del-choice">
+          <label class="del-opt" id="delOptThis">
+            <input type="radio" name="delOpt" value="this" checked>
+            <div>
+              <div class="del-opt-label">This event only</div>
+              <div class="del-opt-sub">Only remove this single occurrence</div>
+            </div>
+          </label>
+          <label class="del-opt" id="delOptFuture">
+            <input type="radio" name="delOpt" value="future">
+            <div>
+              <div class="del-opt-label">This and all future events</div>
+              <div class="del-opt-sub">Remove this occurrence and every one after it</div>
+            </div>
+          </label>
+          <label class="del-opt" id="delOptAll">
+            <input type="radio" name="delOpt" value="all">
+            <div>
+              <div class="del-opt-label">All events in this series</div>
+              <div class="del-opt-sub">Remove every occurrence in the entire series</div>
+            </div>
+          </label>
+        </div>
+      </div>
+      <div class="m-footer" style="justify-content:flex-end">
+        <div class="m-footer-right">
+          <button class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn-danger" onclick="confirmDeleteSeries()" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:#b91c1c;color:#fff;border:none;border-radius:var(--r-sm);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer">
+            <i class="bi bi-trash3"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ROOMS MANAGER MODAL -->
+<div class="modal fade" id="roomsModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:560px">
+    <div class="modal-content">
+      <div class="m-head">
+        <div class="m-head-left">
+          <div class="m-icon"><i class="bi bi-door-open"></i></div>
+          <h5 class="m-title">Manage Rooms</h5>
+        </div>
+        <button class="m-close" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="m-body">
+        <div class="rooms-list" id="roomsList"></div>
+        <div class="fdivider" style="margin-top:16px"><span>Add New Room</span></div>
+        <div class="frow2" style="margin-bottom:0">
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel">Room Name <span class="req">*</span></label>
+            <input type="text" class="finput" id="newRoomName" placeholder="e.g. Meeting Room 3">
+          </div>
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel">Floor</label>
+            <select class="fselect" id="newRoomFloor">
+              <option value="Basement">Basement</option>
+              <option value="Ground Floor" selected>Ground Floor</option>
+              <option value="1st Floor">1st Floor</option>
+              <option value="2nd Floor">2nd Floor</option>
+              <option value="3rd Floor">3rd Floor</option>
+              <option value="4th Floor">4th Floor</option>
+              <option value="5th Floor">5th Floor</option>
+              <option value="6th Floor">6th Floor</option>
+            </select>
+          </div>
+        </div>
+        <div class="frow2" style="margin-top:10px;margin-bottom:0">
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel">Capacity</label>
+            <input type="number" class="finput" id="newRoomCap" min="1" value="20">
+          </div>
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel">Calendar Color</label>
+            <input type="color" class="finput color-swatch" id="newRoomColor" value="#3b6abf" style="height:38px;padding:3px">
+          </div>
+        </div>
+        <div class="fgrp" style="margin-top:10px;margin-bottom:0">
+          <label class="flabel">Description (optional)</label>
+          <input type="text" class="finput" id="newRoomDesc" placeholder="Brief description of the space">
+        </div>
+      </div>
+      <div class="m-footer" style="justify-content:flex-end">
+        <div class="m-footer-right">
+          <button class="btn-cancel" data-bs-dismiss="modal">Done</button>
+          <button class="btn-save" onclick="addRoom()"><i class="bi bi-plus-lg"></i> Add Room</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CSV IMPORT MODAL -->
+<div class="modal fade" id="importModal" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="m-head">
+        <div class="m-head-left">
+          <div class="m-icon"><i class="bi bi-upload"></i></div>
+          <h5 class="m-title">Import Events from CSV</h5>
+        </div>
+        <button class="m-close" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="m-body" style="padding:20px 22px">
+
+        <!-- Template download bar -->
+        <div class="csv-template-bar">
+          <span><i class="bi bi-info-circle" style="margin-right:5px"></i>Download the template to get the correct column format</span>
+          <button class="btn-template" onclick="downloadTemplate()">
+            <i class="bi bi-download"></i> Download Template
+          </button>
+        </div>
+
+        <!-- Drop zone -->
+        <div class="drop-zone" id="dropZone"
+          ondragover="event.preventDefault();this.classList.add('drag-over')"
+          ondragleave="this.classList.remove('drag-over')"
+          ondrop="handleDrop(event)">
+          <input type="file" id="csvFileInput" accept=".csv,.txt" onchange="handleFileSelect(event)">
+          <span class="drop-icon"><i class="bi bi-file-earmark-spreadsheet"></i></span>
+          <div class="drop-title">Drop your CSV file here, or click to browse</div>
+          <div class="drop-sub">Supported: .csv files · Max 1,000 rows</div>
+          <div class="drop-filename" id="dropFilename" style="display:none">
+            <i class="bi bi-file-check"></i> <span id="dropFilenameText"></span>
+          </div>
+        </div>
+
+        <!-- Column format guide (collapsible) -->
+        <details class="col-format-guide" style="margin-top:12px">
+          <summary><i class="bi bi-table"></i> CSV Column Reference</summary>
+          <div class="col-guide-body">
+            <div class="col-row"><span class="col-name">title <span class="col-req">required</span></span><span class="col-desc">Event name, e.g. <em>Board Meeting</em></span></div>
+            <div class="col-row"><span class="col-name">room <span class="col-req">required</span></span><span class="col-desc">Exact room name, e.g. <em>Sanctuary</em> or <em>Glass Room</em></span></div>
+            <div class="col-row"><span class="col-name">start <span class="col-req">required</span></span><span class="col-desc">Date &amp; time: <em>2025-03-15 09:00</em> or <em>2025-03-15T09:00</em></span></div>
+            <div class="col-row"><span class="col-name">end <span class="col-req">required</span></span><span class="col-desc">Date &amp; time: <em>2025-03-15 11:00</em></span></div>
+            <div class="col-row"><span class="col-name">status</span><span class="col-desc"><em>confirmed</em> (default), <em>pending</em>, or <em>cancelled</em></span></div>
+            <div class="col-row"><span class="col-name">type</span><span class="col-desc">Event type name, e.g. <em>Prayer / Service</em>, <em>Torah Study</em></span></div>
+            <div class="col-row"><span class="col-name">organizer</span><span class="col-desc">Organizer's full name</span></div>
+            <div class="col-row"><span class="col-name">email</span><span class="col-desc">Organizer email address</span></div>
+            <div class="col-row"><span class="col-name">phone</span><span class="col-desc">Organizer phone number</span></div>
+            <div class="col-row"><span class="col-name">attendees</span><span class="col-desc">Expected number of attendees (number)</span></div>
+            <div class="col-row"><span class="col-name">description</span><span class="col-desc">Additional notes or details</span></div>
+          </div>
+        </details>
+
+        <!-- Preview table (shown after parse) -->
+        <div class="import-preview" id="importPreview" style="display:none">
+          <div class="preview-header">
+            <div class="preview-title" id="previewTitle">Preview</div>
+            <div class="preview-stats" id="previewStats"></div>
+          </div>
+          <div class="preview-table-wrap">
+            <table class="preview-table" id="previewTable">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Status</th>
+                  <th>Title</th>
+                  <th>Room</th>
+                  <th>Start</th>
+                  <th>End</th>
+                  <th>Organizer</th>
+                  <th>Notes</th>
+                </tr>
+              </thead>
+              <tbody id="previewBody"></tbody>
+            </table>
+          </div>
+
+          <div class="import-progress" id="importProgress">
+            <span id="importProgressText">Importing…</span>
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" id="importProgressBar"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="m-footer">
+        <div style="font-size:12px;color:var(--text-light)" id="importNote"></div>
+        <div class="m-footer-right">
+          <button class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn-save" id="btnImport" onclick="runImport()" style="display:none">
+            <i class="bi bi-check-lg"></i> <span id="btnImportTxt">Import Events</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- APPROVE EVENTS MODAL -->
+<div class="modal fade" id="approveModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="m-head">
+        <div class="m-head-left">
+          <div class="m-icon" style="background:rgba(22,101,52,.2);border-color:#16a34a;color:#16a34a"><i class="bi bi-check2-circle"></i></div>
+          <h5 class="m-title">Pending Approvals</h5>
+        </div>
+        <button class="m-close" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="m-body" style="padding:18px 20px">
+        <div class="approve-list" id="approveList">
+          <p style="color:var(--text-light);text-align:center;padding:20px">Loading…</p>
+        </div>
+      </div>
+      <div class="m-footer" style="justify-content:space-between">
+        <div style="font-size:12px;color:var(--text-light)" id="approveFooterNote"></div>
+        <div class="m-footer-right">
+          <button class="btn-cancel" data-bs-dismiss="modal">Close</button>
+          <button class="btn-save" style="background:#166534" onclick="approveAll()">
+            <i class="bi bi-check-all"></i> Approve All
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- USER MANAGER MODAL -->
+<div class="modal fade" id="usersModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:520px">
+    <div class="modal-content">
+      <div class="m-head">
+        <div class="m-head-left">
+          <div class="m-icon"><i class="bi bi-people"></i></div>
+          <h5 class="m-title">Manage Users</h5>
+        </div>
+        <button class="m-close" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="m-body" style="padding:18px 20px">
+        <div class="user-list" id="userList"></div>
+        <div class="fdivider"><span>Add New User</span></div>
+        <div class="frow2" style="margin-bottom:10px">
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel">Full Name <span class="req">*</span></label>
+            <input type="text" class="finput" id="newUserName" placeholder="e.g. Sarah Cohen">
+          </div>
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel">Username <span class="req">*</span></label>
+            <input type="text" class="finput" id="newUserUsername" placeholder="e.g. sarah">
+          </div>
+        </div>
+        <div class="fgrp" style="margin-bottom:10px">
+          <label class="flabel"><i class="bi bi-envelope" style="color:var(--gold)"></i> Email Address</label>
+          <input type="email" class="finput" id="newUserEmail" placeholder="e.g. sarah@example.com">
+        </div>
+        <div class="frow2" style="margin-bottom:10px">
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel">Password <span class="req">*</span></label>
+            <input type="password" class="finput" id="newUserPass" placeholder="Set a password">
+          </div>
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel">Role</label>
+            <select class="fselect" id="newUserRole">
+              <option value="staff">Staff — can create & view</option>
+              <option value="admin">Admin — full access</option>
+            </select>
+          </div>
+        </div>
+        <div class="alert-err" id="userErr" style="display:none"></div>
+      </div>
+      <div class="m-footer" style="justify-content:flex-end">
+        <div class="m-footer-right">
+          <button class="btn-cancel" data-bs-dismiss="modal">Done</button>
+          <button class="btn-save" style="background:transparent;color:var(--navy);border:1.5px solid var(--navy)" onclick="addUserAndInvite()"><i class="bi bi-envelope-arrow-up"></i> Add &amp; Send Invite</button>
+          <button class="btn-save" onclick="addUser()"><i class="bi bi-person-plus"></i> Add User</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EXPORT MODAL -->
+<div class="modal fade" id="exportModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered" style="max-width:480px">
+    <div class="modal-content">
+      <div class="m-head">
+        <div class="m-head-left">
+          <div class="m-icon"><i class="bi bi-download"></i></div>
+          <h5 class="m-title">Export Events to CSV</h5>
+        </div>
+        <button class="m-close" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="m-body" style="padding:20px 22px">
+
+        <!-- Date range -->
+        <div class="frow2" style="margin-bottom:14px">
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel"><i class="bi bi-calendar-event"></i> From Date</label>
+            <input type="date" class="finput" id="exportFrom">
+          </div>
+          <div class="fgrp" style="margin-bottom:0">
+            <label class="flabel"><i class="bi bi-calendar-event"></i> To Date</label>
+            <input type="date" class="finput" id="exportTo">
+          </div>
+        </div>
+
+        <!-- Status filter -->
+        <div class="fgrp" style="margin-bottom:14px">
+          <label class="flabel"><i class="bi bi-check-circle"></i> Status</label>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:3px">
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
+              <input type="checkbox" id="expConfirmed" checked style="accent-color:var(--navy)"> Confirmed
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
+              <input type="checkbox" id="expPending" checked style="accent-color:var(--navy)"> Pending
+            </label>
+            <label style="display:flex;align-items:center;gap:6px;font-size:13px;cursor:pointer">
+              <input type="checkbox" id="expCancelled" style="accent-color:var(--navy)"> Cancelled
+            </label>
+          </div>
+        </div>
+
+        <!-- Room filter -->
+        <div class="fgrp" style="margin-bottom:14px">
+          <label class="flabel"><i class="bi bi-door-open"></i> Rooms</label>
+          <select class="fselect" id="exportRoom">
+            <option value="">All Rooms</option>
+          </select>
+        </div>
+
+        <!-- Preview count -->
+        <div id="exportPreviewCount" style="padding:10px 13px;background:var(--cream);border:1px solid var(--border);border-radius:var(--r-sm);font-size:13px;color:var(--text-mid);display:flex;align-items:center;gap:8px">
+          <i class="bi bi-info-circle" style="color:var(--gold)"></i>
+          <span id="exportCountText">Set filters to preview export</span>
+        </div>
+
+      </div>
+      <div class="m-footer" style="justify-content:space-between">
+        <div style="display:flex;gap:8px">
+          <button class="btn-cancel-sm" onclick="pushExportToNotion()" id="btnPushNotion" style="display:none;background:var(--navy);color:#fff;border-color:var(--navy)">
+            <i class="bi bi-arrow-up-right-square"></i> Push to Notion
+          </button>
+        </div>
+        <div class="m-footer-right">
+          <button class="btn-cancel" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn-save" id="btnDoExport" onclick="doExport()">
+            <i class="bi bi-download"></i> Download CSV
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST CONTAINER -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+<!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>emailjs.init('cQIgD8s_EAx-xj7uq');</script>
+<!-- Firebase SDKs (official Google CDN) -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script>
+// ════════════════════════════════════════════════════════
+//  FIREBASE CONFIG & DATA LAYER
+// ════════════════════════════════════════════════════════
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCtoqDtVZmVtdM6gs-KOxjsRmLCPyCNw2g",
+  authDomain: "chabad-calendar-a3ea7.firebaseapp.com",
+  databaseURL: "https://chabad-calendar-a3ea7-default-rtdb.firebaseio.com",
+  projectId: "chabad-calendar-a3ea7",
+  storageBucket: "chabad-calendar-a3ea7.firebasestorage.app",
+  messagingSenderId: "372756466051",
+  appId: "1:372756466051:web:b582eab602a7d9841f8eb6",
+  measurementId: "G-4B5E2L1R06"
+};
+
+// Initialise Firebase
+firebase.initializeApp(firebaseConfig);
+const db   = firebase.database();
+const auth = firebase.auth();
+
+// ── Local cache (keeps all existing code synchronous) ─
+let _rooms  = null;
+let _events = null;
+let _users  = null;
+
+// ── Session (stays in sessionStorage — per-browser, correct) ──
+const SESSION_KEY = 'crc_session';
+function getSession(){
+  // Check localStorage first (remember me), then sessionStorage
+  const s = localStorage.getItem(SESSION_KEY) || sessionStorage.getItem(SESSION_KEY);
+  return s ? JSON.parse(s) : null;
+}
+function setSession(user, remember){
+  const data = JSON.stringify(user);
+  if(remember){
+    localStorage.setItem(SESSION_KEY, data);
+    sessionStorage.removeItem(SESSION_KEY);
+  } else {
+    sessionStorage.setItem(SESSION_KEY, data);
+    localStorage.removeItem(SESSION_KEY);
   }
 }
+function clearSession(){
+  sessionStorage.removeItem(SESSION_KEY);
+  localStorage.removeItem(SESSION_KEY);
+}
+function currentUser(){ return getSession() }
+function isAdmin(){ return getSession()?.role==='admin' }
+
+// ── Data accessors (synchronous, use local cache) ─────
+function getRooms()  { return _rooms  || [] }
+function getEvents() { return _events || [] }
+function getUsers()  { return _users  || [] }
+
+// ── Data writers (update cache + write to Firebase) ───
+function saveRooms(rooms){
+  _rooms = rooms;
+  const obj = Object.fromEntries(rooms.map(r=>[r.id.replace(/\./g,'_'), r]));
+  db.ref('rooms').set(obj).catch(e=>console.error('saveRooms',e));
+}
+function saveEvents(events){
+  _events = events;
+  const obj = Object.fromEntries(events.map(e=>[e.id.replace(/\./g,'_'), e]));
+  db.ref('events').set(obj).catch(e=>console.error('saveEvents',e));
+}
+function saveUsers(users){
+  _users = users;
+  const obj = Object.fromEntries(users.map(u=>[u.id.replace(/\./g,'_'), u]));
+  db.ref('users').set(obj).catch(e=>console.error('saveUsers',e));
+}
+
+// ── Default data ──────────────────────────────────────
+const DEFAULT_ROOMS = [
+  {id:'r1',  name:'Sanctuary',           floor:'Floor 2', capacity:200, color:'#1e3a6b', desc:'Main sanctuary for Shabbat and High Holiday services.'},
+  {id:'r2',  name:'SOFL Space',          floor:'Floor 5', capacity:60,  color:'#2d5a3d', desc:'Multipurpose space on the 5th floor.'},
+  {id:'r3',  name:'Mikvah',              floor:'Floor 1', capacity:5,   color:'#3a6a8a', desc:'Mikvah facility on the 1st floor.'},
+  {id:'r4',  name:'Kiddush Room',        floor:'Floor 2', capacity:80,  color:'#7a3a6b', desc:'Kiddush and reception room adjacent to the sanctuary.'},
+  {id:'r5',  name:'Lobby (Floor 2)',     floor:'Floor 2', capacity:40,  color:'#6b4a1a', desc:'Main lobby and gathering area on the 2nd floor.'},
+  {id:'r6',  name:'Waterfront Ballroom', floor:'Floor 4', capacity:250, color:'#1a5a7a', desc:'Large waterfront ballroom for weddings and major events.'},
+  {id:'r7',  name:'Glass Room',          floor:'Floor 5', capacity:30,  color:'#3a7a5a', desc:'Glass-walled meeting and event room on the 5th floor.'},
+  {id:'r8',  name:'Garage',              floor:'Floor 1', capacity:20,  color:'#5a5a5a', desc:'Ground-level garage space available for events and storage.'},
+  {id:'r9',  name:'Daily Sanctuary',     floor:'Floor 2', capacity:60,  color:'#8a2a2a', desc:'Smaller sanctuary for daily minyan and weekday services.'},
+  {id:'r10', name:'Whole Ballroom',      floor:'Floor 4', capacity:400, color:'#5a3a8a', desc:'Full ballroom capacity combining all ballroom sections.'},
+  {id:'r11', name:'Rooftop',             floor:'Floor 6', capacity:100, color:'#2a6a2a', desc:'Open-air rooftop venue for outdoor events and gatherings.'},
+  {id:'r12', name:'Library',             floor:'Floor 5', capacity:25,  color:'#7a6a1a', desc:'Quiet library and study space on the 5th floor.'},
+  {id:'r13', name:'Lobby (Floor 5)',     floor:'Floor 5', capacity:35,  color:'#4a3a7a', desc:'Lobby and reception area on the 5th floor.'},
+];
+
+const EVENT_TYPES = [
+  {id:'t1',  name:'Bar / Bat Mitzvah Club', color:'#1e3a6b'},
+  {id:'t2',  name:'Classes and Lectures',   color:'#2d5a3d'},
+  {id:'t3',  name:'Cteen',                  color:'#7a3a6b'},
+  {id:'t4',  name:'Cteen Jr.',              color:'#5a2a6b'},
+  {id:'t5',  name:'CYP',                    color:'#3a5a7a'},
+  {id:'t6',  name:'Fundraising Dinner',     color:'#8a6a1a'},
+  {id:'t7',  name:'Hebrew School',          color:'#2a6a4a'},
+  {id:'t8',  name:'JCC',                    color:'#1a4a7a'},
+  {id:'t9',  name:'Kids Programs',          color:'#3a7a5a'},
+  {id:'t10', name:'Seniors Program',        color:'#6a3a2a'},
+  {id:'t11', name:'Shul & Kiddush',         color:'#1a2a6a'},
+  {id:'t12', name:'Womens Programs',        color:'#7a2a5a'},
+  {id:'t13', name:'Gan',                    color:'#2a7a3a'},
+  {id:'t14', name:'Tamim',                  color:'#4a2a8a'},
+  {id:'t15', name:'Maintenance',            color:'#5a5a5a'},
+  {id:'t16', name:'Community Event',        color:'#1a6a5a'},
+];
+
+// ── Event Types (static) ──────────────────────────────
+
+// ── Login / Logout ────────────────────────────────
+function doLogin(){
+  const username = document.getElementById('loginUser').value.trim();
+  const password = document.getElementById('loginPass').value;
+  const errEl    = document.getElementById('loginErr');
+  if(!username || !password){ errEl.textContent = 'Please enter username and password.'; return; }
+
+  const users = getUsers();
+  const user  = users.find(u => u.username === username && u.password === password);
+  if(!user){ errEl.textContent = 'Incorrect username or password.'; return; }
+
+  const remember = document.getElementById('rememberMe')?.checked || false;
+  setSession({id:user.id, name:user.name, username:user.username, role:user.role, color:user.color}, remember);
+  document.getElementById('authScreen').style.display = 'none';
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+  errEl.textContent = '';
+  applySession();
+  if(cal) cal.refetchEvents();
+}
+
+function doLogout(){
+  clearSession();
+  document.getElementById('authScreen').style.display = 'flex';
+  document.getElementById('loginUser').value = '';
+  document.getElementById('loginPass').value = '';
+  // Hide all protected UI
+  ['navUserBadge','btnNewBooking','btnLogout','btnManageUsers','btnManageRooms','btnImportNav','btnExportNav','btnSidebarToggle'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.style.display = 'none';
+  });
+  document.getElementById('pendingBanner').classList.remove('visible');
+}
+
+function applySession(){
+  const user = currentUser();
+  if(!user) return;
+
+  // Show nav elements
+  const badge = document.getElementById('navUserBadge');
+  badge.style.display = 'flex';
+  document.getElementById('navAvatar').textContent = user.name.charAt(0).toUpperCase();
+  document.getElementById('navAvatar').style.background = user.color || 'var(--gold)';
+  document.getElementById('navUname').textContent = user.name;
+  const pill = document.getElementById('navRolePill');
+  pill.textContent  = user.role;
+  pill.className    = `role-pill ${user.role}`;
+  document.getElementById('btnNewBooking').style.display = 'inline-flex';
+  document.getElementById('btnLogout').style.display     = 'inline-flex';
+  document.getElementById('btnSidebarToggle').style.display = 'inline-flex';
+
+  if(isAdmin()){
+    document.getElementById('btnManageUsers').style.display = 'inline-flex';
+    document.getElementById('btnManageRooms').style.display = 'inline-flex';
+    document.getElementById('btnImportNav').style.display   = 'inline-flex';
+    document.getElementById('btnExportNav').style.display   = 'inline-flex';
+    checkPendingBanner();
+  }
+}
+
+function checkPendingBanner(){
+  if(!isAdmin()) return;
+  const pending = getEvents().filter(e => e.status === 'pending');
+  const banner  = document.getElementById('pendingBanner');
+  if(pending.length > 0){
+    banner.classList.add('visible');
+    document.getElementById('pendingBannerText').textContent =
+      `${pending.length} event${pending.length!==1?'s':''} awaiting approval`;
+  } else {
+    banner.classList.remove('visible');
+  }
+}
+
+function notifyAdmins(eventData, roomNames){
+  const admins = getUsers().filter(u => u.role === 'admin' && u.email);
+  if(!admins.length) return;
+
+  const appUrl   = window.location.origin + window.location.pathname;
+  const staffName= currentUser()?.name || 'A staff member';
+  const startDt  = new Date(eventData.start);
+  const endDt    = new Date(eventData.end);
+
+  const eventDate = startDt.toLocaleDateString('en-IL', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+  const eventTime = startDt.toLocaleTimeString('en-IL', {hour:'2-digit', minute:'2-digit', hour12:false})
+                  + ' – '
+                  + endDt.toLocaleTimeString('en-IL', {hour:'2-digit', minute:'2-digit', hour12:false});
+
+  admins.forEach(admin => {
+    emailjs.send('service_a1iey22', 'template_nf388xj', {
+      admin_name:  admin.name,
+      to_email:    admin.email,
+      event_title: eventData.title,
+      room_names:  roomNames,
+      event_date:  eventDate,
+      event_time:  eventTime,
+      staff_name:  staffName,
+      attendees:   eventData.attendees || 0,
+      description: eventData.desc || '—',
+      app_url:     appUrl,
+    }).catch(err => console.error('Admin notify error:', err));
+  });
+}
+
+// ── Notion Sync via Zapier Webhook ────────────────────────
+// 🔧 SETUP: Paste your Zapier Webhook URL below (between the quotes)
+const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/27683749/4occxj5/';
+
+// action: 'create' | 'update' | 'delete' | 'approve' | 'reject'
+function syncToNotion(eventData, roomNames, action){
+  if(!ZAPIER_WEBHOOK || ZAPIER_WEBHOOK.includes('YOUR_WEBHOOK')) return;
+
+  action = action || 'create';
+  const startDt = new Date(eventData.start);
+  const endDt   = new Date(eventData.end);
+  const user    = currentUser();
+  const rooms   = getRooms();
+  const roomMap = Object.fromEntries(rooms.map(r=>[r.id,r]));
+
+  // If roomNames not passed, build it from the event
+  if(!roomNames){
+    const evRooms = eventData.roomIds || (eventData.roomId ? [eventData.roomId] : []);
+    roomNames = evRooms.map(rid => roomMap[rid]?.name || rid).join(', ');
+  }
+
+  const payload = {
+    // --- Action type (lets Zapier route create vs update vs delete) ---
+    action:       action,
+    event_id:     eventData.id || '',          // unique ID — used to find & update the Notion page
+    // --- Event fields ---
+    event_title:  eventData.title,
+    room_names:   roomNames,
+    start_iso:    eventData.start,
+    end_iso:      eventData.end,
+    event_date:   startDt.toISOString().split('T')[0],
+    start_time:   startDt.toLocaleTimeString('en-IL', {hour:'2-digit', minute:'2-digit', hour12:false}),
+    end_time:     endDt.toLocaleTimeString('en-IL',   {hour:'2-digit', minute:'2-digit', hour12:false}),
+    status:       eventData.status === 'pending' ? 'Pending' : eventData.status === 'confirmed' ? 'Confirmed' : 'Cancelled',
+    organizer:    eventData.organizer || '',
+    attendees:    eventData.attendees || 0,
+    description:  eventData.desc || '',
+    submitted_by: user?.name || '',
+    setup:        Array.isArray(eventData.setup) && eventData.setup.length ? eventData.setup.join(', ') : '',
+    booking_type: eventData.recurGroupId ? 'Recurring' : 'Single',
+    app_url:      window.location.origin + window.location.pathname,
+  };
+
+  fetch(ZAPIER_WEBHOOK, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(payload),
+  }).catch(err => console.error('Zapier sync error:', err));
+}
+
+function genId(){ return 'e_' + Date.now() + '_' + Math.random().toString(36).slice(2,7) }
+
+// First run: load sample events if none exist
+// ════════════════════════════════════════════════════════
+//  CALENDAR SETUP
+// ════════════════════════════════════════════════════════
+
+let cal = null;
+let popEventId = null;
+
+document.addEventListener('DOMContentLoaded', async function(){
+  const loadStatus = document.getElementById('loadStatus');
+  const loadErr    = document.getElementById('loadErr');
+
+  try {
+    // ── 0. Authenticate with Firebase (anonymous) ───────
+    // This satisfies Firebase security rules (auth != null)
+    // while keeping our own custom username/password system unchanged.
+    loadStatus.textContent = 'Connecting…';
+    await auth.signInAnonymously();
+
+    // ── 1. Load all data from Firebase ─────────────────
+    loadStatus.textContent = 'Loading rooms & events…';
+    const [roomsSnap, eventsSnap, usersSnap] = await Promise.all([
+      db.ref('rooms').get(),
+      db.ref('events').get(),
+      db.ref('users').get(),
+    ]);
+
+    // ── 2. Migrate from localStorage if Firebase is empty ─
+    // This runs once — moves Ruth's existing data to Firebase automatically
+    if(!roomsSnap.exists() && !eventsSnap.exists()){
+      loadStatus.textContent = 'Migrating your existing data…';
+      const localRooms  = localStorage.getItem('crc_rooms');
+      const localEvents = localStorage.getItem('crc_events');
+      const localUsers  = localStorage.getItem('crc_users');
+
+      if(localRooms){
+        _rooms = JSON.parse(localRooms);
+        saveRooms(_rooms);
+      } else {
+        _rooms = JSON.parse(JSON.stringify(DEFAULT_ROOMS));
+        saveRooms(_rooms);
+      }
+      if(localEvents){
+        _events = JSON.parse(localEvents);
+        saveEvents(_events);
+      } else {
+        _events = [];
+      }
+      if(localUsers){
+        _users = JSON.parse(localUsers);
+        saveUsers(_users);
+      } else {
+        _users = [
+          {id:'u1', name:'Administrator', username:'admin', password:'admin123', role:'admin', color:'#c9a84c'},
+          {id:'u2', name:'Staff User',    username:'staff', password:'staff123', role:'staff', color:'#3b6abf'},
+        ];
+        saveUsers(_users);
+      }
+    } else {
+      // ── 3. Populate cache from Firebase snapshot ────────
+      _rooms  = roomsSnap.exists()  ? Object.values(roomsSnap.val())  : JSON.parse(JSON.stringify(DEFAULT_ROOMS));
+      _events = eventsSnap.exists() ? Object.values(eventsSnap.val()) : [];
+      _users  = usersSnap.exists()  ? Object.values(usersSnap.val())  : [
+        {id:'u1', name:'Administrator', username:'admin', password:'admin123', role:'admin', color:'#c9a84c'},
+      ];
+    }
+
+    // ── 4. Set up real-time listeners ───────────────────
+    // These fire whenever ANYONE changes data — instant sync across all users
+    db.ref('rooms').on('value', snap => {
+      _rooms = snap.exists() ? Object.values(snap.val()) : [];
+      buildRoomFilters();
+      if(cal) cal.refetchEvents();
+    });
+
+    db.ref('events').on('value', snap => {
+      _events = snap.exists() ? Object.values(snap.val()) : [];
+      if(cal) cal.refetchEvents();
+      if(isAdmin()) checkPendingBanner();
+    });
+
+    db.ref('users').on('value', snap => {
+      _users = snap.exists() ? Object.values(snap.val()) : [];
+    });
+
+    // ── 5. Boot the app ─────────────────────────────────
+    loadStatus.textContent = 'Ready!';
+    await new Promise(r => setTimeout(r, 400)); // brief "Ready" flash
+
+    document.getElementById('loadingOverlay').style.display = 'none';
+    buildRoomFilters();
+    buildTypeSelect();
+
+    const existingSession = getSession();
+    if(existingSession){
+      document.getElementById('authScreen').style.display = 'none';
+      applySession();
+    }
+    initCalendar();
+
+  } catch(err) {
+    console.error('Firebase init error:', err);
+    loadStatus.style.display = 'none';
+    loadErr.style.display = 'block';
+    loadErr.innerHTML = `<strong>Could not connect to database.</strong><br>
+      Check your internet connection and try refreshing.<br><br>
+      <small style="opacity:.7">${err.message}</small>`;
+  }
+});
+
+function initCalendar(){
+  const calEl = document.getElementById('calendar');
+
+  cal = new FullCalendar.Calendar(calEl, {
+    initialView: 'timeGridWeek',
+    headerToolbar: false,
+    height: window.innerWidth <= 768 ? 'calc(100vh - 100px)' : 'calc(100vh - 114px)',
+    slotMinTime: '06:00:00',
+    slotMaxTime: '23:30:00',
+    slotDuration: '00:30:00',
+    snapDuration: '00:15:00',
+    nowIndicator: true,
+    selectable: true,
+    selectMirror: true,
+    editable: true,
+    eventResizableFromStart: true,
+    firstDay: 0,
+    eventTimeFormat: {hour:'2-digit', minute:'2-digit', hour12:false},
+    slotLabelFormat: {hour:'2-digit', minute:'2-digit', hour12:false},
+
+    events: function(info, success){
+      const rooms = getRooms();
+      const roomMap = Object.fromEntries(rooms.map(r=>[r.id,r]));
+      const checkedRooms = getCheckedRooms();
+      // Show event if ANY of its rooms is checked
+      const events = getEvents().filter(e => {
+        const eRooms = e.roomIds || (e.roomId ? [e.roomId] : []);
+        return eRooms.some(rid => checkedRooms.has(rid));
+      });
+      const fcEvents = events.map(e => {
+        const eRooms = e.roomIds || (e.roomId ? [e.roomId] : []);
+        const primaryRoom = roomMap[eRooms[0]] || {};
+        const allRoomNames = eRooms.map(rid => roomMap[rid]?.name || rid);
+        const type = EVENT_TYPES.find(t=>t.id===e.typeId);
+        const color = e.colorOverride || primaryRoom.color || '#3b6abf';
+        return {
+          id: e.id,
+          title: e.title,
+          start: e.start,
+          end: e.end,
+          backgroundColor: color,
+          borderColor: color,
+          extendedProps: {
+            roomIds: eRooms,
+            roomId: eRooms[0],
+            roomName: allRoomNames.join(', '),
+            roomColor: primaryRoom.color || '#3b6abf',
+            typeName: type ? type.name : '',
+            organizer: e.organizer || '',
+            attendees: e.attendees || 0,
+            desc: e.desc || '',
+            status: e.status || 'confirmed',
+            isRecurring: !!e.recurGroupId,
+            setup: e.setup || [],
+          }
+        };
+      });
+      success(fcEvents);
+    },
+
+    datesSet: function(){ updateTitle() },
+
+    select: function(info){
+      openCreateModal(info.start, info.end);
+      cal.unselect();
+    },
+
+    eventClick: function(info){
+      info.jsEvent.preventDefault();
+      showPop(info.event, info.el);
+    },
+
+    eventDrop: function(info){ reschedule(info) },
+    eventResize: function(info){ reschedule(info) },
+
+    eventContent: function(arg){
+      const ev = arg.event;
+      const p = ev.extendedProps;
+      const view = cal.view.type;
+      const isPending = p.status === 'pending';
+
+      if(view === 'dayGridMonth'){
+        return {html: `<div class="ev-month" style="background:${ev.backgroundColor}">
+          <span class="ev-dot-sm"></span>
+          <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ev.title}</span>
+        </div>`};
+      }
+      if(view === 'listWeek'){
+        return {html:`<span style="font-weight:500">${ev.title}</span>
+          <span style="margin-left:8px;font-size:11px;color:#8a90b0;background:#f0e8d8;padding:1px 6px;border-radius:10px">${p.roomName}</span>`};
+      }
+      return {html:`<div class="ev-inner${isPending?' pending':''}">
+        <div class="ev-time">${arg.timeText}</div>
+        <div class="ev-title">${ev.title}</div>
+        <div class="ev-room">${p.roomName}</div>
+        ${p.organizer ? `<div class="ev-org"><i class="bi bi-person-fill"></i>${p.organizer}</div>` : ''}
+        ${p.isRecurring ? `<span class="ev-recur-dot" title="Recurring">↻</span>` : ''}
+      </div>`};
+    },
+  });
+
+  cal.render();
+  updateTitle();
+}
+
+function updateTitle(){
+  if(cal) document.getElementById('calTitle').textContent = cal.view.title;
+}
+
+function setView(btn, view){
+  cal.changeView(view);
+  document.querySelectorAll('.vpill').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  updateTitle();
+}
+
+function toggleSidebar(){
+  const sidebar = document.getElementById('sidebar');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  const isMobile = window.innerWidth <= 768;
+  if(isMobile){
+    const isOpen = sidebar.classList.contains('mobile-open');
+    sidebar.classList.toggle('mobile-open', !isOpen);
+    backdrop.style.display = isOpen ? 'none' : 'block';
+  } else {
+    sidebar.classList.toggle('closed');
+    setTimeout(()=>cal && cal.updateSize(), 310);
+  }
+}
+
+function closeSidebar(){
+  document.getElementById('sidebar').classList.remove('mobile-open');
+  document.getElementById('sidebarBackdrop').style.display = 'none';
+}
+
+// ── Room Filters ──────────────────────────────────
+function buildRoomFilters(){
+  const rooms = getRooms();
+  const el = document.getElementById('roomFilters');
+  el.innerHTML = rooms.map(r=>`
+    <label class="room-filter" for="rf_${r.id}">
+      <input type="checkbox" id="rf_${r.id}" class="rf-cb" value="${r.id}" checked onchange="cal&&cal.refetchEvents()">
+      <span class="rf-dot" style="background:${r.color}"></span>
+      <span class="rf-name">${r.name}</span>
+      <span class="rf-cap">${r.capacity}</span>
+    </label>`).join('');
+}
+
+function getCheckedRooms(){
+  return new Set(Array.from(document.querySelectorAll('.rf-cb:checked')).map(c=>c.value));
+}
+
+function toggleAllRooms(){
+  const cbs = document.querySelectorAll('.rf-cb');
+  const allChecked = [...cbs].every(c=>c.checked);
+  cbs.forEach(c=>c.checked=!allChecked);
+  cal.refetchEvents();
+}
+
+// ── Type Select ────────────────────────────────────
+function buildTypeSelect(){
+  const sel = document.getElementById('fType');
+  sel.innerHTML = '<option value="">— Select type —</option>' +
+    EVENT_TYPES.map(t=>`<option value="${t.id}">${t.name}</option>`).join('');
+}
+
+function buildOrgSelect(currentName){
+  const sel = document.getElementById('fOrgNameSelect');
+  if(!sel) return;
+  const users = getUsers();
+  sel.innerHTML = '<option value="">— Select user —</option>' +
+    users.map(u=>`<option value="${u.name}">${u.name}${u.role==='admin'?' (admin)':''}</option>`).join('') +
+    '<option value="__custom__">Other / type manually…</option>';
+
+  const nameInput = document.getElementById('fOrgName');
+  if(currentName){
+    // Check if name matches a user
+    const match = users.find(u=>u.name===currentName);
+    if(match){
+      sel.value = currentName;
+      nameInput.style.display = 'none';
+    } else {
+      sel.value = '__custom__';
+      nameInput.style.display = 'block';
+      nameInput.value = currentName;
+    }
+  } else {
+    sel.value = '';
+    nameInput.style.display = 'none';
+    nameInput.value = '';
+  }
+}
+
+function handleOrgNameSelect(sel){
+  const nameInput = document.getElementById('fOrgName');
+  if(sel.value === '__custom__'){
+    nameInput.style.display = 'block';
+    nameInput.value = '';
+    nameInput.focus();
+  } else {
+    nameInput.style.display = 'none';
+    nameInput.value = sel.value;
+  }
+}
+
+// ── Room Grid in Modal ────────────────────────────
+function buildRoomGrid(selectedIds){
+  const ids = Array.isArray(selectedIds) ? selectedIds : (selectedIds ? [selectedIds] : []);
+  const rooms = getRooms();
+  document.getElementById('roomGrid').innerHTML = rooms.map(r=>`
+    <div class="room-card${ids.includes(r.id)?' selected':''}" onclick="toggleRoomCard(this,'${r.id}')">
+      <input type="checkbox" name="rSel" value="${r.id}" ${ids.includes(r.id)?'checked':''} style="display:none">
+      <span class="rc-dot" style="background:${r.color}"></span>
+      <span class="rc-name">${r.name}</span>
+      <span class="rc-cap"><i class="bi bi-people"></i>${r.capacity}</span>
+    </div>`).join('');
+  updateRoomsSummary();
+}
+
+function toggleRoomCard(div, roomId){
+  div.classList.toggle('selected');
+  const cb = div.querySelector('input[type="checkbox"]');
+  cb.checked = div.classList.contains('selected');
+  updateRoomsSummary();
+  checkAvail();
+}
+
+function updateRoomsSummary(){
+  const rooms = getRooms();
+  const roomMap = Object.fromEntries(rooms.map(r=>[r.id,r]));
+  const selected = [...document.querySelectorAll('input[name="rSel"]:checked')].map(cb=>cb.value);
+  const summary = document.getElementById('roomsSummary');
+
+  if(selected.length === 0){
+    summary.style.display = 'none';
+    summary.innerHTML = '';
+    return;
+  }
+
+  summary.style.display = 'flex';
+  const labelPart = selected.length > 1
+    ? `<span style="font-weight:600;color:var(--text-mid);white-space:nowrap">${selected.length} rooms selected:</span>`
+    : `<span style="font-weight:600;color:var(--text-mid);white-space:nowrap">1 room selected:</span>`;
+
+  const tags = selected.map(rid => {
+    const room = roomMap[rid] || {name: rid, color: '#555'};
+    return `<span class="rooms-summary-tag" style="background:${room.color}">
+      ${room.name}
+      <span class="rm-x" title="Remove" onclick="deselectRoom('${rid}')">✕</span>
+    </span>`;
+  }).join('');
+
+  summary.innerHTML = labelPart + tags;
+}
+
+function deselectRoom(roomId){
+  const cb = document.querySelector(`input[name="rSel"][value="${roomId}"]`);
+  if(cb){
+    cb.checked = false;
+    cb.closest('.room-card').classList.remove('selected');
+  }
+  updateRoomsSummary();
+  checkAvail();
+}
+
+// ════════════════════════════════════════════════════════
+//  MODAL — CREATE / EDIT
+// ════════════════════════════════════════════════════════
+
+function openCreateModal(start, end){
+  closeSidebar();
+  resetForm();
+  document.getElementById('mTitle').textContent = 'New Booking';
+  document.getElementById('mIcon').innerHTML = '<i class="bi bi-calendar-plus"></i>';
+  document.getElementById('btnSaveTxt').textContent = 'Create Booking';
+  document.getElementById('delSection').style.display = 'none';
+  buildRoomGrid([]);
+  buildOrgSelect('');
+
+  if(start){
+    document.getElementById('fStart').value = toInput(start);
+    const e = end || new Date(start.getTime()+3600000);
+    document.getElementById('fEnd').value = toInput(e);
+  } else {
+    const now = new Date(); now.setMinutes(0,0,0); now.setHours(now.getHours()+1);
+    const end2 = new Date(now.getTime()+3600000);
+    document.getElementById('fStart').value = toInput(now);
+    document.getElementById('fEnd').value = toInput(end2);
+  }
+  new bootstrap.Modal(document.getElementById('evModal')).show();
+  applyRoleToModal();
+}
+
+function openEditModal(eventId){
+  const events = getEvents();
+  const ev = events.find(e=>e.id===eventId);
+  if(!ev) return;
+
+  resetForm();
+  document.getElementById('mTitle').textContent = 'Edit Booking';
+  document.getElementById('mIcon').innerHTML = '<i class="bi bi-pencil-square"></i>';
+  document.getElementById('btnSaveTxt').textContent = 'Save Changes';
+  document.getElementById('delSection').style.display = 'block';
+  document.getElementById('fId').value = ev.id;
+
+  document.getElementById('fTitle').value     = ev.title || '';
+  document.getElementById('fType').value      = ev.typeId || '';
+  document.getElementById('fStart').value     = toInput(new Date(ev.start));
+  document.getElementById('fEnd').value       = toInput(new Date(ev.end));
+  document.getElementById('fOrgEmail').value  = ev.email || '';
+  document.getElementById('fOrgPhone').value  = ev.phone || '';
+  document.getElementById('fAttendees').value = ev.attendees || 0;
+  document.getElementById('fStatus').value    = ev.status || 'confirmed';
+  document.getElementById('fDesc').value      = ev.desc || '';
+
+  buildOrgSelect(ev.organizer || '');
+
+  // Load setup requirements
+  const savedSetup = ev.setup || [];
+  document.querySelectorAll('.setup-item').forEach(el => {
+    const val = el.querySelector('input').value;
+    if(savedSetup.includes(val)){
+      el.classList.add('checked');
+      el.querySelector('input').checked = true;
+    }
+  });
+  updateSetupSummary();
+
+  buildRoomGrid(ev.roomIds || (ev.roomId ? [ev.roomId] : []));
+  new bootstrap.Modal(document.getElementById('evModal')).show();
+  applyRoleToModal();
+}
+
+function resetForm(){
+  ['fId','fTitle','fStart','fEnd','fOrgName','fOrgEmail','fOrgPhone','fDesc'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('fType').value = '';
+  document.getElementById('fStatus').value = 'confirmed';
+  document.getElementById('fAttendees').value = 0;
+  document.getElementById('formErr').style.display = 'none';
+  document.getElementById('availBox').style.display = 'none';
+  ['errTitle','errType','errRoom','errStart','errEnd'].forEach(id=>document.getElementById(id).textContent='');
+  // Reset organizer dropdown
+  const orgSel = document.getElementById('fOrgNameSelect');
+  if(orgSel) orgSel.value = '';
+  const orgInput = document.getElementById('fOrgName');
+  if(orgInput){ orgInput.value=''; orgInput.style.display='none'; }
+  // Reset recurring
+  document.getElementById('fRecurOn').checked = false;
+  document.getElementById('recurPanel').classList.remove('open');
+  document.getElementById('recurToggleRow').classList.remove('active');
+  document.getElementById('recurBadge').style.display = 'none';
+  document.querySelectorAll('.fpill').forEach(p=>p.classList.remove('active'));
+  document.querySelector('.fpill[data-freq="weekly"]').classList.add('active');
+  document.getElementById('dayPickerWrap').style.display = 'block';
+  document.getElementById('fRecurEnd').value = '';
+  document.getElementById('fRecurCount').value = 10;
+  setEndOpt('date');
+  document.querySelectorAll('.daypill').forEach(p=>p.classList.remove('active'));
+  // Reset setup requirements
+  document.querySelectorAll('.setup-item').forEach(el=>{
+    el.classList.remove('checked');
+    el.querySelector('input').checked = false;
+  });
+  document.getElementById('setupSummary').style.display = 'none';
+  document.getElementById('setupSummary').innerHTML = '';
+  // Reset rooms summary
+  const rs = document.getElementById('roomsSummary');
+  if(rs){ rs.style.display='none'; rs.innerHTML=''; }
+}
+
+// ── Recurring UI helpers ──────────────────────────
+function toggleRecur(){
+  const cb  = document.getElementById('fRecurOn');
+  const row = document.getElementById('recurToggleRow');
+  const panel = document.getElementById('recurPanel');
+  const badge = document.getElementById('recurBadge');
+  // When clicking the row (not the checkbox directly), toggle checkbox
+  if(event && event.target !== cb) cb.checked = !cb.checked;
+  const on = cb.checked;
+  panel.classList.toggle('open', on);
+  row.classList.toggle('active', on);
+  badge.style.display = on ? 'inline' : 'none';
+  if(on) preselectStartDay();
+  updateRecurSummary();
+}
+
+function preselectStartDay(){
+  const start = document.getElementById('fStart').value;
+  if(!start) return;
+  const day = new Date(start).getDay();
+  document.querySelectorAll('.daypill').forEach(p=>{
+    p.classList.toggle('active', parseInt(p.dataset.d)===day);
+  });
+}
+
+function setFreq(freq, btn){
+  event.stopPropagation();
+  document.querySelectorAll('.fpill').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  const weekly = freq==='weekly'||freq==='biweekly';
+  document.getElementById('dayPickerWrap').style.display = weekly ? 'block' : 'none';
+  updateRecurSummary();
+}
+
+function toggleDay(btn){
+  event.stopPropagation();
+  btn.classList.toggle('active');
+  updateRecurSummary();
+}
+
+function setEndOpt(type){
+  event.stopPropagation && event.stopPropagation();
+  document.getElementById('endDateWrap').style.display  = type==='date'  ? 'block':'none';
+  document.getElementById('endCountWrap').style.display = type==='count' ? 'block':'none';
+  document.getElementById('endOptDate').classList.toggle('active',  type==='date');
+  document.getElementById('endOptCount').classList.toggle('active', type==='count');
+  document.querySelector(`input[name="endOpt"][value="${type}"]`).checked = true;
+  updateRecurSummary();
+}
+
+function getFreq(){ return document.querySelector('.fpill.active')?.dataset.freq || 'weekly'; }
+function getEndOpt(){ return document.querySelector('input[name="endOpt"]:checked')?.value || 'date'; }
+
+function updateRecurSummary(){
+  const freq = getFreq();
+  const endOpt = getEndOpt();
+  const days = [...document.querySelectorAll('.daypill.active')].map(p=>['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][p.dataset.d]);
+  const freqLabels = {daily:'Daily',weekly:'Weekly',biweekly:'Every 2 weeks',monthly:'Monthly',yearly:'Yearly'};
+  let txt = freqLabels[freq] || freq;
+  if((freq==='weekly'||freq==='biweekly') && days.length) txt += ` on ${days.join(', ')}`;
+  if(endOpt==='date'){
+    const v = document.getElementById('fRecurEnd').value;
+    if(v) txt += ` until ${new Date(v+'T00:00:00').toLocaleDateString('en-IL',{month:'short',day:'numeric',year:'numeric'})}`;
+  } else {
+    const c = document.getElementById('fRecurCount').value;
+    if(c) txt += `, ${c} times`;
+  }
+  document.getElementById('recurSummaryText').textContent = txt + '.';
+}
+
+// Generate occurrence dates for a recurring event
+function generateOccurrences(startISO, endISO, freq, selectedDays, endOpt, endDate, endCount){
+  const durationMs = new Date(endISO) - new Date(startISO);
+  const occurrences = [];
+  const limit = endOpt==='count' ? Math.min(parseInt(endCount)||10, 104) : 400;
+  const stopDate = endOpt==='date' && endDate ? new Date(endDate+'T23:59:59') : null;
+
+  let cur = new Date(startISO);
+
+  // For weekly/biweekly with specific days, we need a different approach
+  const isWeekly = freq==='weekly'||freq==='biweekly';
+  const step = freq==='daily'?1 : freq==='biweekly'?14 : freq==='monthly'?0 : freq==='yearly'?0 : 7;
+
+  // Set a hard cap date (2 years out)
+  const hardStop = new Date(startISO);
+  hardStop.setFullYear(hardStop.getFullYear()+2);
+
+  while(occurrences.length < limit){
+    if(stopDate && cur > stopDate) break;
+    if(cur > hardStop) break;
+
+    if(isWeekly){
+      // Check if current date's day of week is in selectedDays
+      if(selectedDays.length===0 || selectedDays.includes(cur.getDay())){
+        occurrences.push(new Date(cur));
+      }
+      cur.setDate(cur.getDate()+1);
+      // For biweekly, after a full week of days, jump ahead
+      if(freq==='biweekly' && cur.getDay()===new Date(startISO).getDay() && occurrences.length>0){
+        cur.setDate(cur.getDate()+7);
+      }
+    } else if(freq==='daily'){
+      occurrences.push(new Date(cur));
+      cur.setDate(cur.getDate()+1);
+    } else if(freq==='monthly'){
+      occurrences.push(new Date(cur));
+      cur.setMonth(cur.getMonth()+1);
+    } else if(freq==='yearly'){
+      occurrences.push(new Date(cur));
+      cur.setFullYear(cur.getFullYear()+1);
+    }
+  }
+
+  // Convert to start/end pairs, skip the first (already the base event)
+  return occurrences.slice(1).map(d => ({
+    start: d.toISOString(),
+    end:   new Date(d.getTime()+durationMs).toISOString(),
+  }));
+}
+
+// ── Save ──────────────────────────────────────────
+function saveEvent(){
+  const id       = document.getElementById('fId').value;
+  const title    = document.getElementById('fTitle').value.trim();
+  const roomSels = [...document.querySelectorAll('input[name="rSel"]:checked')];
+  const start    = document.getElementById('fStart').value;
+  const end      = document.getElementById('fEnd').value;
+  const typeId   = document.getElementById('fType').value;
+  const status   = isAdmin()
+    ? document.getElementById('fStatus').value
+    : (id ? document.getElementById('fStatus').value : 'pending'); // staff new events → pending
+  const orgSel   = document.getElementById('fOrgNameSelect');
+  const organizer= (orgSel && orgSel.value && orgSel.value !== '__custom__')
+    ? orgSel.value
+    : document.getElementById('fOrgName').value.trim();
+  const email    = document.getElementById('fOrgEmail').value.trim();
+  const phone    = document.getElementById('fOrgPhone').value.trim();
+  const attendees= parseInt(document.getElementById('fAttendees').value)||0;
+  const desc     = document.getElementById('fDesc').value.trim();
+  const isRecur  = document.getElementById('fRecurOn').checked && !id;
+  const setup    = [...document.querySelectorAll('.setup-item input:checked')].map(el=>el.value);
+
+  let valid = true;
+  if(!title){ document.getElementById('errTitle').textContent='Title is required.'; valid=false; }
+  else document.getElementById('errTitle').textContent='';
+  if(!typeId){ document.getElementById('errType').textContent='Please select an event type.'; valid=false; }
+  else document.getElementById('errType').textContent='';
+  if(!roomSels.length){ document.getElementById('errRoom').textContent='Please select at least one room.'; valid=false; }
+  else document.getElementById('errRoom').textContent='';
+  if(!start){ document.getElementById('errStart').textContent='Start time required.'; valid=false; }
+  else document.getElementById('errStart').textContent='';
+  if(!end){ document.getElementById('errEnd').textContent='End time required.'; valid=false; }
+  else document.getElementById('errEnd').textContent='';
+  if(!valid) return;
+
+  const roomIds  = roomSels.map(r=>r.value);
+  const startISO = new Date(start).toISOString();
+  const endISO   = new Date(end).toISOString();
+
+  if(new Date(end) <= new Date(start)){
+    document.getElementById('formErr').textContent = 'End time must be after start time.';
+    document.getElementById('formErr').style.display = 'block';
+    return;
+  }
+
+  // Conflict check across every selected room
+  const events = getEvents();
+  for(const rid of roomIds){
+    const conflict = events.find(e => {
+      if(e.id === id) return false;
+      if(e.status === 'cancelled') return false;
+      const eRooms = e.roomIds || (e.roomId ? [e.roomId] : []);
+      if(!eRooms.includes(rid)) return false;
+      return new Date(e.start) < new Date(endISO) && new Date(e.end) > new Date(startISO);
+    });
+    if(conflict){
+      const roomName = getRooms().find(r=>r.id===rid)?.name || rid;
+      document.getElementById('formErr').textContent =
+        `Conflict in "${roomName}": "${conflict.title}" already booked ${fmt(new Date(conflict.start))} – ${fmtTime(new Date(conflict.end))}`;
+      document.getElementById('formErr').style.display='block';
+      return;
+    }
+  }
+
+  const baseFields = {title, roomIds, roomId:roomIds[0], typeId, status, organizer, email, phone, attendees, desc, setup};
+
+  if(id){
+    // Update single event
+    const idx = events.findIndex(e=>e.id===id);
+    if(idx>=0) events[idx] = {...events[idx], ...baseFields, start:startISO, end:endISO};
+    saveEvents(events);
+    cal.refetchEvents();
+    bootstrap.Modal.getInstance(document.getElementById('evModal')).hide();
+    checkPendingBanner();
+    toast('Booking updated!','success');
+    // Auto-sync update to Notion
+    const allRoomNamesUpd = roomIds.map(rid => getRooms().find(r=>r.id===rid)?.name || rid).join(', ');
+    syncToNotion(events[idx], allRoomNamesUpd, 'update');
+    return;
+  }
+
+  // Create new event(s)
+  const recurGroupId = isRecur ? 'grp_'+Date.now() : null;
+  const user = currentUser();
+  const createdByName = user ? user.name : '';
+  const newEv = {id:genId(), ...baseFields, start:startISO, end:endISO, recurGroupId, createdByName};
+  const toAdd = [newEv];
+
+  if(isRecur){
+    const freq = getFreq();
+    const selectedDays = [...document.querySelectorAll('.daypill.active')].map(p=>parseInt(p.dataset.d));
+    const endOpt = getEndOpt();
+    const endDate = document.getElementById('fRecurEnd').value;
+    const endCount = document.getElementById('fRecurCount').value;
+
+    if(endOpt==='date' && !endDate){
+      document.getElementById('formErr').textContent = 'Please set an end date for the recurring series.';
+      document.getElementById('formErr').style.display='block';
+      return;
+    }
+
+    const occurrences = generateOccurrences(startISO, endISO, freq, selectedDays, endOpt, endDate, endCount);
+
+    // Check for conflicts in generated occurrences (quick check, skip on conflict)
+    let conflictCount = 0;
+    occurrences.forEach(occ => {
+      const hasConflict = roomIds.some(rid =>
+        events.some(e=>{
+          if(e.status==='cancelled') return false;
+          const eRooms = e.roomIds || (e.roomId ? [e.roomId] : []);
+          if(!eRooms.includes(rid)) return false;
+          return new Date(e.start)<new Date(occ.end) && new Date(e.end)>new Date(occ.start);
+        })
+      );
+      if(!hasConflict){
+        toAdd.push({id:genId(), ...baseFields, start:occ.start, end:occ.end, recurGroupId, createdByName});
+      } else {
+        conflictCount++;
+      }
+    });
+
+    saveEvents([...events, ...toAdd]);
+    cal.refetchEvents();
+    bootstrap.Modal.getInstance(document.getElementById('evModal')).hide();
+    const msg = conflictCount > 0
+      ? `Created ${toAdd.length} bookings (${conflictCount} skipped due to conflicts).`
+      : `Created ${toAdd.length} recurring bookings!`;
+    toast(msg, conflictCount>0?'info':'success');
+    // Notify admins for recurring (use first event as representative)
+    if(!isAdmin()){
+      const allRoomNames = roomIds.map(rid => getRooms().find(r=>r.id===rid)?.name || rid).join(', ');
+      notifyAdmins(newEv, allRoomNames);
+      syncToNotion(newEv, allRoomNames);
+    } else {
+      const allRoomNames = roomIds.map(rid => getRooms().find(r=>r.id===rid)?.name || rid).join(', ');
+      syncToNotion(newEv, allRoomNames);
+    }
+  } else {
+    saveEvents([...events, ...toAdd]);
+    cal.refetchEvents();
+    bootstrap.Modal.getInstance(document.getElementById('evModal')).hide();
+    checkPendingBanner();
+    const pendingNote = !isAdmin() ? ' — awaiting admin approval' : '';
+    toast('Booking created!' + pendingNote, 'success');
+    // Notify admins by email when staff creates a booking; sync all to Notion
+    const allRoomNames = roomIds.map(rid => getRooms().find(r=>r.id===rid)?.name || rid).join(', ');
+    if(!isAdmin()) notifyAdmins(newEv, allRoomNames);
+    syncToNotion(newEv, allRoomNames);
+  }
+}
+
+// ── Delete ─────────────────────────────────────────
+let _pendingDeleteId = null;
+
+function deleteEvent(){
+  const id = document.getElementById('fId').value;
+  if(!id) return;
+  const events = getEvents();
+  const ev = events.find(e=>e.id===id);
+  if(!ev) return;
+
+  if(ev.recurGroupId){
+    _pendingDeleteId = id;
+    bootstrap.Modal.getInstance(document.getElementById('evModal')).hide();
+    setTimeout(()=>new bootstrap.Modal(document.getElementById('delSeriesModal')).show(), 300);
+  } else {
+    saveEvents(events.filter(e=>e.id!==id));
+    cal.refetchEvents();
+    bootstrap.Modal.getInstance(document.getElementById('evModal')).hide();
+    checkPendingBanner();
+    toast('Booking deleted.','info');
+    // Auto-sync delete to Notion
+    syncToNotion(ev, null, 'delete');
+  }
+}
+
+function confirmDeleteSeries(){
+  const opt = document.querySelector('input[name="delOpt"]:checked')?.value || 'this';
+  const events = getEvents();
+  const ev = events.find(e=>e.id===_pendingDeleteId);
+  if(!ev){ bootstrap.Modal.getInstance(document.getElementById('delSeriesModal')).hide(); return; }
+
+  let remaining;
+  if(opt==='this'){
+    remaining = events.filter(e=>e.id!==ev.id);
+  } else if(opt==='future'){
+    remaining = events.filter(e=>!(e.recurGroupId===ev.recurGroupId && new Date(e.start)>=new Date(ev.start)));
+  } else {
+    remaining = events.filter(e=>e.recurGroupId!==ev.recurGroupId);
+  }
+
+  saveEvents(remaining);
+  cal.refetchEvents();
+  bootstrap.Modal.getInstance(document.getElementById('delSeriesModal')).hide();
+  _pendingDeleteId = null;
+  const msgs = {this:'Occurrence deleted.',future:'This and future occurrences deleted.',all:'Entire series deleted.'};
+  toast(msgs[opt]||'Deleted.','info');
+}
+
+// ── Availability Check ─────────────────────────────
+function checkAvail(){
+  const roomSels = [...document.querySelectorAll('input[name="rSel"]:checked')];
+  const start    = document.getElementById('fStart').value;
+  const end      = document.getElementById('fEnd').value;
+  const curId    = document.getElementById('fId').value;
+  const box      = document.getElementById('availBox');
+  if(!roomSels.length || !start || !end){ box.style.display='none'; return; }
+
+  const startISO = new Date(start).toISOString();
+  const endISO   = new Date(end).toISOString();
+  const allEvents = getEvents();
+  let conflict = null;
+  let conflictRoom = '';
+
+  for(const rs of roomSels){
+    const c = allEvents.find(e=>{
+      if(e.id===curId||e.status==='cancelled') return false;
+      const eRooms = e.roomIds || (e.roomId ? [e.roomId] : []);
+      if(!eRooms.includes(rs.value)) return false;
+      return new Date(e.start)<new Date(endISO) && new Date(e.end)>new Date(startISO);
+    });
+    if(c){ conflict=c; conflictRoom=getRooms().find(r=>r.id===rs.value)?.name||rs.value; break; }
+  }
+
+  box.style.display='flex';
+  if(conflict){
+    box.className='avail-box conflict';
+    box.innerHTML=`<i class="bi bi-exclamation-triangle-fill"></i><span><strong>Conflict in ${conflictRoom}:</strong> "${conflict.title}" is already booked during this time.</span>`;
+  } else {
+    box.className='avail-box ok';
+    const label = roomSels.length > 1 ? `All ${roomSels.length} rooms are` : 'This time slot is';
+    box.innerHTML=`<i class="bi bi-check-circle-fill"></i><span>${label} <strong>available</strong>.</span>`;
+  }
+}
+
+// ── Reschedule (drag/resize) ───────────────────────
+function reschedule(info){
+  const events = getEvents();
+  const idx = events.findIndex(e=>e.id===info.event.id);
+  if(idx<0){ info.revert(); return; }
+
+  const startISO = info.event.start.toISOString();
+  const endISO   = info.event.end ? info.event.end.toISOString() : startISO;
+
+  // Conflict check across all rooms of this event
+  const evRooms = events[idx].roomIds || (events[idx].roomId ? [events[idx].roomId] : []);
+  const conflict = events.find(e=>{
+    if(e.id===info.event.id||e.status==='cancelled') return false;
+    const eRooms = e.roomIds || (e.roomId ? [e.roomId] : []);
+    if(!evRooms.some(rid=>eRooms.includes(rid))) return false;
+    return new Date(e.start)<new Date(endISO) && new Date(e.end)>new Date(startISO);
+  });
+  if(conflict){
+    info.revert();
+    toast(`Conflict with "${conflict.title}" — reverted.`, 'error');
+    return;
+  }
+
+  events[idx].start = startISO;
+  events[idx].end   = endISO;
+  saveEvents(events);
+  toast('Booking rescheduled.','success');
+  // Auto-sync reschedule to Notion
+  syncToNotion(events[idx], null, 'update');
+}
+
+// ════════════════════════════════════════════════════════
+//  EVENT POPOVER
+// ════════════════════════════════════════════════════════
+
+function showPop(event, el){
+  const p = event.extendedProps;
+  popEventId = event.id;
+
+  document.getElementById('popTitle').textContent = event.title;
+  document.getElementById('popTitle').style.borderLeftColor = event.backgroundColor;
+  document.getElementById('popRoom').innerHTML = `<i class="bi bi-door-open"></i><strong>${p.roomName}</strong>`;
+
+  const orgEl = document.getElementById('popOrg');
+  if(p.organizer){ orgEl.innerHTML=`<i class="bi bi-person"></i>${p.organizer}`; orgEl.style.display='flex'; }
+  else orgEl.style.display='none';
+
+  const attEl = document.getElementById('popAtt');
+  if(p.attendees>0){ attEl.innerHTML=`<i class="bi bi-people"></i>${p.attendees} expected attendees`; attEl.style.display='flex'; }
+  else attEl.style.display='none';
+
+  const descEl = document.getElementById('popDesc');
+  if(p.desc){ descEl.innerHTML=`<i class="bi bi-text-paragraph"></i>${p.desc}`; descEl.style.display='flex'; }
+  else descEl.style.display='none';
+
+  const setupEl = document.getElementById('popSetup');
+  if(p.setup && p.setup.length){
+    setupEl.innerHTML = `<i class="bi bi-tools"></i><span style="display:flex;flex-wrap:wrap;gap:4px">${p.setup.map(s=>`<span class="setup-tag">${s}</span>`).join('')}</span>`;
+    setupEl.style.display='flex';
+  } else setupEl.style.display='none';
+
+  const colors = {confirmed:'#166534',pending:'#92400e',cancelled:'#b91c1c'};
+  const badge = document.getElementById('popBadge');
+  badge.textContent = p.status.charAt(0).toUpperCase()+p.status.slice(1);
+  badge.style.background = colors[p.status]||'#555';
+  const recurNote = p.isRecurring ? ' &nbsp;<span style="font-size:10px;background:var(--gold);color:var(--navy);padding:1px 6px;border-radius:10px;font-weight:600">↻ Recurring</span>' : '';
+  document.getElementById('popTime').innerHTML = `<i class="bi bi-clock"></i>${fmt(event.start)} — ${fmtTime(event.end)}${recurNote}`;
+
+  // Position
+  const pop = document.getElementById('evPopover');
+  pop.style.display='block';
+  document.getElementById('popBackdrop').style.display='block';
+  const rect = el.getBoundingClientRect();
+  const pw=292, ph=pop.offsetHeight||230;
+  let left=rect.right+10, top=rect.top;
+  if(left+pw>window.innerWidth-16) left=rect.left-pw-10;
+  if(top+ph>window.innerHeight-16) top=window.innerHeight-ph-16;
+  if(top<10) top=10;
+  pop.style.left=left+'px';
+  pop.style.top=top+'px';
+}
+
+function closePop(){
+  document.getElementById('evPopover').style.display='none';
+  document.getElementById('popBackdrop').style.display='none';
+  popEventId=null;
+}
+function editFromPop(){ const id=popEventId; closePop(); if(id) openEditModal(id); }
+function deleteFromPop(){
+  if(!popEventId) return;
+  const events = getEvents();
+  const ev = events.find(e=>e.id===popEventId);
+  if(!ev) return;
+
+  if(ev.recurGroupId){
+    _pendingDeleteId = popEventId;
+    closePop();
+    setTimeout(()=>new bootstrap.Modal(document.getElementById('delSeriesModal')).show(), 150);
+  } else {
+    saveEvents(events.filter(e=>e.id!==popEventId));
+    cal.refetchEvents();
+    closePop();
+    toast('Booking deleted.','info');
+    // Auto-sync delete to Notion
+    syncToNotion(ev, null, 'delete');
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  ROOMS MANAGER
+// ════════════════════════════════════════════════════════
+
+function openRoomsManager(){
+  renderRoomsList();
+  new bootstrap.Modal(document.getElementById('roomsModal')).show();
+}
+
+function renderRoomsList(){
+  const floors = ['Basement','Ground Floor','1st Floor','2nd Floor','3rd Floor','4th Floor','5th Floor','6th Floor'];
+  const floorOpts = floors.map(f=>`<option value="${f}">${f}</option>`).join('');
+  const rooms = getRooms();
+  document.getElementById('roomsList').innerHTML = rooms.map(r=>{
+    const safeName = r.name.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    return `
+    <div class="room-row" id="rrow_${r.id}">
+      <span class="rr-dot" style="background:${r.color}"></span>
+      <div class="rr-info">
+        <div class="rr-name">${r.name}</div>
+        <div class="rr-meta">${r.floor} · Capacity: ${r.capacity}${r.desc?` · ${r.desc}`:''}</div>
+      </div>
+      <div class="rr-actions">
+        <button class="rr-btn" title="Edit room" onclick="toggleRoomEdit('${r.id}')">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button class="rr-btn del" title="Delete room" onclick="deleteRoom('${r.id}','${safeName}')">
+          <i class="bi bi-trash3"></i>
+        </button>
+      </div>
+    </div>
+    <div class="room-edit-form" id="redit_${r.id}">
+      <div class="room-edit-grid">
+        <div class="fgrp" style="margin-bottom:0">
+          <label class="flabel">Room Name</label>
+          <input type="text" class="finput" id="re_name_${r.id}" value="${r.name.replace(/"/g,'&quot;')}">
+        </div>
+        <div class="fgrp" style="margin-bottom:0">
+          <label class="flabel">Floor</label>
+          <select class="fselect" id="re_floor_${r.id}">
+            ${floors.map(f=>`<option value="${f}"${f===r.floor?' selected':''}>${f}</option>`).join('')}
+          </select>
+        </div>
+        <div class="fgrp" style="margin-bottom:0">
+          <label class="flabel">Capacity</label>
+          <input type="number" class="finput" id="re_cap_${r.id}" value="${r.capacity}" min="1">
+        </div>
+        <div class="fgrp" style="margin-bottom:0">
+          <label class="flabel">Color</label>
+          <input type="color" class="finput" id="re_color_${r.id}" value="${r.color}" style="height:38px;padding:3px">
+        </div>
+      </div>
+      <div class="fgrp" style="margin-bottom:8px">
+        <label class="flabel">Description</label>
+        <input type="text" class="finput" id="re_desc_${r.id}" value="${(r.desc||'').replace(/"/g,'&quot;')}" placeholder="Brief description">
+      </div>
+      <div class="room-edit-actions">
+        <button class="btn-cancel-sm" onclick="toggleRoomEdit('${r.id}')">Cancel</button>
+        <button class="btn-save-sm" onclick="saveRoomEdit('${r.id}')"><i class="bi bi-check-lg"></i> Save Changes</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function changeRoomColor(roomId, color){
+  const rooms = getRooms();
+  const r = rooms.find(r=>r.id===roomId);
+  if(r){ r.color=color; saveRooms(rooms); refreshAfterRoomChange(); }
+}
+
+function toggleRoomEdit(roomId){
+  const form = document.getElementById(`redit_${roomId}`);
+  if(!form) return;
+  // Close all other open edit forms first
+  document.querySelectorAll('.room-edit-form.open').forEach(f=>{
+    if(f.id !== `redit_${roomId}`) f.classList.remove('open');
+  });
+  form.classList.toggle('open');
+}
+
+function saveRoomEdit(roomId){
+  const name  = document.getElementById(`re_name_${roomId}`)?.value.trim();
+  const floor = document.getElementById(`re_floor_${roomId}`)?.value;
+  const cap   = parseInt(document.getElementById(`re_cap_${roomId}`)?.value)||1;
+  const color = document.getElementById(`re_color_${roomId}`)?.value;
+  const desc  = document.getElementById(`re_desc_${roomId}`)?.value.trim();
+
+  if(!name){ toast('Room name cannot be empty.','error'); return; }
+
+  const rooms = getRooms();
+  const idx   = rooms.findIndex(r=>r.id===roomId);
+  if(idx < 0) return;
+  rooms[idx] = {...rooms[idx], name, floor, capacity:cap, color, desc};
+  saveRooms(rooms);
+  renderRoomsList();
+  refreshAfterRoomChange();
+  toast(`"${name}" updated!`,'success');
+}
+
+function addRoom(){
+  const name  = document.getElementById('newRoomName').value.trim();
+  const floor = document.getElementById('newRoomFloor').value;
+  const cap   = parseInt(document.getElementById('newRoomCap').value)||10;
+  const color = document.getElementById('newRoomColor').value;
+  const desc  = document.getElementById('newRoomDesc').value.trim();
+  if(!name){ toast('Please enter a room name.','error'); return; }
+  const rooms = getRooms();
+  rooms.push({id:'r_'+Date.now(), name, floor, capacity:cap, color, desc});
+  saveRooms(rooms);
+  document.getElementById('newRoomName').value='';
+  document.getElementById('newRoomDesc').value='';
+  renderRoomsList();
+  refreshAfterRoomChange();
+  toast(`"${name}" added!`,'success');
+}
+
+function deleteRoom(roomId, roomName){
+  // Inline confirm replacing window.confirm() which is blocked inside Bootstrap modals
+  const row = document.getElementById(`rrow_${roomId}`);
+  if(!row) return;
+  // If already showing confirm, proceed with delete
+  if(row.dataset.confirmDelete === 'yes'){
+    saveRooms(getRooms().filter(r=>r.id!==roomId));
+    saveEvents(getEvents().filter(e=>{
+      const eRooms = e.roomIds || (e.roomId ? [e.roomId] : []);
+      return !eRooms.includes(roomId);
+    }));
+    renderRoomsList();
+    refreshAfterRoomChange();
+    toast(`"${roomName}" deleted.`,'info');
+    return;
+  }
+  // First click — show inline confirm
+  row.dataset.confirmDelete = 'yes';
+  const actions = row.querySelector('.rr-actions');
+  const orig = actions.innerHTML;
+  actions.innerHTML = `
+    <span style="font-size:11px;color:var(--danger);font-weight:600;white-space:nowrap">Sure?</span>
+    <button class="rr-btn" style="background:#b91c1c;color:#fff;border-color:#b91c1c" onclick="deleteRoom('${roomId}','${roomName.replace(/'/g,"\\'")}')">Yes</button>
+    <button class="rr-btn" onclick="cancelDeleteRoom('${roomId}')">No</button>`;
+}
+
+function cancelDeleteRoom(roomId){
+  const row = document.getElementById(`rrow_${roomId}`);
+  if(row) delete row.dataset.confirmDelete;
+  renderRoomsList();
+}
+
+function refreshAfterRoomChange(){
+  buildRoomFilters();
+  cal.refetchEvents();
+}
+
+// ════════════════════════════════════════════════════════
+//  UTILITIES
+// ════════════════════════════════════════════════════════
+
+function toInput(dt){
+  const d=new Date(dt), p=n=>String(n).padStart(2,'0');
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+function fmt(dt){
+  if(!dt) return '';
+  return new Date(dt).toLocaleDateString('en-IL',{weekday:'short',month:'short',day:'numeric'})+
+    ' '+new Date(dt).toLocaleTimeString('en-IL',{hour:'2-digit',minute:'2-digit',hour12:false});
+}
+function fmtTime(dt){
+  if(!dt) return '';
+  return new Date(dt).toLocaleTimeString('en-IL',{hour:'2-digit',minute:'2-digit',hour12:false});
+}
+
+// ════════════════════════════════════════════════════════
+//  CSV IMPORT
+// ════════════════════════════════════════════════════════
+
+let _parsedRows = [];   // holds validated row objects after parsing
+
+function openImportModal(){
+  // Reset state
+  _parsedRows = [];
+  document.getElementById('csvFileInput').value = '';
+  document.getElementById('dropFilename').style.display = 'none';
+  document.getElementById('importPreview').style.display = 'none';
+  document.getElementById('btnImport').style.display = 'none';
+  document.getElementById('importNote').textContent = '';
+  document.getElementById('importProgress').style.display = 'none';
+  document.getElementById('dropZone').classList.remove('drag-over');
+  new bootstrap.Modal(document.getElementById('importModal')).show();
+}
+
+// ── Template download ─────────────────────────────
+function downloadTemplate(){
+  const rooms = getRooms();
+  const roomExample = rooms[0]?.name || 'Sanctuary';
+  const room2 = rooms[1]?.name || 'Glass Room';
+
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate()+1);
+  const d = tomorrow.toISOString().slice(0,10);
+
+  const rows = [
+    ['title','room','start','end','status','type','organizer','email','phone','attendees','description'],
+    [`Morning Prayers`,roomExample,`${d} 08:00`,`${d} 09:00`,'confirmed','Prayer / Service','Rabbi Cohen','rabbi@example.com','+1-555-0100','40','Daily morning service'],
+    [`Board Meeting`,room2,`${d} 15:00`,`${d} 17:00`,'confirmed','Board / Meeting','Sarah Levy','sarah@example.com','+1-555-0101','12','Monthly board session'],
+    [`Torah Study`,roomExample,`${d} 20:00`,`${d} 21:30`,'pending','Torah Study','','','','20',''],
+  ];
+
+  const csv = rows.map(r => r.map(cell => {
+    const s = String(cell);
+    return s.includes(',') || s.includes('"') || s.includes('\n') ? `"${s.replace(/"/g,'""')}"` : s;
+  }).join(',')).join('\r\n');
+
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = 'events_template.csv';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Template downloaded!','success');
+}
+
+// ── File handling ─────────────────────────────────
+function handleFileSelect(e){
+  const file = e.target.files[0];
+  if(file) processFile(file);
+}
+
+function handleDrop(e){
+  e.preventDefault();
+  document.getElementById('dropZone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if(file && (file.name.endsWith('.csv')||file.name.endsWith('.txt'))) processFile(file);
+  else toast('Please drop a .csv file.','error');
+}
+
+function processFile(file){
+  document.getElementById('dropFilename').style.display = 'inline-flex';
+  document.getElementById('dropFilenameText').textContent = file.name;
+  const reader = new FileReader();
+  reader.onload = e => parseCSV(e.target.result);
+  reader.readAsText(file);
+}
+
+// ── CSV Parser ────────────────────────────────────
+function parseCSVLine(line){
+  // Handles quoted fields with commas inside
+  const result = [];
+  let cur = '', inQ = false;
+  for(let i=0; i<line.length; i++){
+    const ch = line[i];
+    if(ch==='"'){
+      if(inQ && line[i+1]==='"'){ cur+='"'; i++; }
+      else inQ=!inQ;
+    } else if(ch===',' && !inQ){
+      result.push(cur.trim()); cur='';
+    } else {
+      cur+=ch;
+    }
+  }
+  result.push(cur.trim());
+  return result;
+}
+
+function parseCSV(text){
+  const lines = text.replace(/\r\n/g,'\n').replace(/\r/g,'\n').split('\n').filter(l=>l.trim());
+  if(lines.length < 2){
+    toast('CSV appears empty or has only a header row.','error'); return;
+  }
+
+  // Normalise header
+  const headers = parseCSVLine(lines[0]).map(h=>h.toLowerCase().replace(/[^a-z]/g,''));
+  const col = h => {
+    const synonyms = {
+      title:['title','name','event','eventname','eventitle'],
+      room:['room','roomname','space','venue','location'],
+      start:['start','starttime','startdate','startdatetime','begins','from'],
+      end:['end','endtime','enddate','enddatetime','finishes','to','until'],
+      status:['status','state'],
+      type:['type','eventtype','category'],
+      organizer:['organizer','organiser','contact','host','coordinator'],
+      email:['email','emailaddress','mail'],
+      phone:['phone','phonenumber','tel','telephone','mobile'],
+      attendees:['attendees','guests','capacity','headcount','count','number','expected'],
+      description:['description','desc','notes','details','info'],
+    };
+    const opts = synonyms[h] || [h];
+    for(const o of opts){
+      const idx = headers.indexOf(o);
+      if(idx!==-1) return idx;
+    }
+    return -1;
+  };
+
+  const COLS = {
+    title: col('title'), room: col('room'), start: col('start'), end: col('end'),
+    status: col('status'), type: col('type'), organizer: col('organizer'),
+    email: col('email'), phone: col('phone'), attendees: col('attendees'), description: col('description'),
+  };
+
+  if(COLS.title===-1 || COLS.room===-1 || COLS.start===-1 || COLS.end===-1){
+    toast('Missing required columns: title, room, start, end','error'); return;
+  }
+
+  const rooms = getRooms();
+  const events = getEvents();
+  const rows = [];
+
+  for(let i=1; i<Math.min(lines.length, 1001); i++){
+    const vals = parseCSVLine(lines[i]);
+    const get  = idx => idx===-1 ? '' : (vals[idx]||'').trim();
+
+    const raw = {
+      title:       get(COLS.title),
+      room:        get(COLS.room),
+      start:       get(COLS.start),
+      end:         get(COLS.end),
+      status:      get(COLS.status),
+      type:        get(COLS.type),
+      organizer:   get(COLS.organizer),
+      email:       get(COLS.email),
+      phone:       get(COLS.phone),
+      attendees:   get(COLS.attendees),
+      description: get(COLS.description),
+    };
+
+    const errors = [], warnings = [];
+
+    // Validate required
+    if(!raw.title) errors.push('Missing title');
+
+    // Match room (case-insensitive, partial match)
+    const matchedRoom = rooms.find(r=>r.name.toLowerCase()===raw.room.toLowerCase())
+      || rooms.find(r=>r.name.toLowerCase().includes(raw.room.toLowerCase())&&raw.room.length>2)
+      || rooms.find(r=>raw.room.toLowerCase().includes(r.name.toLowerCase())&&r.name.length>2);
+    if(!raw.room) errors.push('Missing room');
+    else if(!matchedRoom) errors.push(`Room not found: "${raw.room}"`);
+
+    // Parse dates — support multiple formats
+    const parseDate = s => {
+      if(!s) return null;
+      // Try ISO with T
+      let d = new Date(s.includes('T') ? s : s.replace(' ','T'));
+      if(!isNaN(d)) return d;
+      // Try MM/DD/YYYY HH:MM
+      const m = s.match(/(\d{1,2})\/(\d{1,2})\/(\d{2,4})\s+(\d{1,2}):(\d{2})/);
+      if(m) return new Date(+m[3]<100?+m[3]+2000:+m[3], +m[1]-1, +m[2], +m[4], +m[5]);
+      return null;
+    };
+
+    const startDt = parseDate(raw.start);
+    const endDt   = parseDate(raw.end);
+    if(!startDt) errors.push('Invalid start date');
+    if(!endDt)   errors.push('Invalid end date');
+    if(startDt && endDt && endDt <= startDt) errors.push('End must be after start');
+
+    // Status normalise
+    const status = ['confirmed','pending','cancelled'].includes(raw.status.toLowerCase())
+      ? raw.status.toLowerCase() : 'confirmed';
+    if(raw.status && !['confirmed','pending','cancelled'].includes(raw.status.toLowerCase()))
+      warnings.push(`Status "${raw.status}" defaulted to confirmed`);
+
+    // Match event type
+    const matchedType = EVENT_TYPES.find(t=>t.name.toLowerCase()===raw.type.toLowerCase())
+      || EVENT_TYPES.find(t=>t.name.toLowerCase().includes(raw.type.toLowerCase())&&raw.type.length>2);
+    if(raw.type && !matchedType) warnings.push(`Type "${raw.type}" not matched`);
+
+    // Conflict check
+    let conflict = null;
+    if(errors.length===0 && matchedRoom && startDt && endDt){
+      conflict = events.find(e=>{
+        if(e.status==='cancelled'||e.roomId!==matchedRoom.id) return false;
+        return new Date(e.start)<endDt && new Date(e.end)>startDt;
+      });
+      if(conflict) warnings.push(`Conflict with "${conflict.title}"`);
+    }
+
+    const rowStatus = errors.length   ? 'err'
+                    : conflict         ? 'warn'
+                    : warnings.length  ? 'warn' : 'ok';
+
+    rows.push({
+      rowNum: i,
+      raw, errors, warnings,
+      status: rowStatus,
+      resolved: {
+        title:       raw.title,
+        roomId:      matchedRoom?.id || null,
+        roomName:    matchedRoom?.name || raw.room,
+        typeId:      matchedType?.id || null,
+        start:       startDt?.toISOString() || null,
+        end:         endDt?.toISOString() || null,
+        status,
+        organizer:   raw.organizer,
+        email:       raw.email,
+        phone:       raw.phone,
+        attendees:   parseInt(raw.attendees)||0,
+        desc:        raw.description,
+      }
+    });
+  }
+
+  _parsedRows = rows;
+  renderPreview(rows);
+}
+
+// ── Render preview table ──────────────────────────
+function renderPreview(rows){
+  const ok    = rows.filter(r=>r.status==='ok').length;
+  const warn  = rows.filter(r=>r.status==='warn').length;
+  const err   = rows.filter(r=>r.status==='err').length;
+
+  document.getElementById('importPreview').style.display = 'block';
+  document.getElementById('previewTitle').textContent = `Preview — ${rows.length} row${rows.length!==1?'s':''} found`;
+  document.getElementById('previewStats').innerHTML = `
+    ${ok   ? `<span class="pstat ok"><i class="bi bi-check-circle"></i> ${ok} ready</span>` : ''}
+    ${warn ? `<span class="pstat warn"><i class="bi bi-exclamation-triangle"></i> ${warn} with warnings</span>` : ''}
+    ${err  ? `<span class="pstat err"><i class="bi bi-x-circle"></i> ${err} errors</span>` : ''}
+  `;
+
+  const importable = ok + warn; // warn rows are imported but conflicts noted
+  const readyToImport = rows.filter(r=>r.status!=='err').length;
+
+  document.getElementById('previewBody').innerHTML = rows.map(r => {
+    const res = r.resolved;
+    const allIssues = [...r.errors, ...r.warnings].join(' · ');
+    const badge = r.status==='ok'
+      ? '<span class="row-badge ok">Ready</span>'
+      : r.status==='warn'
+      ? '<span class="row-badge warn">Warning</span>'
+      : '<span class="row-badge err">Error</span>';
+
+    const startFmt = res.start ? new Date(res.start).toLocaleDateString('en-IL',{month:'short',day:'numeric',year:'numeric'})+' '+new Date(res.start).toLocaleTimeString('en-IL',{hour:'2-digit',minute:'2-digit',hour12:false}) : r.raw.start;
+    const endFmt   = res.end   ? new Date(res.end).toLocaleTimeString('en-IL',{hour:'2-digit',minute:'2-digit',hour12:false}) : r.raw.end;
+
+    return `<tr class="row-${r.status}">
+      <td style="color:var(--text-light);font-size:11px">${r.rowNum}</td>
+      <td>${badge}${allIssues ? `<div style="font-size:10px;color:var(--text-light);margin-top:2px;white-space:normal;max-width:140px">${allIssues}</div>`:''}
+      </td>
+      <td style="font-weight:500">${res.title||'—'}</td>
+      <td><span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:${getRooms().find(r2=>r2.id===res.roomId)?.color||'#ccc'};margin-right:4px"></span>${res.roomName}</td>
+      <td style="white-space:nowrap">${startFmt}</td>
+      <td style="white-space:nowrap">${endFmt}</td>
+      <td>${res.organizer||'—'}</td>
+      <td style="color:var(--text-light);font-size:11px;white-space:normal;max-width:160px">${res.desc||''}</td>
+    </tr>`;
+  }).join('');
+
+  // Update import button
+  const btn = document.getElementById('btnImport');
+  const note = document.getElementById('importNote');
+  if(readyToImport > 0){
+    btn.style.display = 'inline-flex';
+    document.getElementById('btnImportTxt').textContent = `Import ${readyToImport} Event${readyToImport!==1?'s':''}`;
+    note.textContent = err > 0 ? `${err} row${err!==1?'s':''} with errors will be skipped.` : '';
+  } else {
+    btn.style.display = 'none';
+    note.textContent = 'Fix errors in your CSV and re-upload.';
+  }
+}
+
+// ── Run import ────────────────────────────────────
+function runImport(){
+  const toImport = _parsedRows.filter(r=>r.status!=='err');
+  if(!toImport.length){ toast('Nothing to import.','info'); return; }
+
+  const progress = document.getElementById('importProgress');
+  const progressText = document.getElementById('importProgressText');
+  const progressBar  = document.getElementById('importProgressBar');
+  progress.style.display = 'block';
+
+  const events = getEvents();
+  let imported=0, skipped=0;
+
+  toImport.forEach((r,i) => {
+    const res = r.resolved;
+    // Re-check conflict at import time (state may have changed)
+    const conflict = events.find(e=>{
+      if(e.status==='cancelled'||e.roomId!==res.roomId) return false;
+      return new Date(e.start)<new Date(res.end) && new Date(e.end)>new Date(res.start);
+    });
+    if(conflict){ skipped++; return; }
+
+    events.push({
+      id: genId(),
+      title:      res.title,
+      roomId:     res.roomId,
+      typeId:     res.typeId,
+      start:      res.start,
+      end:        res.end,
+      status:     res.status,
+      organizer:  res.organizer,
+      email:      res.email,
+      phone:      res.phone,
+      attendees:  res.attendees,
+      desc:       res.desc,
+    });
+    imported++;
+
+    // Update progress bar
+    const pct = Math.round(((i+1)/toImport.length)*100);
+    progressBar.style.width = pct+'%';
+    progressText.textContent = `Importing… ${i+1} of ${toImport.length}`;
+  });
+
+  saveEvents(events);
+  cal.refetchEvents();
+
+  // Show result
+  progressBar.style.width = '100%';
+  progressText.innerHTML = `<strong>Done!</strong> ${imported} event${imported!==1?'s':''} imported${skipped>0?`, ${skipped} skipped (conflicts)`:''}.`;
+  progressBar.style.background = '#15803d';
+
+  document.getElementById('btnImport').style.display = 'none';
+  document.getElementById('importNote').textContent = '';
+
+  toast(`${imported} event${imported!==1?'s':''} imported successfully!`, 'success');
+  // Close modal after short delay
+  setTimeout(()=>bootstrap.Modal.getInstance(document.getElementById('importModal')).hide(), 1800);
+}
+
+// ── Setup Requirements ────────────────────────────
+function toggleSetup(label){
+  event.preventDefault();
+  label.classList.toggle('checked');
+  const cb = label.querySelector('input');
+  cb.checked = label.classList.contains('checked');
+  updateSetupSummary();
+}
+
+function updateSetupSummary(){
+  const selected = [...document.querySelectorAll('.setup-item input:checked')].map(el=>el.value);
+  const summary = document.getElementById('setupSummary');
+  if(selected.length){
+    summary.style.display = 'flex';
+    summary.innerHTML = '<span style="font-weight:600;color:var(--text-mid);margin-right:2px;white-space:nowrap">Selected:</span> '
+      + selected.map(s=>`<span class="setup-tag"><i class="bi bi-check-lg" style="font-size:9px"></i>${s}</span>`).join('');
+  } else {
+    summary.style.display = 'none';
+    summary.innerHTML = '';
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  APPROVE EVENTS
+// ════════════════════════════════════════════════════════
+
+function openApproveModal(){
+  renderApproveList();
+  new bootstrap.Modal(document.getElementById('approveModal')).show();
+}
+
+function renderApproveList(){
+  const rooms   = getRooms();
+  const roomMap = Object.fromEntries(rooms.map(r=>[r.id,r]));
+  const pending = getEvents().filter(e=>e.status==='pending').sort((a,b)=>new Date(a.start)-new Date(b.start));
+  const list    = document.getElementById('approveList');
+  const note    = document.getElementById('approveFooterNote');
+
+  if(!pending.length){
+    list.innerHTML = `<div style="text-align:center;padding:28px;color:var(--text-light)">
+      <i class="bi bi-check-circle" style="font-size:32px;color:#16a34a;display:block;margin-bottom:8px"></i>
+      All caught up — no pending events.
+    </div>`;
+    note.textContent = '';
+    return;
+  }
+
+  note.textContent = `${pending.length} event${pending.length!==1?'s':''} waiting for approval`;
+
+  list.innerHTML = pending.map(ev=>{
+    const roomIds   = ev.roomIds || (ev.roomId ? [ev.roomId] : []);
+    const roomNames = roomIds.map(rid=>roomMap[rid]?.name||rid).join(', ');
+    const startFmt  = fmt(new Date(ev.start));
+    const endFmt    = fmtTime(new Date(ev.end));
+    const submittedBy = ev.createdByName ? `<span><i class="bi bi-person"></i> ${ev.createdByName}</span>` : '';
+    return `<div class="approve-row" id="arow_${ev.id}">
+      <div class="approve-info">
+        <div class="approve-title">${ev.title}</div>
+        <div class="approve-meta">
+          <span><i class="bi bi-door-open"></i> ${roomNames}</span>
+          <span><i class="bi bi-clock"></i> ${startFmt} – ${endFmt}</span>
+          ${ev.organizer ? `<span><i class="bi bi-person"></i> ${ev.organizer}</span>` : ''}
+          ${submittedBy}
+          ${ev.attendees ? `<span><i class="bi bi-people"></i> ${ev.attendees}</span>` : ''}
+        </div>
+      </div>
+      <div class="approve-actions">
+        <button class="btn-approve" onclick="approveOne('${ev.id}')">
+          <i class="bi bi-check-lg"></i> Approve
+        </button>
+        <button class="btn-reject" onclick="rejectOne('${ev.id}')">
+          <i class="bi bi-x-lg"></i> Reject
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function approveOne(id){
+  const events = getEvents();
+  const idx    = events.findIndex(e=>e.id===id);
+  if(idx<0) return;
+  events[idx].status = 'confirmed';
+  saveEvents(events);
+  cal.refetchEvents();
+  checkPendingBanner();
+  // Auto-sync approved status to Notion
+  syncToNotion(events[idx], null, 'approve');
+  // Remove row with animation
+  const row = document.getElementById(`arow_${id}`);
+  if(row){ row.style.opacity='0'; row.style.transition='opacity .2s'; setTimeout(()=>{ row.remove(); refreshApproveFooter(); },220); }
+  toast('Event approved!','success');
+}
+
+function rejectOne(id){
+  const events = getEvents();
+  const idx    = events.findIndex(e=>e.id===id);
+  if(idx<0) return;
+  events[idx].status = 'cancelled';
+  saveEvents(events);
+  cal.refetchEvents();
+  checkPendingBanner();
+  // Auto-sync rejected status to Notion
+  syncToNotion(events[idx], null, 'reject');
+  const row = document.getElementById(`arow_${id}`);
+  if(row){ row.style.opacity='0'; row.style.transition='opacity .2s'; setTimeout(()=>{ row.remove(); refreshApproveFooter(); },220); }
+  toast('Event rejected.','info');
+}
+
+function approveAll(){
+  const events  = getEvents();
+  let count = 0;
+  events.forEach(e=>{ if(e.status==='pending'){ e.status='confirmed'; count++; } });
+  saveEvents(events);
+  cal.refetchEvents();
+  checkPendingBanner();
+  renderApproveList();
+  toast(`${count} event${count!==1?'s':''} approved!`,'success');
+}
+
+function refreshApproveFooter(){
+  const remaining = document.querySelectorAll('.approve-row').length;
+  const note = document.getElementById('approveFooterNote');
+  if(remaining === 0){
+    document.getElementById('approveList').innerHTML = `<div style="text-align:center;padding:28px;color:var(--text-light)">
+      <i class="bi bi-check-circle" style="font-size:32px;color:#16a34a;display:block;margin-bottom:8px"></i>
+      All caught up!
+    </div>`;
+    note.textContent = '';
+  } else {
+    note.textContent = `${remaining} event${remaining!==1?'s':''} remaining`;
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  USER MANAGER
+// ════════════════════════════════════════════════════════
+
+function openUsersModal(){
+  renderUserList();
+  document.getElementById('userErr').style.display = 'none';
+  new bootstrap.Modal(document.getElementById('usersModal')).show();
+}
+
+function renderUserList(){
+  const users   = getUsers();
+  const session = currentUser();
+  const isOnlyAdmin = users.filter(x=>x.role==='admin').length <= 1;
+
+  document.getElementById('userList').innerHTML = users.map(u=>{
+    const isMe     = u.id === session?.id;
+    const canDelete = !isMe && !(u.role==='admin' && isOnlyAdmin);
+    const hasEmail  = !!u.email;
+    const safeId    = u.id.replace(/[^a-zA-Z0-9_]/g,'_');
+
+    return `
+    <div class="user-row" id="urow_${safeId}">
+      <div class="user-avatar-sm" style="background:${u.color||'#c9a84c'}">${u.name.charAt(0).toUpperCase()}</div>
+      <div class="user-info">
+        <div class="user-name">${u.name} ${isMe?'<span style="font-size:10px;color:var(--text-light)">(you)</span>':''}</div>
+        <div class="user-username">@${u.username}${u.email?` · <span style="color:var(--text-light)">${u.email}</span>`:''}</div>
+      </div>
+      <span class="user-role-badge ${u.role}">${u.role}</span>
+      ${hasEmail && !isMe
+        ? `<button class="btn-invite" title="Send invite email" onclick="sendInviteEmail('${u.id}')"><i class="bi bi-envelope-arrow-up"></i> Invite</button>`
+        : `<span style="width:60px"></span>`
+      }
+      <button class="rr-btn" title="Edit user" onclick="toggleUserEdit('${u.id}')"><i class="bi bi-pencil"></i></button>
+      ${canDelete
+        ? `<button class="rr-btn del" title="Remove user" onclick="removeUser('${u.id}')"><i class="bi bi-trash3"></i></button>`
+        : `<button class="rr-btn" style="opacity:.3;cursor:default" disabled><i class="bi bi-lock"></i></button>`
+      }
+    </div>
+    <div class="user-edit-form" id="uedit_${safeId}">
+      <div class="user-edit-grid">
+        <div class="fgrp" style="margin-bottom:0">
+          <label class="flabel">Full Name</label>
+          <input type="text" class="finput" id="ue_name_${safeId}" value="${u.name.replace(/"/g,'&quot;')}">
+        </div>
+        <div class="fgrp" style="margin-bottom:0">
+          <label class="flabel">Username</label>
+          <input type="text" class="finput" id="ue_user_${safeId}" value="${u.username}">
+        </div>
+        <div class="fgrp" style="margin-bottom:0">
+          <label class="flabel">Email</label>
+          <input type="email" class="finput" id="ue_email_${safeId}" value="${u.email||''}">
+        </div>
+        <div class="fgrp" style="margin-bottom:0">
+          <label class="flabel">Role</label>
+          <select class="fselect" id="ue_role_${safeId}">
+            <option value="staff" ${u.role==='staff'?'selected':''}>Staff</option>
+            <option value="admin" ${u.role==='admin'?'selected':''}>Admin</option>
+          </select>
+        </div>
+      </div>
+      <div class="fgrp" style="margin-bottom:8px">
+        <label class="flabel">New Password <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:10px;color:var(--text-light)">(leave blank to keep current)</span></label>
+        <input type="password" class="finput" id="ue_pass_${safeId}" placeholder="Enter new password to change it">
+      </div>
+      <div class="room-edit-actions">
+        <button class="btn-cancel-sm" onclick="toggleUserEdit('${u.id}')">Cancel</button>
+        <button class="btn-save-sm" onclick="saveUserEdit('${u.id}')"><i class="bi bi-check-lg"></i> Save Changes</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function addUserAndInvite(){
+  const email = document.getElementById('newUserEmail').value.trim();
+  if(!email){
+    const errEl = document.getElementById('userErr');
+    errEl.textContent = 'Please enter an email address to send the invite.';
+    errEl.style.display = 'block'; return;
+  }
+  // Add the user first, then trigger invite using the new user's ID
+  const added = addUser(true); // returns user id
+  if(added) sendInviteEmail(added);
+}
+
+function sendInviteEmail(userId){
+  const users = getUsers();
+  const u = users.find(x=>x.id===userId);
+  if(!u || !u.email){
+    toast('No email address on file for this user.','error');
+    return;
+  }
+
+  const appUrl = window.location.origin + window.location.pathname;
+  const sender = currentUser()?.name || 'The Admin';
+
+  // Show sending indicator
+  toast('Sending invite…','info');
+
+  emailjs.send('service_a1iey22', 'template_ycvu12c', {
+    to_email:  u.email,
+    to_name:   u.name,
+    from_name: sender,
+    username:  u.username,
+    password:  u.password,
+    app_url:   appUrl,
+  })
+  .then(() => {
+    toast(`✅ Invite sent to ${u.email}!`, 'success');
+  })
+  .catch(err => {
+    console.error('EmailJS error:', err);
+    toast('Failed to send email. Check your EmailJS template settings.', 'error');
+  });
+}
+
+function addUser(returnId=false){
+  const name     = document.getElementById('newUserName').value.trim();
+  const username = document.getElementById('newUserUsername').value.trim().toLowerCase();
+  const email    = document.getElementById('newUserEmail').value.trim();
+  const password = document.getElementById('newUserPass').value;
+  const role     = document.getElementById('newUserRole').value;
+  const errEl    = document.getElementById('userErr');
+
+  if(!name || !username || !password){
+    errEl.textContent = 'Name, username, and password are all required.';
+    errEl.style.display = 'block'; return null;
+  }
+  const users = getUsers();
+  if(users.find(u=>u.username===username)){
+    errEl.textContent = `Username "${username}" is already taken.`;
+    errEl.style.display = 'block'; return null;
+  }
+
+  const colors = ['#1e3a6b','#2d5a3d','#7a3a6b','#3a5a7a','#6b4a1a','#3a7a5a','#5a3a8a','#8a2a2a'];
+  const color  = colors[users.length % colors.length];
+  const newId  = 'u_' + Date.now();
+
+  users.push({id:newId, name, username, email, password, role, color});
+  saveUsers(users);
+  renderUserList();
+  document.getElementById('newUserName').value     = '';
+  document.getElementById('newUserUsername').value = '';
+  document.getElementById('newUserEmail').value    = '';
+  document.getElementById('newUserPass').value     = '';
+  document.getElementById('newUserRole').value     = 'staff';
+  errEl.style.display = 'none';
+  if(!returnId) toast(`User "${name}" added!`, 'success');
+  return returnId ? newId : true;
+}
+
+function removeUser(userId){
+  const users = getUsers();
+  const u = users.find(x=>x.id===userId);
+  if(!u) return;
+  saveUsers(users.filter(x=>x.id!==userId));
+  renderUserList();
+  toast(`User "${u.name}" removed.`,'info');
+}
+
+function toggleUserEdit(userId){
+  const safeId = userId.replace(/[^a-zA-Z0-9_]/g,'_');
+  const form = document.getElementById(`uedit_${safeId}`);
+  if(!form) return;
+  // Close all other open edit forms first
+  document.querySelectorAll('.user-edit-form.open').forEach(f=>{
+    if(f.id !== `uedit_${safeId}`) f.classList.remove('open');
+  });
+  form.classList.toggle('open');
+}
+
+function saveUserEdit(userId){
+  const safeId  = userId.replace(/[^a-zA-Z0-9_]/g,'_');
+  const name    = document.getElementById(`ue_name_${safeId}`)?.value.trim();
+  const username= document.getElementById(`ue_user_${safeId}`)?.value.trim().toLowerCase();
+  const email   = document.getElementById(`ue_email_${safeId}`)?.value.trim();
+  const role    = document.getElementById(`ue_role_${safeId}`)?.value;
+  const newPass = document.getElementById(`ue_pass_${safeId}`)?.value;
+
+  if(!name || !username){ toast('Name and username cannot be empty.','error'); return; }
+
+  const users = getUsers();
+  // Check username not taken by another user
+  if(users.find(u=>u.username===username && u.id!==userId)){
+    toast(`Username "${username}" is already taken.`,'error'); return;
+  }
+
+  const idx = users.findIndex(u=>u.id===userId);
+  if(idx < 0) return;
+
+  users[idx] = {
+    ...users[idx],
+    name,
+    username,
+    email,
+    role,
+    ...(newPass ? {password: newPass} : {}),
+  };
+  saveUsers(users);
+
+  // If editing self, refresh session to reflect name/role changes
+  const session = currentUser();
+  if(session && session.id === userId){
+    const updated = users[idx];
+    setSession({id:updated.id, name:updated.name, username:updated.username, role:updated.role, color:updated.color},
+      !!localStorage.getItem('crc_session'));
+    applySession();
+  }
+
+  renderUserList();
+  toast(`User "${name}" updated!`,'success');
+}
+
+// ════════════════════════════════════════════════════════
+//  ROLE-AWARE MODAL HELPERS
+// ════════════════════════════════════════════════════════
+
+function applyRoleToModal(){
+  const admin = isAdmin();
+  // Status field: admin sees all options; staff see read-only label
+  const statusWrap = document.getElementById('statusFieldWrap');
+  if(statusWrap) statusWrap.style.display = admin ? '' : 'none';
+  // Delete button: only admins can delete
+  const delSec = document.getElementById('delSection');
+  if(delSec && delSec.style.display !== 'none'){
+    // already shown for edit — keep for admin only
+    if(!admin) delSec.style.display = 'none';
+  }
+}
+
+// ════════════════════════════════════════════════════════
+//  EXPORT TO CSV & NOTION
+// ════════════════════════════════════════════════════════
+
+function openExportModal(){
+  // Default: today → 1 year from now
+  const today  = new Date();
+  const inYear = new Date(today);
+  inYear.setFullYear(inYear.getFullYear() + 1);
+  const toDate = d => d.toISOString().split('T')[0];
+
+  document.getElementById('exportFrom').value = toDate(today);
+  document.getElementById('exportTo').value   = toDate(inYear);
+
+  // Populate room dropdown
+  const rooms = getRooms();
+  document.getElementById('exportRoom').innerHTML =
+    '<option value="">All Rooms</option>' +
+    rooms.map(r=>`<option value="${r.id}">${r.name}</option>`).join('');
+
+  updateExportPreview();
+
+  // Watch filter changes
+  ['exportFrom','exportTo','expConfirmed','expPending','expCancelled','exportRoom']
+    .forEach(id => document.getElementById(id)?.addEventListener('change', updateExportPreview));
+
+  new bootstrap.Modal(document.getElementById('exportModal')).show();
+}
+
+function getFilteredExportEvents(){
+  const from   = document.getElementById('exportFrom').value;
+  const to     = document.getElementById('exportTo').value;
+  const roomId = document.getElementById('exportRoom').value;
+  const wantConfirmed = document.getElementById('expConfirmed').checked;
+  const wantPending   = document.getElementById('expPending').checked;
+  const wantCancelled = document.getElementById('expCancelled').checked;
+
+  const fromDt = from ? new Date(from + 'T00:00:00') : null;
+  const toDt   = to   ? new Date(to   + 'T23:59:59') : null;
+  const rooms  = getRooms();
+  const roomMap = Object.fromEntries(rooms.map(r=>[r.id,r]));
+
+  return getEvents().filter(ev => {
+    const start = new Date(ev.start);
+    if(fromDt && start < fromDt) return false;
+    if(toDt   && start > toDt)   return false;
+    if(roomId){
+      const evRooms = ev.roomIds || (ev.roomId ? [ev.roomId] : []);
+      if(!evRooms.includes(roomId)) return false;
+    }
+    if(ev.status === 'confirmed' && !wantConfirmed) return false;
+    if(ev.status === 'pending'   && !wantPending)   return false;
+    if(ev.status === 'cancelled' && !wantCancelled) return false;
+    return true;
+  }).sort((a,b) => new Date(a.start) - new Date(b.start))
+    .map(ev => {
+      const evRooms = ev.roomIds || (ev.roomId ? [ev.roomId] : []);
+      const roomNames = evRooms.map(rid => roomMap[rid]?.name || rid).join(' + ');
+      return {...ev, _roomNames: roomNames};
+    });
+}
+
+function updateExportPreview(){
+  const events = getFilteredExportEvents();
+  const countEl = document.getElementById('exportCountText');
+  const pushBtn = document.getElementById('btnPushNotion');
+  if(events.length === 0){
+    countEl.textContent = 'No events match these filters.';
+    pushBtn.style.display = 'none';
+  } else {
+    countEl.textContent = `${events.length} event${events.length!==1?'s':''} will be exported.`;
+    pushBtn.style.display = 'inline-flex';
+  }
+}
+
+function buildCSV(events){
+  const headers = [
+    'title','room','start_date','start_time','end_date','end_time',
+    'status','organizer','email','phone','attendees',
+    'setup_requirements','description','booking_type','submitted_by'
+  ];
+
+  const esc = val => {
+    const s = String(val ?? '');
+    return s.includes(',') || s.includes('"') || s.includes('\n')
+      ? `"${s.replace(/"/g,'""')}"` : s;
+  };
+
+  const rows = events.map(ev => {
+    const start = new Date(ev.start);
+    const end   = new Date(ev.end);
+    const pad   = n => String(n).padStart(2,'0');
+    const dateStr = d => `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+    const timeStr = d => `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    return [
+      ev.title,
+      ev._roomNames,
+      dateStr(start), timeStr(start),
+      dateStr(end),   timeStr(end),
+      ev.status || 'confirmed',
+      ev.organizer || '',
+      ev.email || '',
+      ev.phone || '',
+      ev.attendees || 0,
+      Array.isArray(ev.setup) ? ev.setup.join('; ') : '',
+      ev.desc || '',
+      ev.recurGroupId ? 'Recurring' : 'Single',
+      ev.createdByName || '',
+    ].map(esc).join(',');
+  });
+
+  return [headers.join(','), ...rows].join('\r\n');
+}
+
+function doExport(){
+  const events = getFilteredExportEvents();
+  if(!events.length){ toast('No events to export.','info'); return; }
+
+  const csv  = buildCSV(events);
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  const from = document.getElementById('exportFrom').value || 'all';
+  const to   = document.getElementById('exportTo').value   || 'all';
+  a.href     = url;
+  a.download = `crc_events_${from}_to_${to}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast(`${events.length} events exported!`, 'success');
+}
+
+function pushExportToNotion(){
+  const events = getFilteredExportEvents();
+  if(!events.length){ toast('No events to push.','info'); return; }
+
+  const btn = document.getElementById('btnPushNotion');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="bi bi-arrow-repeat"></i> Pushing…';
+
+  let sent = 0;
+  const user = currentUser();
+
+  const sendNext = (idx) => {
+    if(idx >= events.length){
+      btn.disabled = false;
+      btn.innerHTML = '<i class="bi bi-check-lg"></i> Done!';
+      toast(`${sent} events pushed to Notion!`, 'success');
+      setTimeout(()=>{ btn.innerHTML='<i class="bi bi-arrow-up-right-square"></i> Push to Notion'; }, 3000);
+      return;
+    }
+    const ev = events[idx];
+    const start = new Date(ev.start);
+    const end   = new Date(ev.end);
+    const pad   = n => String(n).padStart(2,'0');
+    const timeStr = d => `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+
+    fetch(ZAPIER_WEBHOOK, {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        event_title:  ev.title,
+        room_names:   ev._roomNames,
+        start_iso:    ev.start,
+        end_iso:      ev.end,
+        event_date:   ev.start.split('T')[0],
+        start_time:   timeStr(start),
+        end_time:     timeStr(end),
+        status:       ev.status === 'confirmed' ? 'Confirmed' : ev.status === 'pending' ? 'Pending' : 'Cancelled',
+        organizer:    ev.organizer || '',
+        attendees:    ev.attendees || 0,
+        description:  ev.desc || '',
+        setup:        Array.isArray(ev.setup) ? ev.setup.join(', ') : '',
+        submitted_by: ev.createdByName || '',
+        booking_type: ev.recurGroupId ? 'Recurring' : 'Single',
+        app_url:      window.location.origin + window.location.pathname,
+      }),
+    })
+    .then(()=>{ sent++; btn.innerHTML = `<i class="bi bi-arrow-repeat"></i> ${sent}/${events.length}…`; })
+    .catch(err => console.error('Notion push error:', err))
+    .finally(()=> setTimeout(()=>sendNext(idx+1), 300)); // 300ms gap to avoid rate limits
+  };
+
+  sendNext(0);
+}
+
+function toast(msg, type='success'){
+  const wrap = document.getElementById('toastWrap');
+  const el = document.createElement('div');
+  el.className = `toast-item ${type}`;
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(()=>{ el.style.opacity='0'; el.style.transition='opacity .3s'; setTimeout(()=>el.remove(),350); }, 2800);
+}
 </script>
-</head>
-  <body class="bg-gray-50 text-slate-800 antialiased">
-    <div id="root"></div>
-   <script type="module" src="index.tsx"></script>
-  </body>
+</body>
 </html>
