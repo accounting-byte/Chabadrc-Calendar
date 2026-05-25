@@ -1906,7 +1906,7 @@ function syncToNotion(eventData, roomNames, action){
   fetch(ZAPIER_WEBHOOK, {
     method: 'POST',
     mode: 'no-cors',
-    headers: {'Content-Type': 'application/json'},
+    headers: {'Content-Type': 'text/plain'},
     body: JSON.stringify(payload),
   }).catch(err => console.error('Zapier sync error:', err));
 }
@@ -3895,7 +3895,7 @@ function pushExportToNotion(){
     fetch(ZAPIER_WEBHOOK, {
       method: 'POST',
       mode: 'no-cors',
-      headers: {'Content-Type':'application/json'},
+      headers: {'Content-Type':'text/plain'},
       body: JSON.stringify({
         event_title:  ev.title,
         room_names:   ev._roomNames,
