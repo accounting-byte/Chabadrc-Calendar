@@ -1881,26 +1881,33 @@ function syncToNotion(eventData, roomNames, action){
     roomNames = evRooms.map(rid => roomMap[rid]?.name || rid).join(', ');
   }
 
+  // Format datetime exactly as Notion Date property expects: YYYY-MM-DDTHH:MM:SS (no Z)
+  const pad = n => String(n).padStart(2,'0');
+  const notionDateTime = d =>
+    `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}:00`;
+
   const payload = {
-    action:       action,
-    event_id:     eventData.id || '',
-    event_title:  eventData.title,
-    room_names:   roomNames,
-    start_iso:    eventData.start,
-    end_iso:      eventData.end,
-    event_date:   startDt.toISOString().split('T')[0],
-    start_time:   startDt.toLocaleTimeString('en-IL', {hour:'2-digit', minute:'2-digit', hour12:false}),
-    end_time:     endDt.toLocaleTimeString('en-IL',   {hour:'2-digit', minute:'2-digit', hour12:false}),
-    status:       eventData.status === 'pending' ? 'Pending' : eventData.status === 'confirmed' ? 'Confirmed' : 'Cancelled',
-    organizer:    eventData.organizer || '',
-    email:        eventData.email || '',
-    phone:        eventData.phone || '',
-    attendees:    eventData.attendees || 0,
-    description:  eventData.desc || '',
-    submitted_by: user?.name || '',
-    setup:        Array.isArray(eventData.setup) && eventData.setup.length ? eventData.setup.join(', ') : '',
-    booking_type: eventData.recurGroupId ? 'Recurring' : 'Single',
-    app_url:      window.location.origin + window.location.pathname,
+    action:         action,
+    event_id:       eventData.id || '',
+    event_title:    eventData.title,
+    room_names:     roomNames,
+    start_iso:      eventData.start,
+    end_iso:        eventData.end,
+    start_notion:   notionDateTime(startDt),
+    end_notion:     notionDateTime(endDt),
+    event_date:     startDt.toISOString().split('T')[0],
+    start_time:     startDt.toLocaleTimeString('en-IL', {hour:'2-digit', minute:'2-digit', hour12:false}),
+    end_time:       endDt.toLocaleTimeString('en-IL',   {hour:'2-digit', minute:'2-digit', hour12:false}),
+    status:         eventData.status === 'pending' ? 'Pending' : eventData.status === 'confirmed' ? 'Confirmed' : 'Cancelled',
+    organizer:      eventData.organizer || '',
+    email:          eventData.email || '',
+    phone:          eventData.phone || '',
+    attendees:      eventData.attendees || 0,
+    description:    eventData.desc || '',
+    submitted_by:   user?.name || '',
+    setup:          Array.isArray(eventData.setup) && eventData.setup.length ? eventData.setup.join(', ') : '',
+    booking_type:   eventData.recurGroupId ? 'Recurring' : 'Single',
+    app_url:        window.location.origin + window.location.pathname,
   };
 
   fetch(ZAPIER_WEBHOOK, {
