@@ -1881,7 +1881,8 @@ function syncToNotion(eventData, roomNames, action){
     roomNames = evRooms.map(rid => roomMap[rid]?.name || rid).join(', ');
   }
 
-  // Format datetime exactly as Notion Date property expects: YYYY-MM-DDTHH:MM:SS (no Z)
+  // Send local time as-is with no timezone offset
+  // Notion + Zapier will display exactly what the calendar shows
   const pad = n => String(n).padStart(2,'0');
   const notionDateTime = d =>
     `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}:00`;
