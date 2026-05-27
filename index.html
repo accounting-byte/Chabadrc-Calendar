@@ -1881,8 +1881,12 @@ function syncToNotion(eventData, roomNames, action){
     roomNames = evRooms.map(rid => roomMap[rid]?.name || rid).join(', ');
   }
 
-  // Send local time as-is with no timezone offset
-  // Notion + Zapier will display exactly what the calendar shows
+  // Resolve event type name from typeId
+  const eventType = typeof EVENT_TYPES !== 'undefined'
+    ? (EVENT_TYPES.find(t => t.id === eventData.typeId)?.name || '')
+    : '';
+
+  // Format datetime in Israel local time with timezone offset for Notion
   const pad = n => String(n).padStart(2,'0');
   const notionDateTime = d =>
     `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}:00`;
@@ -1891,6 +1895,7 @@ function syncToNotion(eventData, roomNames, action){
     action:         action,
     event_id:       eventData.id || '',
     event_title:    eventData.title,
+    event_type:     eventType,
     room_names:     roomNames,
     start_iso:      eventData.start,
     end_iso:        eventData.end,
