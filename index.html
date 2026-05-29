@@ -1861,13 +1861,26 @@ function notifyAdmins(eventData, roomNames){
   });
 }
 
-// ── Notion Sync via Zapier Webhook ────────────────────────
-const ZAPIER_WEBHOOK = 'https://hooks.zapier.com/hooks/catch/27683749/4o02dto/';
+// ── Three Zapier Webhooks — one per action type ───────────
+const ZAPIER_WEBHOOK_CREATE = 'https://hooks.zapier.com/hooks/catch/27683749/4o02dto/';
+const ZAPIER_WEBHOOK_UPDATE = 'https://hooks.zapier.com/hooks/catch/27683749/4b64qtu/';
+const ZAPIER_WEBHOOK_DELETE = 'https://hooks.zapier.com/hooks/catch/27683749/4b66nsd/';
 
-// action: 'create' | 'update' | 'delete' | 'approve' | 'reject'
+// action: 'create' | 'update' | 'approve' | 'reject' | 'delete'
 function syncToNotion(eventData, roomNames, action){
-  if(!ZAPIER_WEBHOOK) return;
   action = action || 'create';
+
+  // Route to the correct webhook based on action
+  let webhookUrl;
+  if(action === 'create'){
+    webhookUrl = ZAPIER_WEBHOOK_CREATE;
+  } else if(action === 'delete'){
+    webhookUrl = ZAPIER_WEBHOOK_DELETE;
+  } else {
+    // update, approve, reject all go to the Update Zap
+    webhookUrl = ZAPIER_WEBHOOK_UPDATE;
+  }
+  if(!webhookUrl) return;
 
   const startDt = new Date(eventData.start);
   const endDt   = new Date(eventData.end);
@@ -1886,7 +1899,7 @@ function syncToNotion(eventData, roomNames, action){
     ? (EVENT_TYPES.find(t => t.id === eventData.typeId)?.name || '')
     : '';
 
-  // Format datetime in Israel local time with timezone offset for Notion
+  // Send local time — Notion displays exactly what the calendar shows
   const pad = n => String(n).padStart(2,'0');
   const notionDateTime = d =>
     `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}:00`;
@@ -1916,7 +1929,7 @@ function syncToNotion(eventData, roomNames, action){
     app_url:        window.location.origin + window.location.pathname,
   };
 
-  fetch(ZAPIER_WEBHOOK, {
+  fetch(webhookUrl, {
     method: 'POST',
     mode: 'no-cors',
     headers: {'Content-Type': 'text/plain'},
@@ -3905,7 +3918,7 @@ function pushExportToNotion(){
     const pad   = n => String(n).padStart(2,'0');
     const timeStr = d => `${pad(d.getHours())}:${pad(d.getMinutes())}`;
 
-    fetch(ZAPIER_WEBHOOK, {
+    fetch(ZAPIER_WEBHOOK_CREATE, {
       method: 'POST',
       mode: 'no-cors',
       headers: {'Content-Type':'text/plain'},
