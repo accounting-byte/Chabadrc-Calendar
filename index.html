@@ -2874,6 +2874,7 @@ function deleteFromPop(){
     cal.refetchEvents();
     closePop();
     toast('Booking deleted.','info');
+    syncToNotion(ev, null, 'delete');
   }
 }
 
