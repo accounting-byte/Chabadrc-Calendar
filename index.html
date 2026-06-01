@@ -1870,16 +1870,11 @@ const ZAPIER_WEBHOOK_DELETE = 'https://hooks.zapier.com/hooks/catch/27683749/4b6
 function syncToNotion(eventData, roomNames, action){
   action = action || 'create';
 
-  // Route to the correct webhook based on action
+  // Route to correct webhook based on action
   let webhookUrl;
-  if(action === 'create'){
-    webhookUrl = ZAPIER_WEBHOOK_CREATE;
-  } else if(action === 'delete'){
-    webhookUrl = ZAPIER_WEBHOOK_DELETE;
-  } else {
-    // update, approve, reject all go to the Update Zap
-    webhookUrl = ZAPIER_WEBHOOK_UPDATE;
-  }
+  if(action === 'create')       webhookUrl = ZAPIER_WEBHOOK_CREATE;
+  else if(action === 'delete')  webhookUrl = ZAPIER_WEBHOOK_DELETE;
+  else                          webhookUrl = ZAPIER_WEBHOOK_UPDATE;
   if(!webhookUrl) return;
 
   const startDt = new Date(eventData.start);
@@ -1899,15 +1894,22 @@ function syncToNotion(eventData, roomNames, action){
     ? (EVENT_TYPES.find(t => t.id === eventData.typeId)?.name || '')
     : '';
 
-  // Send local time — Notion displays exactly what the calendar shows
+  // Format datetime in Israel local time with timezone offset for Notion
   const pad = n => String(n).padStart(2,'0');
   const notionDateTime = d =>
     `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}:00`;
+
+  // Calculate lifecycle based on event date vs today
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  const eventEndDt = new Date(eventData.end || eventData.start);
+  const lifecycle = eventEndDt < now ? 'Finished' : 'Active';
 
   const payload = {
     action:         action,
     event_id:       eventData.id || '',
     event_title:    eventData.title,
+    lifecycle:      lifecycle,
     event_type:     eventType,
     room_names:     roomNames,
     start_iso:      eventData.start,
@@ -2874,7 +2876,6 @@ function deleteFromPop(){
     cal.refetchEvents();
     closePop();
     toast('Booking deleted.','info');
-    syncToNotion(ev, null, 'delete');
   }
 }
 
