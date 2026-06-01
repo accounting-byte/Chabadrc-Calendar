@@ -2733,6 +2733,9 @@ function confirmDeleteSeries(){
   saveEvents(remaining);
   cal.refetchEvents();
   bootstrap.Modal.getInstance(document.getElementById('delSeriesModal')).hide();
+  // Sync all deleted events to Notion
+  const deleted = events.filter(e => !remaining.find(r => r.id === e.id));
+  deleted.forEach(delEv => syncToNotion(delEv, null, 'delete'));
   _pendingDeleteId = null;
   const msgs = {this:'Occurrence deleted.',future:'This and future occurrences deleted.',all:'Entire series deleted.'};
   toast(msgs[opt]||'Deleted.','info');
@@ -2876,6 +2879,7 @@ function deleteFromPop(){
     cal.refetchEvents();
     closePop();
     toast('Booking deleted.','info');
+    syncToNotion(ev, null, 'delete');
   }
 }
 
