@@ -1919,7 +1919,7 @@ function syncToNotion(eventData, roomNames, action){
     event_date:     startDt.toISOString().split('T')[0],
     start_time:     startDt.toLocaleTimeString('en-IL', {hour:'2-digit', minute:'2-digit', hour12:false}),
     end_time:       endDt.toLocaleTimeString('en-IL',   {hour:'2-digit', minute:'2-digit', hour12:false}),
-    status:         eventData.status === 'pending' ? 'Pending' : eventData.status === 'confirmed' ? 'Confirmed' : 'Cancelled',
+    status:         action === 'delete' ? 'Cancelled' : eventData.status === 'pending' ? 'Pending' : eventData.status === 'confirmed' ? 'Confirmed' : 'Cancelled',
     organizer:      eventData.organizer || '',
     email:          eventData.email || '',
     phone:          eventData.phone || '',
