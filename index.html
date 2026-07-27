@@ -1942,7 +1942,8 @@ function syncToNotion(eventData, roomNames, action){
 }
 
 // ── Approval confirmation email (fires when an event is approved) ──
-// Posts to a dedicated Zap that emails the submitter + organizer.
+// Sends the event's raw fields to a dedicated Zap; the email layout lives in
+// Zapier. Empty fields are sent blank so the Zap shows them as empty.
 function notifyApproval(eventData, roomNames){
   if(!ZAPIER_WEBHOOK_APPROVE) return;
 
@@ -1966,19 +1967,28 @@ function notifyApproval(eventData, roomNames){
   const eventType = typeof EVENT_TYPES !== 'undefined'
     ? (EVENT_TYPES.find(t => t.id === eventData.typeId)?.name || '')
     : '';
+  const dateStr = startDt.toLocaleDateString('en-IL', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+  const timeStr = startDt.toLocaleTimeString('en-IL', {hour:'2-digit', minute:'2-digit', hour12:false})
+                + ' – '
+                + endDt.toLocaleTimeString('en-IL', {hour:'2-digit', minute:'2-digit', hour12:false});
+  const setupStr = Array.isArray(eventData.setup) ? eventData.setup.join(', ') : '';
+  const guests   = (eventData.attendees && Number(eventData.attendees) > 0) ? eventData.attendees : '';
 
   const payload = {
-    event_id:      eventData.id || '',
+    notify_emails: notifyList.join(','),
+    email_subject: ('Your event is approved — ' + (eventData.title || '')).trim(),
     event_title:   eventData.title || '',
     event_type:    eventType,
+    event_date:    dateStr,
+    event_time:    timeStr,
     room_names:    roomNames,
-    event_date:    startDt.toLocaleDateString('en-IL', {weekday:'long', year:'numeric', month:'long', day:'numeric'}),
-    start_time:    startDt.toLocaleTimeString('en-IL', {hour:'2-digit', minute:'2-digit', hour12:false}),
-    end_time:      endDt.toLocaleTimeString('en-IL',   {hour:'2-digit', minute:'2-digit', hour12:false}),
     organizer:     eventData.organizer || '',
-    attendees:     eventData.attendees || 0,
+    contact_email: eventData.email || '',
+    phone:         eventData.phone || '',
+    attendees:     guests,
+    setup:         setupStr,
     description:   eventData.desc || '',
-    notify_emails: notifyList.join(','),
+    submitted_by:  eventData.createdByName || '',
     app_url:       window.location.origin + window.location.pathname,
   };
 
