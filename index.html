@@ -1865,6 +1865,8 @@ function notifyAdmins(eventData, roomNames){
 const ZAPIER_WEBHOOK_CREATE = 'https://hooks.zapier.com/hooks/catch/27683749/4o02dto/';
 const ZAPIER_WEBHOOK_UPDATE = 'https://hooks.zapier.com/hooks/catch/27683749/4b64qtu/';
 const ZAPIER_WEBHOOK_DELETE = 'https://hooks.zapier.com/hooks/catch/27683749/4b66nsd/';
+// Dedicated webhook for the "your event is approved" confirmation email Zap
+const ZAPIER_WEBHOOK_APPROVE = 'https://hooks.zapier.com/hooks/catch/27683749/440h5ep/';
 
 // action: 'create' | 'update' | 'approve' | 'reject' | 'delete'
 function syncToNotion(eventData, roomNames, action){
@@ -1937,6 +1939,55 @@ function syncToNotion(eventData, roomNames, action){
     headers: {'Content-Type': 'text/plain'},
     body: JSON.stringify(payload),
   }).catch(err => console.error('Zapier sync error:', err));
+}
+
+// ── Approval confirmation email (fires when an event is approved) ──
+// Posts to a dedicated Zap that emails the submitter + organizer.
+function notifyApproval(eventData, roomNames){
+  if(!ZAPIER_WEBHOOK_APPROVE) return;
+
+  const rooms   = getRooms();
+  const roomMap = Object.fromEntries(rooms.map(r=>[r.id,r]));
+  if(!roomNames){
+    const evRooms = eventData.roomIds || (eventData.roomId ? [eventData.roomId] : []);
+    roomNames = evRooms.map(rid => roomMap[rid]?.name || rid).join(', ');
+  }
+
+  // Merge submitter + organizer emails: dedupe (case-insensitive), drop blanks
+  const notifyList = [];
+  [eventData.submitterEmail, eventData.email].forEach(e => {
+    const clean = (e || '').trim();
+    if(clean && !notifyList.some(x => x.toLowerCase() === clean.toLowerCase())) notifyList.push(clean);
+  });
+  if(!notifyList.length) return; // nobody to notify — skip silently
+
+  const startDt   = new Date(eventData.start);
+  const endDt     = new Date(eventData.end);
+  const eventType = typeof EVENT_TYPES !== 'undefined'
+    ? (EVENT_TYPES.find(t => t.id === eventData.typeId)?.name || '')
+    : '';
+
+  const payload = {
+    event_id:      eventData.id || '',
+    event_title:   eventData.title || '',
+    event_type:    eventType,
+    room_names:    roomNames,
+    event_date:    startDt.toLocaleDateString('en-IL', {weekday:'long', year:'numeric', month:'long', day:'numeric'}),
+    start_time:    startDt.toLocaleTimeString('en-IL', {hour:'2-digit', minute:'2-digit', hour12:false}),
+    end_time:      endDt.toLocaleTimeString('en-IL',   {hour:'2-digit', minute:'2-digit', hour12:false}),
+    organizer:     eventData.organizer || '',
+    attendees:     eventData.attendees || 0,
+    description:   eventData.desc || '',
+    notify_emails: notifyList.join(','),
+    app_url:       window.location.origin + window.location.pathname,
+  };
+
+  fetch(ZAPIER_WEBHOOK_APPROVE, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {'Content-Type': 'text/plain'},
+    body: JSON.stringify(payload),
+  }).catch(err => console.error('Approval email webhook error:', err));
 }
 
 function genId(){ return 'e_' + Date.now() + '_' + Math.random().toString(36).slice(2,7) }
@@ -2625,7 +2676,9 @@ function saveEvent(){
   const recurGroupId = isRecur ? 'grp_'+Date.now() : null;
   const user = currentUser();
   const createdByName = user ? user.name : '';
-  const newEv = {id:genId(), ...baseFields, start:startISO, end:endISO, recurGroupId, createdByName};
+  // Reliable recipient for approval emails: the submitter's account email
+  const submitterEmail = (getUsers().find(u => u.id === user?.id)?.email) || '';
+  const newEv = {id:genId(), ...baseFields, start:startISO, end:endISO, recurGroupId, createdByName, submitterEmail};
   const toAdd = [newEv];
 
   if(isRecur){
@@ -2655,7 +2708,7 @@ function saveEvent(){
         })
       );
       if(!hasConflict){
-        toAdd.push({id:genId(), ...baseFields, start:occ.start, end:occ.end, recurGroupId, createdByName});
+        toAdd.push({id:genId(), ...baseFields, start:occ.start, end:occ.end, recurGroupId, createdByName, submitterEmail});
       } else {
         conflictCount++;
       }
@@ -3491,6 +3544,7 @@ function approveOne(id){
   cal.refetchEvents();
   checkPendingBanner();
   syncToNotion(events[idx], null, 'approve');
+  notifyApproval(events[idx], null);
   // Remove row with animation
   const row = document.getElementById(`arow_${id}`);
   if(row){ row.style.opacity='0'; row.style.transition='opacity .2s'; setTimeout(()=>{ row.remove(); refreshApproveFooter(); },220); }
@@ -3514,11 +3568,13 @@ function rejectOne(id){
 function approveAll(){
   const events  = getEvents();
   let count = 0;
-  events.forEach(e=>{ if(e.status==='pending'){ e.status='confirmed'; count++; } });
+  const approved = [];
+  events.forEach(e=>{ if(e.status==='pending'){ e.status='confirmed'; count++; approved.push(e); } });
   saveEvents(events);
   cal.refetchEvents();
   checkPendingBanner();
   renderApproveList();
+  approved.forEach(ev => { syncToNotion(ev, null, 'approve'); notifyApproval(ev, null); });
   toast(`${count} event${count!==1?'s':''} approved!`,'success');
 }
 
