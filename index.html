@@ -1967,10 +1967,21 @@ function notifyApproval(eventData, roomNames){
   const eventType = typeof EVENT_TYPES !== 'undefined'
     ? (EVENT_TYPES.find(t => t.id === eventData.typeId)?.name || '')
     : '';
-  const dateStr = startDt.toLocaleDateString('en-IL', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
-  const timeStr = startDt.toLocaleTimeString('en-IL', {hour:'2-digit', minute:'2-digit', hour12:false})
-                + ' – '
-                + endDt.toLocaleTimeString('en-IL', {hour:'2-digit', minute:'2-digit', hour12:false});
+  // Date/Time adapt to single-day vs multi-day bookings
+  const sameDay    = startDt.toDateString() === endDt.toDateString();
+  const tOpts      = {hour:'2-digit', minute:'2-digit', hour12:false};
+  const startClock = startDt.toLocaleTimeString('en-IL', tOpts);
+  const endClock   = endDt.toLocaleTimeString('en-IL', tOpts);
+  let dateStr, timeStr;
+  if(sameDay){
+    dateStr = startDt.toLocaleDateString('en-IL', {weekday:'long', year:'numeric', month:'long', day:'numeric'});
+    timeStr = startClock + ' – ' + endClock;
+  } else {
+    dateStr = startDt.toLocaleDateString('en-IL', {weekday:'short', month:'short', day:'numeric'})
+            + ' – '
+            + endDt.toLocaleDateString('en-IL', {weekday:'short', year:'numeric', month:'short', day:'numeric'});
+    timeStr = startClock + ' (first day) – ' + endClock + ' (last day)';
+  }
   const setupStr = Array.isArray(eventData.setup) ? eventData.setup.join(', ') : '';
   const guests   = (eventData.attendees && Number(eventData.attendees) > 0) ? eventData.attendees : '';
 
@@ -2905,7 +2916,9 @@ function showPop(event, el){
   badge.textContent = p.status.charAt(0).toUpperCase()+p.status.slice(1);
   badge.style.background = colors[p.status]||'#555';
   const recurNote = p.isRecurring ? ' &nbsp;<span style="font-size:10px;background:var(--gold);color:var(--navy);padding:1px 6px;border-radius:10px;font-weight:600">↻ Recurring</span>' : '';
-  document.getElementById('popTime').innerHTML = `<i class="bi bi-clock"></i>${fmt(event.start)} — ${fmtTime(event.end)}${recurNote}`;
+  const multiDay = new Date(event.start).toDateString() !== new Date(event.end).toDateString();
+  const endStr   = multiDay ? fmt(event.end) : fmtTime(event.end);
+  document.getElementById('popTime').innerHTML = `<i class="bi bi-clock"></i>${fmt(event.start)} — ${endStr}${recurNote}`;
 
   // Position
   const pop = document.getElementById('evPopover');
