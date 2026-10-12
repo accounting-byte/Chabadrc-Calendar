@@ -558,6 +558,39 @@ body{
 .del-opt-label{font-size:13px;font-weight:500}
 .del-opt-sub{font-size:11.5px;color:var(--text-light);margin-top:1px}
 
+/* ── VISIBILITY (booking form) ───────────────────── */
+.vis-toggle{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:3px}
+.vis-opt{cursor:pointer;margin:0}
+.vis-opt input{position:absolute;opacity:0;pointer-events:none}
+.vis-card{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:var(--white);transition:border-color var(--t),background var(--t);height:100%}
+.vis-card>i{font-size:18px;color:var(--text-light);transition:color var(--t)}
+.vis-card strong{display:block;font-size:13px;font-weight:600;color:var(--text-dark)}
+.vis-card small{display:block;font-size:11px;color:var(--text-mid);line-height:1.3}
+.vis-opt:hover .vis-card{border-color:var(--border-mid)}
+.vis-opt input:focus-visible+.vis-card{outline:2px solid var(--gold);outline-offset:1px}
+.vis-opt input[value="public"]:checked+.vis-card{border-color:var(--success);background:#f0f7f2}
+.vis-opt input[value="public"]:checked+.vis-card>i{color:var(--success)}
+.vis-opt input[value="internal"]:checked+.vis-card{border-color:var(--navy);background:#eef0f8}
+.vis-opt input[value="internal"]:checked+.vis-card>i{color:var(--navy)}
+.vis-toggle.invalid .vis-card{border-color:var(--danger)}
+.vis-series{display:flex;align-items:center;gap:7px;margin-top:8px;font-size:12px;color:var(--text-mid);cursor:pointer}
+.vis-series input{accent-color:var(--navy)}
+@media (max-width:480px){.vis-toggle{grid-template-columns:1fr}}
+.vis-pill{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;letter-spacing:.03em;text-transform:uppercase}
+.vis-pill.public{background:#e3f1e7;color:var(--success)}
+.vis-pill.internal{background:#e4e7f3;color:var(--navy)}
+.vis-pill.unset{background:#fbecd9;color:var(--warn)}
+.ev-lock{font-size:9px;opacity:.85;margin-right:3px}
+
+.exp-vis{display:flex;border:1px solid var(--border-mid);border-radius:var(--r-sm);overflow:hidden;margin-top:3px}
+.exp-vis label{flex:1;margin:0;cursor:pointer}
+.exp-vis input{position:absolute;opacity:0;pointer-events:none}
+.exp-vis span{display:flex;align-items:center;justify-content:center;gap:5px;padding:7px 6px;font-size:12.5px;font-weight:500;color:var(--text-mid);background:var(--white);border-right:1px solid var(--border);transition:background var(--t),color var(--t)}
+.exp-vis label:last-child span{border-right:none}
+.exp-vis input:checked+span{background:var(--navy);color:#fff}
+.exp-vis input:focus-visible+span{outline:2px solid var(--gold);outline-offset:-2px}
+.exp-vis-note{margin-top:6px;font-size:11.5px;color:var(--warn)}
+
 /* ── LIVE FEED (export modal) ────────────────────── */
 .live-feed{margin-top:16px;padding:13px 14px;border:1px solid var(--gold);border-radius:var(--r-sm);background:var(--gold-pale)}
 .live-feed-head{display:flex;align-items:center;gap:8px;margin-bottom:4px}
@@ -1062,7 +1095,7 @@ body{
     <div class="pop-row" id="popAtt" style="display:none"></div>
     <div class="pop-row" id="popDesc" style="display:none"></div>
     <div class="pop-row" id="popSetup" style="display:none"></div>
-    <div style="margin-top:8px"><span class="pop-badge" id="popBadge"></span></div>
+    <div style="margin-top:8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap"><span class="pop-badge" id="popBadge"></span><span id="popVis"></span></div>
   </div>
   <div class="pop-foot">
     <button class="pop-edit-btn" onclick="editFromPop()"><i class="bi bi-pencil"></i> Edit</button>
@@ -1094,6 +1127,25 @@ body{
             <select class="fselect" id="fType"></select>
             <div class="ferr" id="errType"></div>
           </div>
+        </div>
+
+        <!-- ── VISIBILITY (required) ─────────────── -->
+        <div class="fgrp" style="margin-top:13px">
+          <label class="flabel"><i class="bi bi-eye"></i> Visibility <span class="req">*</span></label>
+          <div class="vis-toggle" id="visToggle">
+            <label class="vis-opt">
+              <input type="radio" name="fVisibility" value="public" onchange="onVisibilityChange()">
+              <span class="vis-card"><i class="bi bi-globe2"></i><span><strong>Public</strong><small>Community event — shown in the ChabadRC app</small></span></span>
+            </label>
+            <label class="vis-opt">
+              <input type="radio" name="fVisibility" value="internal" onchange="onVisibilityChange()">
+              <span class="vis-card"><i class="bi bi-lock"></i><span><strong>Internal</strong><small>Room reservation — staff &amp; management only</small></span></span>
+            </label>
+          </div>
+          <label class="vis-series" id="visSeriesWrap" style="display:none">
+            <input type="checkbox" id="fVisSeries"> <span id="visSeriesTxt">Apply visibility to all events in this recurring series</span>
+          </label>
+          <div class="ferr" id="errVisibility"></div>
         </div>
 
         <div class="fgrp">
@@ -1441,6 +1493,7 @@ body{
             <div class="col-row"><span class="col-name">room <span class="col-req">required</span></span><span class="col-desc">Exact room name, e.g. <em>Sanctuary</em> or <em>Glass Room</em></span></div>
             <div class="col-row"><span class="col-name">start <span class="col-req">required</span></span><span class="col-desc">Date &amp; time: <em>2025-03-15 09:00</em> or <em>2025-03-15T09:00</em></span></div>
             <div class="col-row"><span class="col-name">end <span class="col-req">required</span></span><span class="col-desc">Date &amp; time: <em>2025-03-15 11:00</em></span></div>
+            <div class="col-row"><span class="col-name">visibility <span class="col-req">required</span></span><span class="col-desc"><em>public</em> (shown in the app) or <em>internal</em> (staff only)</span></div>
             <div class="col-row"><span class="col-name">status</span><span class="col-desc"><em>confirmed</em> (default), <em>pending</em>, or <em>cancelled</em></span></div>
             <div class="col-row"><span class="col-name">type</span><span class="col-desc">Event type name, e.g. <em>Prayer / Service</em>, <em>Torah Study</em></span></div>
             <div class="col-row"><span class="col-name">organizer</span><span class="col-desc">Organizer's full name</span></div>
@@ -1619,6 +1672,17 @@ body{
               <input type="checkbox" id="expCancelled" style="accent-color:var(--navy)"> Cancelled
             </label>
           </div>
+        </div>
+
+        <!-- Visibility filter -->
+        <div class="fgrp" style="margin-bottom:14px">
+          <label class="flabel"><i class="bi bi-eye"></i> Visibility</label>
+          <div class="exp-vis" role="radiogroup">
+            <label><input type="radio" name="expVis" value="public"><span><i class="bi bi-globe2"></i> Public only</span></label>
+            <label><input type="radio" name="expVis" value="internal"><span><i class="bi bi-lock"></i> Internal only</span></label>
+            <label><input type="radio" name="expVis" value="both" checked><span>Both</span></label>
+          </div>
+          <div class="exp-vis-note" id="expVisNote" style="display:none"></div>
         </div>
 
         <!-- Room filter -->
@@ -1960,6 +2024,7 @@ function syncToNotion(eventData, roomNames, action){
     start_time:     startDt.toLocaleTimeString('en-IL', {hour:'2-digit', minute:'2-digit', hour12:false}),
     end_time:       endDt.toLocaleTimeString('en-IL',   {hour:'2-digit', minute:'2-digit', hour12:false}),
     status:         action === 'delete' ? 'Cancelled' : eventData.status === 'pending' ? 'Pending' : eventData.status === 'confirmed' ? 'Confirmed' : 'Cancelled',
+    visibility:     VISIBILITY_LABELS[eventData.visibility] || '',
     organizer:      eventData.organizer || '',
     email:          eventData.email || '',
     phone:          eventData.phone || '',
@@ -2215,6 +2280,7 @@ function initCalendar(){
             status: e.status || 'confirmed',
             isRecurring: !!e.recurGroupId,
             setup: e.setup || [],
+            visibility: e.visibility || '',
           }
         };
       });
@@ -2241,20 +2307,21 @@ function initCalendar(){
       const p = ev.extendedProps;
       const view = cal.view.type;
       const isPending = p.status === 'pending';
+      const lock = p.visibility === 'internal' ? '<i class="bi bi-lock-fill ev-lock" title="Internal"></i>' : '';
 
       if(view === 'dayGridMonth'){
         return {html: `<div class="ev-month" style="background:${ev.backgroundColor}">
           <span class="ev-dot-sm"></span>
-          <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${ev.title}</span>
+          <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${lock}${ev.title}</span>
         </div>`};
       }
       if(view === 'listWeek'){
-        return {html:`<span style="font-weight:500">${ev.title}</span>
+        return {html:`<span style="font-weight:500">${lock}${ev.title}</span>
           <span style="margin-left:8px;font-size:11px;color:#8a90b0;background:#f0e8d8;padding:1px 6px;border-radius:10px">${p.roomName}</span>`};
       }
       return {html:`<div class="ev-inner${isPending?' pending':''}">
         <div class="ev-time">${arg.timeText}</div>
-        <div class="ev-title">${ev.title}</div>
+        <div class="ev-title">${lock}${ev.title}</div>
         <div class="ev-room">${p.roomName}</div>
         ${p.organizer ? `<div class="ev-org"><i class="bi bi-person-fill"></i>${p.organizer}</div>` : ''}
         ${p.isRecurring ? `<span class="ev-recur-dot" title="Recurring">↻</span>` : ''}
@@ -2475,6 +2542,16 @@ function openEditModal(eventId){
   document.getElementById('fAttendees').value = ev.attendees || 0;
   document.getElementById('fStatus').value    = ev.status || 'confirmed';
   document.getElementById('fDesc').value      = ev.desc || '';
+  setVisibility(ev.visibility || '');
+  // Recurring series: offer to apply the visibility to every occurrence
+  if(ev.recurGroupId){
+    const n = events.filter(e=>e.recurGroupId===ev.recurGroupId).length;
+    if(n > 1){
+      document.getElementById('visSeriesTxt').textContent = `Apply visibility to all ${n} events in this recurring series`;
+      document.getElementById('fVisSeries').checked = !ev.visibility; // untagged series → default to tagging all
+      document.getElementById('visSeriesWrap').style.display = 'flex';
+    }
+  }
 
   buildOrgSelect(ev.organizer || '');
 
@@ -2494,6 +2571,25 @@ function openEditModal(eventId){
   applyRoleToModal();
 }
 
+// ── Visibility helpers (Public / Internal — required) ──
+const VISIBILITY_LABELS = {public:'Public', internal:'Internal'};
+function getVisibility(){
+  return document.querySelector('input[name="fVisibility"]:checked')?.value || '';
+}
+function setVisibility(v){
+  document.querySelectorAll('input[name="fVisibility"]').forEach(r => r.checked = (r.value === v));
+  document.getElementById('visToggle').classList.remove('invalid');
+}
+function onVisibilityChange(){
+  document.getElementById('visToggle').classList.remove('invalid');
+  document.getElementById('errVisibility').textContent = '';
+}
+function visPill(v){
+  if(v === 'public')   return '<span class="vis-pill public"><i class="bi bi-globe2"></i> Public</span>';
+  if(v === 'internal') return '<span class="vis-pill internal"><i class="bi bi-lock-fill"></i> Internal</span>';
+  return '<span class="vis-pill unset"><i class="bi bi-question-circle"></i> Visibility not set</span>';
+}
+
 function resetForm(){
   ['fId','fTitle','fStart','fEnd','fOrgName','fOrgEmail','fOrgPhone','fDesc'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('fType').value = '';
@@ -2501,7 +2597,10 @@ function resetForm(){
   document.getElementById('fAttendees').value = 0;
   document.getElementById('formErr').style.display = 'none';
   document.getElementById('availBox').style.display = 'none';
-  ['errTitle','errType','errRoom','errStart','errEnd'].forEach(id=>document.getElementById(id).textContent='');
+  ['errTitle','errType','errRoom','errStart','errEnd','errVisibility'].forEach(id=>document.getElementById(id).textContent='');
+  setVisibility('');
+  document.getElementById('fVisSeries').checked = false;
+  document.getElementById('visSeriesWrap').style.display = 'none';
   // Reset organizer dropdown
   const orgSel = document.getElementById('fOrgNameSelect');
   if(orgSel) orgSel.value = '';
@@ -2672,12 +2771,18 @@ function saveEvent(){
   const desc     = document.getElementById('fDesc').value.trim();
   const isRecur  = document.getElementById('fRecurOn').checked && !id;
   const setup    = [...document.querySelectorAll('.setup-item input:checked')].map(el=>el.value);
+  const visibility = getVisibility();
 
   let valid = true;
   if(!title){ document.getElementById('errTitle').textContent='Title is required.'; valid=false; }
   else document.getElementById('errTitle').textContent='';
   if(!typeId){ document.getElementById('errType').textContent='Please select an event type.'; valid=false; }
   else document.getElementById('errType').textContent='';
+  if(!visibility){
+    document.getElementById('errVisibility').textContent='Choose whether this is a Public event or an Internal reservation.';
+    document.getElementById('visToggle').classList.add('invalid');
+    valid=false;
+  } else onVisibilityChange();
   if(!roomSels.length){ document.getElementById('errRoom').textContent='Please select at least one room.'; valid=false; }
   else document.getElementById('errRoom').textContent='';
   if(!start){ document.getElementById('errStart').textContent='Start time required.'; valid=false; }
@@ -2715,19 +2820,33 @@ function saveEvent(){
     }
   }
 
-  const baseFields = {title, roomIds, roomId:roomIds[0], typeId, status, organizer, email, phone, attendees, desc, setup};
+  const baseFields = {title, roomIds, roomId:roomIds[0], typeId, status, organizer, email, phone, attendees, desc, setup, visibility};
 
   if(id){
     // Update single event
     const idx = events.findIndex(e=>e.id===id);
     if(idx>=0) events[idx] = {...events[idx], ...baseFields, start:startISO, end:endISO};
+    // Optionally apply visibility to the rest of the recurring series
+    const seriesChanged = [];
+    const grp = events[idx]?.recurGroupId;
+    if(grp && document.getElementById('fVisSeries').checked){
+      events.forEach((e,i) => {
+        if(i !== idx && e.recurGroupId === grp && e.visibility !== visibility){
+          events[i] = {...e, visibility};
+          seriesChanged.push(events[i]);
+        }
+      });
+    }
     saveEvents(events);
     cal.refetchEvents();
     bootstrap.Modal.getInstance(document.getElementById('evModal')).hide();
     checkPendingBanner();
-    toast('Booking updated!','success');
+    toast(seriesChanged.length
+      ? `Booking updated — ${VISIBILITY_LABELS[visibility]} applied to ${seriesChanged.length + 1} events in the series.`
+      : 'Booking updated!', 'success');
     const allRoomNamesUpd = roomIds.map(rid => getRooms().find(r=>r.id===rid)?.name || rid).join(', ');
     syncToNotion(events[idx], allRoomNamesUpd, 'update');
+    seriesChanged.forEach(e => syncToNotion(e, null, 'update'));
     return;
   }
 
@@ -2953,6 +3072,7 @@ function showPop(event, el){
   const badge = document.getElementById('popBadge');
   badge.textContent = p.status.charAt(0).toUpperCase()+p.status.slice(1);
   badge.style.background = colors[p.status]||'#555';
+  document.getElementById('popVis').innerHTML = visPill(p.visibility);
   const recurNote = p.isRecurring ? ' &nbsp;<span style="font-size:10px;background:var(--gold);color:var(--navy);padding:1px 6px;border-radius:10px;font-weight:600">↻ Recurring</span>' : '';
   const multiDay = new Date(event.start).toDateString() !== new Date(event.end).toDateString();
   const endStr   = multiDay ? fmt(event.end) : fmtTime(event.end);
@@ -3198,10 +3318,10 @@ function downloadTemplate(){
   const d = tomorrow.toISOString().slice(0,10);
 
   const rows = [
-    ['title','room','start','end','status','type','organizer','email','phone','attendees','description'],
-    [`Morning Prayers`,roomExample,`${d} 08:00`,`${d} 09:00`,'confirmed','Prayer / Service','Rabbi Cohen','rabbi@example.com','+1-555-0100','40','Daily morning service'],
-    [`Board Meeting`,room2,`${d} 15:00`,`${d} 17:00`,'confirmed','Board / Meeting','Sarah Levy','sarah@example.com','+1-555-0101','12','Monthly board session'],
-    [`Torah Study`,roomExample,`${d} 20:00`,`${d} 21:30`,'pending','Torah Study','','','','20',''],
+    ['title','room','start','end','visibility','status','type','organizer','email','phone','attendees','description'],
+    [`Morning Prayers`,roomExample,`${d} 08:00`,`${d} 09:00`,'public','confirmed','Shul & Kiddush','Rabbi Cohen','rabbi@example.com','+1-555-0100','40','Daily morning service'],
+    [`Board Meeting`,room2,`${d} 15:00`,`${d} 17:00`,'internal','confirmed','Community Event','Sarah Levy','sarah@example.com','+1-555-0101','12','Monthly board session'],
+    [`Torah Study`,roomExample,`${d} 20:00`,`${d} 21:30`,'public','pending','Classes and Lectures','','','','20',''],
   ];
 
   const csv = rows.map(r => r.map(cell => {
@@ -3282,6 +3402,7 @@ function parseCSV(text){
       phone:['phone','phonenumber','tel','telephone','mobile'],
       attendees:['attendees','guests','capacity','headcount','count','number','expected'],
       description:['description','desc','notes','details','info'],
+      visibility:['visibility','audience','publicinternal','access'],
     };
     const opts = synonyms[h] || [h];
     for(const o of opts){
@@ -3295,10 +3416,11 @@ function parseCSV(text){
     title: col('title'), room: col('room'), start: col('start'), end: col('end'),
     status: col('status'), type: col('type'), organizer: col('organizer'),
     email: col('email'), phone: col('phone'), attendees: col('attendees'), description: col('description'),
+    visibility: col('visibility'),
   };
 
-  if(COLS.title===-1 || COLS.room===-1 || COLS.start===-1 || COLS.end===-1){
-    toast('Missing required columns: title, room, start, end','error'); return;
+  if(COLS.title===-1 || COLS.room===-1 || COLS.start===-1 || COLS.end===-1 || COLS.visibility===-1){
+    toast('Missing required columns: title, room, start, end, visibility','error'); return;
   }
 
   const rooms = getRooms();
@@ -3321,6 +3443,7 @@ function parseCSV(text){
       phone:       get(COLS.phone),
       attendees:   get(COLS.attendees),
       description: get(COLS.description),
+      visibility:  get(COLS.visibility),
     };
 
     const errors = [], warnings = [];
@@ -3364,6 +3487,12 @@ function parseCSV(text){
       || EVENT_TYPES.find(t=>t.name.toLowerCase().includes(raw.type.toLowerCase())&&raw.type.length>2);
     if(raw.type && !matchedType) warnings.push(`Type "${raw.type}" not matched`);
 
+    // Visibility (required): public / internal
+    const visRaw = raw.visibility.toLowerCase();
+    const visibility = visRaw.startsWith('pub') ? 'public' : visRaw.startsWith('int') ? 'internal' : '';
+    if(!raw.visibility) errors.push('Missing visibility (public or internal)');
+    else if(!visibility) errors.push(`Visibility "${raw.visibility}" must be public or internal`);
+
     // Conflict check
     let conflict = null;
     if(errors.length===0 && matchedRoom && startDt && endDt){
@@ -3395,6 +3524,7 @@ function parseCSV(text){
         phone:       raw.phone,
         attendees:   parseInt(raw.attendees)||0,
         desc:        raw.description,
+        visibility,
       }
     });
   }
@@ -3493,6 +3623,7 @@ function runImport(){
       phone:      res.phone,
       attendees:  res.attendees,
       desc:       res.desc,
+      visibility: res.visibility,
     });
     imported++;
 
@@ -3909,6 +4040,7 @@ function openExportModal(){
   // Watch filter changes
   ['exportFrom','exportTo','expConfirmed','expPending','expCancelled','exportRoom']
     .forEach(id => document.getElementById(id)?.addEventListener('change', updateExportPreview));
+  document.querySelectorAll('input[name="expVis"]').forEach(r => r.onchange = updateExportPreview);
 
   new bootstrap.Modal(document.getElementById('exportModal')).show();
 }
@@ -3957,13 +4089,18 @@ function copyFeedUrl(inputId){
     .catch(() => { const el = document.getElementById(inputId); el.select(); document.execCommand('copy'); toast('Link copied!', 'success'); });
 }
 
-function getFilteredExportEvents(){
+function getExportVisibility(){
+  return document.querySelector('input[name="expVis"]:checked')?.value || 'both';
+}
+
+function getFilteredExportEvents(visOverride){
   const from   = document.getElementById('exportFrom').value;
   const to     = document.getElementById('exportTo').value;
   const roomId = document.getElementById('exportRoom').value;
   const wantConfirmed = document.getElementById('expConfirmed').checked;
   const wantPending   = document.getElementById('expPending').checked;
   const wantCancelled = document.getElementById('expCancelled').checked;
+  const visMode = visOverride || getExportVisibility();
 
   const fromDt = from ? new Date(from + 'T00:00:00') : null;
   const toDt   = to   ? new Date(to   + 'T23:59:59') : null;
@@ -3981,6 +4118,8 @@ function getFilteredExportEvents(){
     if(ev.status === 'confirmed' && !wantConfirmed) return false;
     if(ev.status === 'pending'   && !wantPending)   return false;
     if(ev.status === 'cancelled' && !wantCancelled) return false;
+    // Untagged (older) events only appear under "Both"
+    if(visMode !== 'both' && ev.visibility !== visMode) return false;
     return true;
   }).sort((a,b) => new Date(a.start) - new Date(b.start))
     .map(ev => {
@@ -3994,6 +4133,15 @@ function updateExportPreview(){
   const events = getFilteredExportEvents();
   const countEl = document.getElementById('exportCountText');
   const pushBtn = document.getElementById('btnPushNotion');
+
+  // Warn about older events that predate the visibility field
+  const untagged = getFilteredExportEvents('both').filter(e => !e.visibility).length;
+  const noteEl = document.getElementById('expVisNote');
+  if(untagged){
+    noteEl.innerHTML = `<i class="bi bi-exclamation-triangle"></i> ${untagged} event${untagged!==1?'s':''} in this range ${untagged!==1?'have':'has'} no visibility set yet — included only under “Both”. Edit ${untagged!==1?'them':'it'} to tag as Public or Internal.`;
+    noteEl.style.display = 'block';
+  } else noteEl.style.display = 'none';
+
   if(events.length === 0){
     countEl.textContent = 'No events match these filters.';
     pushBtn.style.display = 'none';
@@ -4006,7 +4154,7 @@ function updateExportPreview(){
 function buildCSV(events){
   const headers = [
     'title','room','start_date','start_time','end_date','end_time',
-    'status','organizer','email','phone','attendees',
+    'status','visibility','organizer','email','phone','attendees',
     'setup_requirements','description','booking_type','submitted_by'
   ];
 
@@ -4028,6 +4176,7 @@ function buildCSV(events){
       dateStr(start), timeStr(start),
       dateStr(end),   timeStr(end),
       ev.status || 'confirmed',
+      ev.visibility || '',
       ev.organizer || '',
       ev.email || '',
       ev.phone || '',
@@ -4052,8 +4201,9 @@ function doExport(){
   const a    = document.createElement('a');
   const from = document.getElementById('exportFrom').value || 'all';
   const to   = document.getElementById('exportTo').value   || 'all';
+  const vis  = getExportVisibility();
   a.href     = url;
-  a.download = `crc_events_${from}_to_${to}.csv`;
+  a.download = `crc_${vis === 'both' ? 'events' : vis + '_events'}_${from}_to_${to}.csv`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -4099,6 +4249,7 @@ function pushExportToNotion(){
         start_time:   timeStr(start),
         end_time:     timeStr(end),
         status:       ev.status === 'confirmed' ? 'Confirmed' : ev.status === 'pending' ? 'Pending' : 'Cancelled',
+        visibility:   VISIBILITY_LABELS[ev.visibility] || '',
         organizer:    ev.organizer || '',
         attendees:    ev.attendees || 0,
         description:  ev.desc || '',

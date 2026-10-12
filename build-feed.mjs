@@ -11,10 +11,10 @@
 //  Files are only rewritten when the published content actually changes.
 //
 //  Usage:
-//    node scripts/build-feed.mjs                      # fetch from Firebase
-//    node scripts/build-feed.mjs --input dump.json    # build from a local dump {rooms, events}
-//    node scripts/build-feed.mjs --get-refresh-token  # one-time: print a token for the
-//                                                     # FIREBASE_REFRESH_TOKEN repo secret
+//    node build-feed.mjs                      # fetch from Firebase
+//    node build-feed.mjs --input dump.json    # build from a local dump {rooms, events}
+//    node build-feed.mjs --get-refresh-token  # one-time: print a token for the
+//                                             # FIREBASE_REFRESH_TOKEN repo secret
 //
 //  Zero dependencies — needs Node 18+.
 // ════════════════════════════════════════════════════════════════
@@ -36,6 +36,11 @@ const CFG = {
   // Only these statuses are published (comma list). Pending requests and
   // cancelled bookings stay internal.
   statuses:    list(process.env.FEED_STATUSES, ['confirmed']),
+  // Only events marked Public are published. The repo (and so this feed) is
+  // public, so Internal reservations must never be added here.
+  // Set FEED_INCLUDE_UNSET=true to also publish older events that have no
+  // visibility yet (transition period only).
+  includeUnset: process.env.FEED_INCLUDE_UNSET === 'true',
   // Event type ids to keep out of the public feed (t15 = Maintenance)
   excludeTypes: list(process.env.FEED_EXCLUDE_TYPES, ['t15']),
   // Room ids to keep out of the public feed (e.g. "r3" for the Mikvah)
@@ -96,7 +101,7 @@ async function getIdToken() {
     return d.id_token;
   }
   console.warn('::warning::FIREBASE_REFRESH_TOKEN not set — signing in anonymously (creates a new auth user each run). ' +
-               'Run `node scripts/build-feed.mjs --get-refresh-token` once and save it as a repo secret.');
+               'Run `node build-feed.mjs --get-refresh-token` once and save it as a repo secret.');
   return (await signInAnonymously()).idToken;
 }
 
@@ -128,6 +133,7 @@ function buildItems({ rooms, events }, now = new Date()) {
   return events
     .filter(e => e && e.id && e.title && e.start && e.end)
     .filter(e => CFG.statuses.includes(e.status || 'confirmed'))
+    .filter(e => e.visibility === 'public' || (CFG.includeUnset && !e.visibility))
     .filter(e => !CFG.excludeTypes.includes(e.typeId))
     .map(e => ({ e, start: new Date(e.start), end: new Date(e.end),
                  roomIds: e.roomIds || (e.roomId ? [e.roomId] : []) }))
@@ -145,6 +151,7 @@ function buildItems({ rooms, events }, now = new Date()) {
         start: start.toISOString(),
         end: end.toISOString(),
         status: e.status || 'confirmed',
+        visibility: 'public',
         type: type ? { id: e.typeId, name: type.name, color: type.color } : null,
         rooms: roomIds.map(id => ({ id, name: roomMap[id]?.name || id, floor: roomMap[id]?.floor || '' })),
         organizer: e.organizer || '',
