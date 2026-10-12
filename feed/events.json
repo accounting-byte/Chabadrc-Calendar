@@ -1,0 +1,2688 @@
+{
+  "schema": 1,
+  "calendar": "Chabad Russian Center",
+  "timezone": "America/New_York",
+  "version": "d8c5cfb1904eee84",
+  "updatedAt": "2026-10-12T20:56:37.404Z",
+  "count": 100,
+  "rooms": [
+    {
+      "id": "r_1774223782080",
+      "name": "Kitchen",
+      "floor": "4th Floor",
+      "color": "#3b6abf"
+    },
+    {
+      "id": "r_1774227700560",
+      "name": "2nd Fl Kitchen",
+      "floor": "2nd Floor",
+      "color": "#3b6abf"
+    },
+    {
+      "id": "r_1783619264573",
+      "name": "Gravel Parking",
+      "floor": "Ground Floor",
+      "color": "#b03bbf"
+    },
+    {
+      "id": "r_1783620370870",
+      "name": "3rd Fl Gan",
+      "floor": "3rd Floor",
+      "color": "#3bbfa5"
+    },
+    {
+      "id": "r_1783620382439",
+      "name": "5th Fl Tamim",
+      "floor": "5th Floor",
+      "color": "#4abf3b"
+    },
+    {
+      "id": "r_1784045439894",
+      "name": "Kitchen Side Ballroom",
+      "floor": "4th Floor",
+      "color": "#a9bf3b"
+    },
+    {
+      "id": "r1",
+      "name": "Sanctuary",
+      "floor": "Floor 2",
+      "color": "#1e3a6b"
+    },
+    {
+      "id": "r2",
+      "name": "SOFL Space",
+      "floor": "Floor 5",
+      "color": "#2d5a3d"
+    },
+    {
+      "id": "r3",
+      "name": "Mikvah",
+      "floor": "Floor 1",
+      "color": "#3a6a8a"
+    },
+    {
+      "id": "r4",
+      "name": "Kiddush Room",
+      "floor": "Floor 2",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "r5",
+      "name": "2nd Fl Lobby",
+      "floor": "2nd Floor",
+      "color": "#6b4a1a"
+    },
+    {
+      "id": "r6",
+      "name": "Waterfront Ballroom",
+      "floor": "Floor 4",
+      "color": "#1a5a7a"
+    },
+    {
+      "id": "r7",
+      "name": "Glass Room",
+      "floor": "Floor 5",
+      "color": "#3a7a5a"
+    },
+    {
+      "id": "r8",
+      "name": "Garage",
+      "floor": "Ground Floor",
+      "color": "#5a5a5a"
+    },
+    {
+      "id": "r9",
+      "name": "Daily Sanctuary",
+      "floor": "Floor 2",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "r10",
+      "name": "Whole Ballroom",
+      "floor": "Floor 4",
+      "color": "#5a3a8a"
+    },
+    {
+      "id": "r11",
+      "name": "Rooftop",
+      "floor": "Floor 6",
+      "color": "#2a6a2a"
+    },
+    {
+      "id": "r12",
+      "name": "Library",
+      "floor": "Floor 5",
+      "color": "#7a6a1a"
+    },
+    {
+      "id": "r13",
+      "name": "5th Fl Lobby",
+      "floor": "5th Floor",
+      "color": "#4a3a7a"
+    }
+  ],
+  "eventTypes": [
+    {
+      "id": "t1",
+      "name": "Bar / Bat Mitzvah Club",
+      "color": "#1e3a6b"
+    },
+    {
+      "id": "t2",
+      "name": "Classes and Lectures",
+      "color": "#2d5a3d"
+    },
+    {
+      "id": "t3",
+      "name": "Cteen",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "t4",
+      "name": "Cteen Jr.",
+      "color": "#5a2a6b"
+    },
+    {
+      "id": "t5",
+      "name": "CYP",
+      "color": "#3a5a7a"
+    },
+    {
+      "id": "t6",
+      "name": "Fundraising Dinner",
+      "color": "#8a6a1a"
+    },
+    {
+      "id": "t7",
+      "name": "Hebrew School",
+      "color": "#2a6a4a"
+    },
+    {
+      "id": "t8",
+      "name": "JCC",
+      "color": "#1a4a7a"
+    },
+    {
+      "id": "t9",
+      "name": "Kids Programs",
+      "color": "#3a7a5a"
+    },
+    {
+      "id": "t10",
+      "name": "Seniors Program",
+      "color": "#6a3a2a"
+    },
+    {
+      "id": "t11",
+      "name": "Shul & Kiddush",
+      "color": "#1a2a6a"
+    },
+    {
+      "id": "t12",
+      "name": "Womens Programs",
+      "color": "#7a2a5a"
+    },
+    {
+      "id": "t13",
+      "name": "Gan",
+      "color": "#2a7a3a"
+    },
+    {
+      "id": "t14",
+      "name": "Tamim",
+      "color": "#4a2a8a"
+    },
+    {
+      "id": "t16",
+      "name": "Community Event",
+      "color": "#1a6a5a"
+    }
+  ],
+  "events": [
+    {
+      "id": "e_1783369563428_kgk06",
+      "title": "Chassidus",
+      "start": "2026-08-20T00:15:00.000Z",
+      "end": "2026-08-20T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783369563429_f4842",
+      "title": "Chassidus",
+      "start": "2026-08-27T00:15:00.000Z",
+      "end": "2026-08-27T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783369563429_ms6aq",
+      "title": "Chassidus",
+      "start": "2026-09-03T00:15:00.000Z",
+      "end": "2026-09-03T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663274_ucx43",
+      "title": "Women's Torah Class",
+      "start": "2026-09-08T23:30:00.000Z",
+      "end": "2026-09-09T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563429_sozf2",
+      "title": "Chassidus",
+      "start": "2026-09-10T00:15:00.000Z",
+      "end": "2026-09-10T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783369563429_ic7q4",
+      "title": "Chassidus",
+      "start": "2026-09-17T00:15:00.000Z",
+      "end": "2026-09-17T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663275_dvr8t",
+      "title": "Women's Torah Class",
+      "start": "2026-09-22T23:30:00.000Z",
+      "end": "2026-09-23T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563429_2geja",
+      "title": "Chassidus",
+      "start": "2026-09-24T00:15:00.000Z",
+      "end": "2026-09-24T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663275_12gba",
+      "title": "Women's Torah Class",
+      "start": "2026-09-29T23:30:00.000Z",
+      "end": "2026-09-30T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563429_514jv",
+      "title": "Chassidus",
+      "start": "2026-10-01T00:15:00.000Z",
+      "end": "2026-10-01T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663276_qoll3",
+      "title": "Women's Torah Class",
+      "start": "2026-10-06T23:30:00.000Z",
+      "end": "2026-10-07T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563429_8zocy",
+      "title": "Chassidus",
+      "start": "2026-10-08T00:15:00.000Z",
+      "end": "2026-10-08T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1782833676667_f6cze",
+      "title": "Hebrew School 10/11",
+      "start": "2026-10-11T13:00:00.000Z",
+      "end": "2026-10-11T16:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t7",
+        "name": "Hebrew School",
+        "color": "#2a6a4a"
+      },
+      "rooms": [
+        {
+          "id": "r12",
+          "name": "Library",
+          "floor": "Floor 5"
+        },
+        {
+          "id": "r13",
+          "name": "5th Fl Lobby",
+          "floor": "5th Floor"
+        },
+        {
+          "id": "r2",
+          "name": "SOFL Space",
+          "floor": "Floor 5"
+        },
+        {
+          "id": "r7",
+          "name": "Glass Room",
+          "floor": "Floor 5"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a6a1a"
+    },
+    {
+      "id": "e_1783616850765_oom7j",
+      "title": "Solomon Program",
+      "start": "2026-10-12T22:00:00.000Z",
+      "end": "2026-10-13T01:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r1",
+          "name": "Sanctuary",
+          "floor": "Floor 2"
+        },
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chani Kaller",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#1e3a6b"
+    },
+    {
+      "id": "e_1791762804983_wpk1t",
+      "title": "Mendy class",
+      "start": "2026-10-13T00:00:00.000Z",
+      "end": "2026-10-13T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r6",
+          "name": "Waterfront Ballroom",
+          "floor": "Floor 4"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "",
+      "recurringGroupId": "grp_1791762804983",
+      "color": "#1a5a7a"
+    },
+    {
+      "id": "e_1783013117843_u44al",
+      "title": "BMC Neshama",
+      "start": "2026-10-13T22:00:00.000Z",
+      "end": "2026-10-14T00:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t1",
+        "name": "Bar / Bat Mitzvah Club",
+        "color": "#1e3a6b"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563429_lnjfz",
+      "title": "Chassidus",
+      "start": "2026-10-15T00:15:00.000Z",
+      "end": "2026-10-15T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1782840505191_ycc98",
+      "title": "Cteen Jr Sushi",
+      "start": "2026-10-18T14:00:00.000Z",
+      "end": "2026-10-18T16:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t4",
+        "name": "Cteen Jr.",
+        "color": "#5a2a6b"
+      },
+      "rooms": [
+        {
+          "id": "r_1774223782080",
+          "name": "Kitchen",
+          "floor": "4th Floor"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "I need the side of the ballroom near the kitchen",
+      "recurringGroupId": null,
+      "color": "#3b6abf"
+    },
+    {
+      "id": "e_1785097407534_8g7v4",
+      "title": "Wellness Morning Moms",
+      "start": "2026-10-19T12:00:00.000Z",
+      "end": "2026-10-19T16:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t13",
+        "name": "Gan",
+        "color": "#2a7a3a"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chani Kaller",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783616898128_x3kuq",
+      "title": "Solomon Program",
+      "start": "2026-10-19T22:00:00.000Z",
+      "end": "2026-10-20T01:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chani Kaller",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1791762804984_xq724",
+      "title": "Mendy class",
+      "start": "2026-10-20T00:00:00.000Z",
+      "end": "2026-10-20T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r6",
+          "name": "Waterfront Ballroom",
+          "floor": "Floor 4"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "",
+      "recurringGroupId": "grp_1791762804983",
+      "color": "#1a5a7a"
+    },
+    {
+      "id": "e_1783522663276_n4i0t",
+      "title": "Women's Torah Class",
+      "start": "2026-10-20T23:30:00.000Z",
+      "end": "2026-10-21T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1790283991663_vidrn",
+      "title": "Seniors Lunch",
+      "start": "2026-10-21T15:00:00.000Z",
+      "end": "2026-10-21T17:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t10",
+        "name": "Seniors Program",
+        "color": "#6a3a2a"
+      },
+      "rooms": [
+        {
+          "id": "r6",
+          "name": "Waterfront Ballroom",
+          "floor": "Floor 4"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#1a5a7a"
+    },
+    {
+      "id": "e_1783369563429_sxwsh",
+      "title": "Chassidus",
+      "start": "2026-10-22T00:15:00.000Z",
+      "end": "2026-10-22T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1791480274602_rt6tg",
+      "title": "Cyp shabbat dinner",
+      "start": "2026-10-23T22:00:00.000Z",
+      "end": "2026-10-24T03:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t5",
+        "name": "CYP",
+        "color": "#3a5a7a"
+      },
+      "rooms": [
+        {
+          "id": "r10",
+          "name": "Whole Ballroom",
+          "floor": "Floor 4"
+        }
+      ],
+      "organizer": "Eitan Shilov",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#5a3a8a"
+    },
+    {
+      "id": "e_1782833784161_bsli7",
+      "title": "Hebrew School 10/25",
+      "start": "2026-10-25T13:00:00.000Z",
+      "end": "2026-10-25T16:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t7",
+        "name": "Hebrew School",
+        "color": "#2a6a4a"
+      },
+      "rooms": [
+        {
+          "id": "r12",
+          "name": "Library",
+          "floor": "Floor 5"
+        },
+        {
+          "id": "r13",
+          "name": "5th Fl Lobby",
+          "floor": "5th Floor"
+        },
+        {
+          "id": "r2",
+          "name": "SOFL Space",
+          "floor": "Floor 5"
+        },
+        {
+          "id": "r7",
+          "name": "Glass Room",
+          "floor": "Floor 5"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a6a1a"
+    },
+    {
+      "id": "e_1782835356618_8quul",
+      "title": "Grinberg Play",
+      "start": "2026-10-25T21:00:00.000Z",
+      "end": "2026-10-26T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t8",
+        "name": "JCC",
+        "color": "#1a4a7a"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Natasha Grinberg",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783013180448_yygd6",
+      "title": "BMC Name",
+      "start": "2026-10-27T22:00:00.000Z",
+      "end": "2026-10-28T00:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t1",
+        "name": "Bar / Bat Mitzvah Club",
+        "color": "#1e3a6b"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563429_xhhot",
+      "title": "Chassidus",
+      "start": "2026-10-29T00:15:00.000Z",
+      "end": "2026-10-29T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783615768638_i9rmb",
+      "title": "Gan Shabbat Dinner",
+      "start": "2026-10-30T04:00:00.000Z",
+      "end": "2026-10-31T04:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t13",
+        "name": "Gan",
+        "color": "#2a7a3a"
+      },
+      "rooms": [
+        {
+          "id": "r1",
+          "name": "Sanctuary",
+          "floor": "Floor 2"
+        },
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Eliana Reines",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#1e3a6b"
+    },
+    {
+      "id": "e_1782833817368_pgzvh",
+      "title": "Hebrew School 11/01",
+      "start": "2026-11-01T04:00:00.000Z",
+      "end": "2026-11-01T17:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t7",
+        "name": "Hebrew School",
+        "color": "#2a6a4a"
+      },
+      "rooms": [
+        {
+          "id": "r12",
+          "name": "Library",
+          "floor": "Floor 5"
+        },
+        {
+          "id": "r13",
+          "name": "5th Fl Lobby",
+          "floor": "5th Floor"
+        },
+        {
+          "id": "r2",
+          "name": "SOFL Space",
+          "floor": "Floor 5"
+        },
+        {
+          "id": "r7",
+          "name": "Glass Room",
+          "floor": "Floor 5"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a6a1a"
+    },
+    {
+      "id": "e_1782840542495_bf1x3",
+      "title": "Cteen Jr Merch",
+      "start": "2026-11-01T15:00:00.000Z",
+      "end": "2026-11-01T17:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t4",
+        "name": "Cteen Jr.",
+        "color": "#5a2a6b"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783616946446_h5qyg",
+      "title": "Solomon Program",
+      "start": "2026-11-02T23:00:00.000Z",
+      "end": "2026-11-03T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chani Kaller",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1791762804985_b7kbz",
+      "title": "Mendy class",
+      "start": "2026-11-03T01:00:00.000Z",
+      "end": "2026-11-03T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r6",
+          "name": "Waterfront Ballroom",
+          "floor": "Floor 4"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "",
+      "recurringGroupId": "grp_1791762804983",
+      "color": "#1a5a7a"
+    },
+    {
+      "id": "e_1786509972068_lce0t",
+      "title": "Russian Concert",
+      "start": "2026-11-03T23:00:00.000Z",
+      "end": "2026-11-04T04:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t11",
+        "name": "Shul & Kiddush",
+        "color": "#1a2a6a"
+      },
+      "rooms": [
+        {
+          "id": "r1",
+          "name": "Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Rabbi Kaller",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#1e3a6b"
+    },
+    {
+      "id": "e_1783522663276_eklei",
+      "title": "Women's Torah Class",
+      "start": "2026-11-04T00:30:00.000Z",
+      "end": "2026-11-04T03:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563429_1oqzm",
+      "title": "Chassidus",
+      "start": "2026-11-05T01:15:00.000Z",
+      "end": "2026-11-05T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1782833922569_3d5on",
+      "title": "Hebrew School 11/08",
+      "start": "2026-11-08T14:00:00.000Z",
+      "end": "2026-11-08T17:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t7",
+        "name": "Hebrew School",
+        "color": "#2a6a4a"
+      },
+      "rooms": [
+        {
+          "id": "r12",
+          "name": "Library",
+          "floor": "Floor 5"
+        },
+        {
+          "id": "r13",
+          "name": "5th Fl Lobby",
+          "floor": "5th Floor"
+        },
+        {
+          "id": "r2",
+          "name": "SOFL Space",
+          "floor": "Floor 5"
+        },
+        {
+          "id": "r7",
+          "name": "Glass Room",
+          "floor": "Floor 5"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a6a1a"
+    },
+    {
+      "id": "e_1791499731833_7tivw",
+      "title": "Russian Quiz Game",
+      "start": "2026-11-08T22:00:00.000Z",
+      "end": "2026-11-09T04:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t16",
+        "name": "Community Event",
+        "color": "#1a6a5a"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Julia Memruk",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1791762804985_wuipf",
+      "title": "Mendy class",
+      "start": "2026-11-10T01:00:00.000Z",
+      "end": "2026-11-10T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r6",
+          "name": "Waterfront Ballroom",
+          "floor": "Floor 4"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "",
+      "recurringGroupId": "grp_1791762804983",
+      "color": "#1a5a7a"
+    },
+    {
+      "id": "e_1783013270739_2vkc6",
+      "title": "BMC Challah Bake",
+      "start": "2026-11-10T23:00:00.000Z",
+      "end": "2026-11-11T01:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t1",
+        "name": "Bar / Bat Mitzvah Club",
+        "color": "#1e3a6b"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563429_1ounr",
+      "title": "Chassidus",
+      "start": "2026-11-12T01:15:00.000Z",
+      "end": "2026-11-12T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1782833957813_dslyw",
+      "title": "Hebrew School 11/15",
+      "start": "2026-11-15T14:00:00.000Z",
+      "end": "2026-11-15T17:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t7",
+        "name": "Hebrew School",
+        "color": "#2a6a4a"
+      },
+      "rooms": [
+        {
+          "id": "r12",
+          "name": "Library",
+          "floor": "Floor 5"
+        },
+        {
+          "id": "r13",
+          "name": "5th Fl Lobby",
+          "floor": "5th Floor"
+        },
+        {
+          "id": "r2",
+          "name": "SOFL Space",
+          "floor": "Floor 5"
+        },
+        {
+          "id": "r7",
+          "name": "Glass Room",
+          "floor": "Floor 5"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a6a1a"
+    },
+    {
+      "id": "e_1783617007929_w5da3",
+      "title": "Solomon Program",
+      "start": "2026-11-16T23:00:00.000Z",
+      "end": "2026-11-17T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chani Kaller",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783522663276_wyned",
+      "title": "Women's Torah Class",
+      "start": "2026-11-18T00:30:00.000Z",
+      "end": "2026-11-18T03:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1791392115173_prdqh",
+      "title": "Seniors Lunch",
+      "start": "2026-11-18T16:00:00.000Z",
+      "end": "2026-11-18T18:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t10",
+        "name": "Seniors Program",
+        "color": "#6a3a2a"
+      },
+      "rooms": [
+        {
+          "id": "r6",
+          "name": "Waterfront Ballroom",
+          "floor": "Floor 4"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#1a5a7a"
+    },
+    {
+      "id": "e_1783369563429_jz3ym",
+      "title": "Chassidus",
+      "start": "2026-11-19T01:15:00.000Z",
+      "end": "2026-11-19T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663277_gnde3",
+      "title": "Women's Torah Class",
+      "start": "2026-11-25T00:30:00.000Z",
+      "end": "2026-11-25T03:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563429_flgg9",
+      "title": "Chassidus",
+      "start": "2026-11-26T01:15:00.000Z",
+      "end": "2026-11-26T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783369563429_ydtdw",
+      "title": "Chassidus",
+      "start": "2026-12-03T01:15:00.000Z",
+      "end": "2026-12-03T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663277_4ff0w",
+      "title": "Women's Torah Class",
+      "start": "2026-12-09T00:30:00.000Z",
+      "end": "2026-12-09T03:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563429_dripq",
+      "title": "Chassidus",
+      "start": "2026-12-10T01:15:00.000Z",
+      "end": "2026-12-10T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783369563429_pgrj7",
+      "title": "Chassidus",
+      "start": "2026-12-17T01:15:00.000Z",
+      "end": "2026-12-17T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663277_h1bsu",
+      "title": "Women's Torah Class",
+      "start": "2026-12-23T00:30:00.000Z",
+      "end": "2026-12-23T03:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_1v0ew",
+      "title": "Chassidus",
+      "start": "2026-12-24T01:15:00.000Z",
+      "end": "2026-12-24T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663277_ji8y1",
+      "title": "Women's Torah Class",
+      "start": "2026-12-30T00:30:00.000Z",
+      "end": "2026-12-30T03:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_6dlag",
+      "title": "Chassidus",
+      "start": "2026-12-31T01:15:00.000Z",
+      "end": "2026-12-31T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783369563430_398rd",
+      "title": "Chassidus",
+      "start": "2027-01-07T01:15:00.000Z",
+      "end": "2027-01-07T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663278_454td",
+      "title": "Women's Torah Class",
+      "start": "2027-01-13T00:30:00.000Z",
+      "end": "2027-01-13T03:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_ouogf",
+      "title": "Chassidus",
+      "start": "2027-01-14T01:15:00.000Z",
+      "end": "2027-01-14T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783369563430_vxdai",
+      "title": "Chassidus",
+      "start": "2027-01-21T01:15:00.000Z",
+      "end": "2027-01-21T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663278_icvye",
+      "title": "Women's Torah Class",
+      "start": "2027-01-27T00:30:00.000Z",
+      "end": "2027-01-27T03:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_ch6ip",
+      "title": "Chassidus",
+      "start": "2027-01-28T01:15:00.000Z",
+      "end": "2027-01-28T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783369563430_l60vz",
+      "title": "Chassidus",
+      "start": "2027-02-04T01:15:00.000Z",
+      "end": "2027-02-04T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663278_ce3i9",
+      "title": "Women's Torah Class",
+      "start": "2027-02-10T00:30:00.000Z",
+      "end": "2027-02-10T03:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_vx66h",
+      "title": "Chassidus",
+      "start": "2027-02-11T01:15:00.000Z",
+      "end": "2027-02-11T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783369563430_j35cd",
+      "title": "Chassidus",
+      "start": "2027-02-18T01:15:00.000Z",
+      "end": "2027-02-18T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663278_jufqy",
+      "title": "Women's Torah Class",
+      "start": "2027-02-24T00:30:00.000Z",
+      "end": "2027-02-24T03:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_aeyq6",
+      "title": "Chassidus",
+      "start": "2027-02-25T01:15:00.000Z",
+      "end": "2027-02-25T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783369563430_pt0u0",
+      "title": "Chassidus",
+      "start": "2027-03-04T01:15:00.000Z",
+      "end": "2027-03-04T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663279_wd42m",
+      "title": "Women's Torah Class",
+      "start": "2027-03-10T00:30:00.000Z",
+      "end": "2027-03-10T03:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_42v6e",
+      "title": "Chassidus",
+      "start": "2027-03-11T01:15:00.000Z",
+      "end": "2027-03-11T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783369563430_7k7uk",
+      "title": "Chassidus",
+      "start": "2027-03-18T00:15:00.000Z",
+      "end": "2027-03-18T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663279_2ylh9",
+      "title": "Women's Torah Class",
+      "start": "2027-03-23T23:30:00.000Z",
+      "end": "2027-03-24T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_fisuk",
+      "title": "Chassidus",
+      "start": "2027-03-25T00:15:00.000Z",
+      "end": "2027-03-25T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663279_1sdhq",
+      "title": "Women's Torah Class",
+      "start": "2027-03-30T23:30:00.000Z",
+      "end": "2027-03-31T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_5k3uo",
+      "title": "Chassidus",
+      "start": "2027-04-01T00:15:00.000Z",
+      "end": "2027-04-01T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663279_4aksx",
+      "title": "Women's Torah Class",
+      "start": "2027-04-06T23:30:00.000Z",
+      "end": "2027-04-07T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_pqgxn",
+      "title": "Chassidus",
+      "start": "2027-04-08T00:15:00.000Z",
+      "end": "2027-04-08T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663280_7xmqq",
+      "title": "Women's Torah Class",
+      "start": "2027-04-20T23:30:00.000Z",
+      "end": "2027-04-21T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_sflcg",
+      "title": "Chassidus",
+      "start": "2027-04-22T00:15:00.000Z",
+      "end": "2027-04-22T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663280_bm53g",
+      "title": "Women's Torah Class",
+      "start": "2027-04-27T23:30:00.000Z",
+      "end": "2027-04-28T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_52nzf",
+      "title": "Chassidus",
+      "start": "2027-04-29T00:15:00.000Z",
+      "end": "2027-04-29T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663280_n9pf8",
+      "title": "Women's Torah Class",
+      "start": "2027-05-04T23:30:00.000Z",
+      "end": "2027-05-05T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_wcktu",
+      "title": "Chassidus",
+      "start": "2027-05-06T00:15:00.000Z",
+      "end": "2027-05-06T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663280_wlict",
+      "title": "Women's Torah Class",
+      "start": "2027-05-11T23:30:00.000Z",
+      "end": "2027-05-12T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_m6uwp",
+      "title": "Chassidus",
+      "start": "2027-05-13T00:15:00.000Z",
+      "end": "2027-05-13T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663280_eowb1",
+      "title": "Women's Torah Class",
+      "start": "2027-05-18T23:30:00.000Z",
+      "end": "2027-05-19T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_mtymg",
+      "title": "Chassidus",
+      "start": "2027-05-20T00:15:00.000Z",
+      "end": "2027-05-20T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663280_jhxpe",
+      "title": "Women's Torah Class",
+      "start": "2027-05-25T23:30:00.000Z",
+      "end": "2027-05-26T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_475nl",
+      "title": "Chassidus",
+      "start": "2027-05-27T00:15:00.000Z",
+      "end": "2027-05-27T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663280_rzcr0",
+      "title": "Women's Torah Class",
+      "start": "2027-06-01T23:30:00.000Z",
+      "end": "2027-06-02T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_bc3qh",
+      "title": "Chassidus",
+      "start": "2027-06-03T00:15:00.000Z",
+      "end": "2027-06-03T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663281_ebpjk",
+      "title": "Women's Torah Class",
+      "start": "2027-06-08T23:30:00.000Z",
+      "end": "2027-06-09T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_xvad8",
+      "title": "Chassidus",
+      "start": "2027-06-10T00:15:00.000Z",
+      "end": "2027-06-10T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663281_lhfpc",
+      "title": "Women's Torah Class",
+      "start": "2027-06-15T23:30:00.000Z",
+      "end": "2027-06-16T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_hinu1",
+      "title": "Chassidus",
+      "start": "2027-06-17T00:15:00.000Z",
+      "end": "2027-06-17T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663281_pad2x",
+      "title": "Women's Torah Class",
+      "start": "2027-06-22T23:30:00.000Z",
+      "end": "2027-06-23T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1783369563430_8wnvl",
+      "title": "Chassidus",
+      "start": "2027-06-24T00:15:00.000Z",
+      "end": "2027-06-24T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r9",
+          "name": "Daily Sanctuary",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chezky Altein",
+      "description": "",
+      "recurringGroupId": "grp_1783369563427",
+      "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1783522663281_4m84y",
+      "title": "Women's Torah Class",
+      "start": "2027-06-29T23:30:00.000Z",
+      "end": "2027-06-30T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Emanuella Boroda",
+      "description": "",
+      "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    }
+  ]
+}
