@@ -1,0 +1,28 @@
+# Feed build steps, run by .github/workflows/build-feed.yml.
+# Secrets/variables arrive as environment variables set by that file.
+name: Build calendar feed
+description: Reads the room calendar from Firebase, writes feed/events.json + feed/events.ics, commits if changed.
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Build feed from Firebase
+      shell: bash
+      run: node build-feed.mjs
+
+    - name: Commit feed if changed
+      shell: bash
+      run: |
+        if git diff --quiet --exit-code -- feed/ && [ -z "$(git ls-files --others --exclude-standard feed/)" ]; then
+          echo "Feed unchanged."
+          exit 0
+        fi
+        git config user.name  "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git add feed/
+        git commit -m "Update live calendar feed [skip ci]"
+        git pull --rebase --autostash
+        git push
