@@ -558,6 +558,23 @@ body{
 .del-opt-label{font-size:13px;font-weight:500}
 .del-opt-sub{font-size:11.5px;color:var(--text-light);margin-top:1px}
 
+/* ── LIVE FEED (export modal) ────────────────────── */
+.live-feed{margin-top:16px;padding:13px 14px;border:1px solid var(--gold);border-radius:var(--r-sm);background:var(--gold-pale)}
+.live-feed-head{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 0 3px rgba(22,101,52,.18);flex-shrink:0}
+.live-dot.stale{background:var(--warn);box-shadow:0 0 0 3px rgba(146,64,14,.18)}
+.live-feed-title{font-weight:600;font-size:13px;color:var(--navy)}
+.live-feed-status{margin-left:auto;font-size:11px;color:var(--text-mid)}
+.live-feed-note{font-size:12px;color:var(--text-mid);margin:0 0 10px}
+.live-feed-row{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.live-feed-label{font-size:11.5px;font-weight:500;color:var(--text-mid);width:104px;flex-shrink:0}
+.live-feed-url{font-size:11.5px !important;padding:5px 8px !important;background:var(--white) !important;min-width:0;flex:1}
+.live-feed-btn{border:1px solid var(--border-mid);background:var(--white);border-radius:var(--r-sm);padding:4px 9px;cursor:pointer;color:var(--navy);transition:background var(--t)}
+.live-feed-btn:hover{background:var(--cream-mid)}
+.live-feed-sub{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font-size:12.5px;font-weight:500;color:var(--navy);text-decoration:none}
+.live-feed-sub:hover{text-decoration:underline}
+@media (max-width:480px){.live-feed-label{width:auto}.live-feed-row{flex-wrap:wrap}}
+
 /* ── CSV IMPORT ──────────────────────────────────── */
 .drop-zone{
   border:2px dashed var(--border-mid);border-radius:var(--r-md);
@@ -1570,7 +1587,7 @@ body{
       <div class="m-head">
         <div class="m-head-left">
           <div class="m-icon"><i class="bi bi-download"></i></div>
-          <h5 class="m-title">Export Events to CSV</h5>
+          <h5 class="m-title">Export Events</h5>
         </div>
         <button class="m-close" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
       </div>
@@ -1616,6 +1633,27 @@ body{
         <div id="exportPreviewCount" style="padding:10px 13px;background:var(--cream);border:1px solid var(--border);border-radius:var(--r-sm);font-size:13px;color:var(--text-mid);display:flex;align-items:center;gap:8px">
           <i class="bi bi-info-circle" style="color:var(--gold)"></i>
           <span id="exportCountText">Set filters to preview export</span>
+        </div>
+
+        <!-- Live feed (auto-updating) -->
+        <div class="live-feed">
+          <div class="live-feed-head">
+            <span class="live-dot"></span>
+            <span class="live-feed-title">Live Feed — auto-updating</span>
+            <span class="live-feed-status" id="liveFeedStatus">Checking…</span>
+          </div>
+          <p class="live-feed-note">Confirmed public events, refreshed every ~15 minutes. Use these links in the ChabadRC app or any calendar — no manual export needed.</p>
+          <div class="live-feed-row">
+            <span class="live-feed-label">Calendar (.ics)</span>
+            <input class="finput live-feed-url" id="feedIcsUrl" readonly onclick="this.select()">
+            <button class="live-feed-btn" onclick="copyFeedUrl('feedIcsUrl')" title="Copy"><i class="bi bi-clipboard"></i></button>
+          </div>
+          <div class="live-feed-row">
+            <span class="live-feed-label">App data (.json)</span>
+            <input class="finput live-feed-url" id="feedJsonUrl" readonly onclick="this.select()">
+            <button class="live-feed-btn" onclick="copyFeedUrl('feedJsonUrl')" title="Copy"><i class="bi bi-clipboard"></i></button>
+          </div>
+          <a class="live-feed-sub" id="feedWebcalLink" href="#"><i class="bi bi-calendar-plus"></i> Subscribe in my calendar</a>
         </div>
 
       </div>
@@ -3866,12 +3904,57 @@ function openExportModal(){
     rooms.map(r=>`<option value="${r.id}">${r.name}</option>`).join('');
 
   updateExportPreview();
+  initLiveFeedPanel();
 
   // Watch filter changes
   ['exportFrom','exportTo','expConfirmed','expPending','expCancelled','exportRoom']
     .forEach(id => document.getElementById(id)?.addEventListener('change', updateExportPreview));
 
   new bootstrap.Modal(document.getElementById('exportModal')).show();
+}
+
+// ── Live feed (built by .github/workflows/build-feed.yml) ──
+// Leave empty to auto-detect: GitHub Pages → same site, otherwise raw GitHub.
+const FEED_BASE_URL = '';
+const FEED_REPO_RAW = 'https://raw.githubusercontent.com/accounting-byte/Chabadrc-Calendar/main/feed/';
+
+function feedBase(){
+  if(FEED_BASE_URL) return FEED_BASE_URL.replace(/\/?$/, '/');
+  if(location.hostname.endsWith('github.io')) return new URL('feed/', location.href).href;
+  return FEED_REPO_RAW;
+}
+
+function initLiveFeedPanel(){
+  const base = feedBase();
+  const icsUrl  = base + 'events.ics';
+  const jsonUrl = base + 'events.json';
+  document.getElementById('feedIcsUrl').value  = icsUrl;
+  document.getElementById('feedJsonUrl').value = jsonUrl;
+  document.getElementById('feedWebcalLink').href = icsUrl.replace(/^https?:/, 'webcal:');
+
+  const statusEl = document.getElementById('liveFeedStatus');
+  const dot = document.querySelector('.live-feed .live-dot');
+  statusEl.textContent = 'Checking…';
+  fetch(jsonUrl + '?t=' + Date.now(), {cache:'no-store'})
+    .then(r => { if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(feed => {
+      dot.classList.remove('stale');
+      const mins = Math.round((Date.now() - new Date(feed.updatedAt)) / 60000);
+      const ago = mins < 1 ? 'just now' : mins < 60 ? `${mins} min ago`
+                : mins < 1440 ? `${Math.round(mins/60)} h ago` : `${Math.round(mins/1440)} d ago`;
+      statusEl.textContent = `${feed.count} events · changed ${ago}`;
+    })
+    .catch(() => {
+      dot.classList.add('stale');
+      statusEl.textContent = 'Not published yet';
+    });
+}
+
+function copyFeedUrl(inputId){
+  const val = document.getElementById(inputId).value;
+  (navigator.clipboard?.writeText(val) || Promise.reject())
+    .then(() => toast('Link copied!', 'success'))
+    .catch(() => { const el = document.getElementById(inputId); el.select(); document.execCommand('copy'); toast('Link copied!', 'success'); });
 }
 
 function getFilteredExportEvents(){
