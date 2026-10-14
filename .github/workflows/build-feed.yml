@@ -31,6 +31,10 @@ jobs:
       - name: Build feed from Firebase
         env:
           FIREBASE_REFRESH_TOKEN: ${{ secrets.FIREBASE_REFRESH_TOKEN }}
+          # Internal / Both feeds go to a secret Gist (never this public repo)
+          FEED_GIST_TOKEN: ${{ secrets.FEED_GIST_TOKEN }}
+          FEED_GIST_ID:    ${{ secrets.FEED_GIST_ID }}
+          FEED_PRIVATE_EXCLUDE_TYPES: ${{ vars.FEED_PRIVATE_EXCLUDE_TYPES }}
           # Optional overrides (Settings → Secrets and variables → Actions → Variables)
           FEED_STATUSES:      ${{ vars.FEED_STATUSES }}
           FEED_EXCLUDE_TYPES: ${{ vars.FEED_EXCLUDE_TYPES }}
@@ -41,6 +45,8 @@ jobs:
         run: node build-feed.mjs
 
       - name: Commit feed if changed
+        # Still commit the public feed if only the private (gist) step failed
+        if: success() || failure()
         run: |
           if git diff --quiet --exit-code -- feed/ && [ -z "$(git ls-files --others --exclude-standard feed/)" ]; then
             echo "Feed unchanged."
