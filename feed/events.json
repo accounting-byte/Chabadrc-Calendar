@@ -2,9 +2,9 @@
   "schema": 1,
   "calendar": "Chabad Russian Center",
   "timezone": "America/New_York",
-  "version": "d8c5cfb1904eee84",
-  "updatedAt": "2026-10-12T20:56:37.404Z",
-  "count": 100,
+  "version": "cfaadeba4ad49d51",
+  "updatedAt": "2026-10-14T15:28:40.866Z",
+  "count": 105,
   "rooms": [
     {
       "id": "r_1774223782080",
@@ -628,6 +628,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1791986398991_t2z6f",
+      "title": "Teach Florida",
+      "start": "2026-10-15T12:00:00.000Z",
+      "end": "2026-10-15T14:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t13",
+        "name": "Gan",
+        "color": "#2a7a3a"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Belen",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1782840505191_ycc98",
       "title": "Cteen Jr Sushi",
       "start": "2026-10-18T14:00:00.000Z",
@@ -796,6 +820,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1791905820958_fs1xs",
+      "title": "Cyp Academy",
+      "start": "2026-10-23T00:00:00.000Z",
+      "end": "2026-10-23T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t5",
+        "name": "CYP",
+        "color": "#3a5a7a"
+      },
+      "rooms": [
+        {
+          "id": "r5",
+          "name": "2nd Fl Lobby",
+          "floor": "2nd Floor"
+        }
+      ],
+      "organizer": "Eitan Shilov",
+      "description": "",
+      "recurringGroupId": "grp_1791905820958",
+      "color": "#6b4a1a"
+    },
+    {
       "id": "e_1791480274602_rt6tg",
       "title": "Cyp shabbat dinner",
       "start": "2026-10-23T22:00:00.000Z",
@@ -929,6 +977,30 @@
       "description": "",
       "recurringGroupId": "grp_1783369563427",
       "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1791905820960_btk9e",
+      "title": "Cyp Academy",
+      "start": "2026-10-30T00:00:00.000Z",
+      "end": "2026-10-30T01:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t5",
+        "name": "CYP",
+        "color": "#3a5a7a"
+      },
+      "rooms": [
+        {
+          "id": "r5",
+          "name": "2nd Fl Lobby",
+          "floor": "2nd Floor"
+        }
+      ],
+      "organizer": "Eitan Shilov",
+      "description": "",
+      "recurringGroupId": "grp_1791905820958",
+      "color": "#6b4a1a"
     },
     {
       "id": "e_1783615768638_i9rmb",
@@ -1143,6 +1215,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1791905820961_6gu0t",
+      "title": "Cyp Academy",
+      "start": "2026-11-06T01:00:00.000Z",
+      "end": "2026-11-06T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t5",
+        "name": "CYP",
+        "color": "#3a5a7a"
+      },
+      "rooms": [
+        {
+          "id": "r5",
+          "name": "2nd Fl Lobby",
+          "floor": "2nd Floor"
+        }
+      ],
+      "organizer": "Eitan Shilov",
+      "description": "",
+      "recurringGroupId": "grp_1791905820958",
+      "color": "#6b4a1a"
+    },
+    {
       "id": "e_1782833922569_3d5on",
       "title": "Hebrew School 11/08",
       "start": "2026-11-08T14:00:00.000Z",
@@ -1276,6 +1372,30 @@
       "description": "",
       "recurringGroupId": "grp_1783369563427",
       "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1791905820961_qt4bi",
+      "title": "Cyp Academy",
+      "start": "2026-11-13T01:00:00.000Z",
+      "end": "2026-11-13T02:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t5",
+        "name": "CYP",
+        "color": "#3a5a7a"
+      },
+      "rooms": [
+        {
+          "id": "r5",
+          "name": "2nd Fl Lobby",
+          "floor": "2nd Floor"
+        }
+      ],
+      "organizer": "Eitan Shilov",
+      "description": "",
+      "recurringGroupId": "grp_1791905820958",
+      "color": "#6b4a1a"
     },
     {
       "id": "e_1782833957813_dslyw",
