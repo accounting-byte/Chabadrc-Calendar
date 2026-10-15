@@ -35,7 +35,12 @@ Change these without editing code via repo **Settings → Secrets and variables 
    - Note: `CRC calendar feeds`. Expiration: your choice (if it expires, the private feeds stop updating until you replace it). Scope: tick **only `gist`**.
    - Copy the token and save it in this repo as the secret **`FEED_GIST_TOKEN`** (Settings → Secrets and variables → Actions → New repository secret).
    - The gist is created under the account that owns the token.
-4. Actions tab → **Build live calendar feed** → *Run workflow*. The first run creates the secret gist and saves its links to Firebase; reopen **Export** in the calendar to see them.
+4. **Firebase rules:** allow the job to save the private links. Firebase console → *Realtime Database* → *Rules*, and add a `feedConfig` entry next to the existing `rooms` / `events` / `users` entries:
+   ```json
+   "feedConfig": { ".read": "auth != null", ".write": "auth != null" }
+   ```
+   Mind the comma between entries, then click **Publish**. Without this the run log shows "Could not save the private feed links to Firebase" and the Export screen keeps saying "Not set up".
+5. Actions tab → **Build live calendar feed** → *Run workflow*. The first run creates the secret gist and saves its links to Firebase; reopen **Export** in the calendar to see them.
 
 If the job ever can't write to Firebase, it logs a warning. In that case open gist.github.com while signed in as the token owner, copy the gist's ID from its URL, and save it as the secret `FEED_GIST_ID`.
 

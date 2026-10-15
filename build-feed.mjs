@@ -333,6 +333,29 @@ async function gistFileContent(f) {
   return res.ok ? res.text() : null;
 }
 
+const GIST_DESC = 'Chabad Russian Center — private calendar feeds (Internal / All). Staff only, do not share.';
+
+// Find the job's own gist(s) in the token owner's account by their exact
+// description. Keeps the oldest and removes duplicates made by earlier runs.
+async function findOwnGist(mask) {
+  const mine = [];
+  for (let page = 1; page <= 10; page++) {
+    const batch = await gh('GET', `/gists?per_page=100&page=${page}`);
+    mine.push(...batch.filter(g => g.description === GIST_DESC));
+    if (batch.length < 100) break;
+  }
+  if (!mine.length) return null;
+  mine.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+  mine.forEach(g => mask(g.id));
+  const [keep, ...extras] = mine;
+  for (const g of extras) {
+    try { await gh('DELETE', `/gists/${g.id}`); }
+    catch (e) { console.warn(`::warning::Could not remove a duplicate feed gist: ${e.message}`); }
+  }
+  if (extras.length) console.log(`Removed ${extras.length} duplicate feed gist(s); kept the original.`);
+  return gh('GET', `/gists/${keep.id}`);
+}
+
 const rawUrl = (owner, id, name) => `https://gist.githubusercontent.com/${owner}/${id}/raw/${name}`;
 
 async function publishPrivate(data) {
@@ -352,11 +375,11 @@ async function publishPrivate(data) {
     return;
   }
 
-  // Where is the gist? env var → Firebase /feedConfig → create a new one
+  // Where is the gist? env var → Firebase /feedConfig → search by description → create
   let feedConfig = null;
   if (data.token) {
     try { feedConfig = await readRaw('feedConfig', data.token); }
-    catch (e) { console.warn(`::warning::Could not read /feedConfig: ${e.message}`); }
+    catch (e) { console.warn(`::warning::Could not read /feedConfig (${e.message.slice(0, 60)}) — see FEED.md, "Firebase rules".`); }
   }
   let gistId = CFG.gistId || feedConfig?.gistId || '';
   const mask = id => { if (id && process.env.GITHUB_ACTIONS) console.log(`::add-mask::${id}`); };
@@ -366,9 +389,13 @@ async function publishPrivate(data) {
     try { gist = await gh('GET', `/gists/${gistId}`); }
     catch (e) {
       if (CFG.gistId || e.status !== 404) throw e;   // only replace a gist that's really gone
-      console.warn(`::warning::Saved gist not reachable (${e.message}) — creating a new one.`);
+      console.warn(`::warning::Saved gist not reachable (${e.message}) — looking for another.`);
       gistId = '';
     }
+  }
+  if (!gist) {
+    gist = await findOwnGist(mask);
+    if (gist) gistId = gist.id;
   }
 
   // Work out which files changed
@@ -387,7 +414,7 @@ async function publishPrivate(data) {
 
   if (!gist) {
     gist = await gh('POST', '/gists', {
-      description: 'Chabad Russian Center — private calendar feeds (Internal / All). Staff only, do not share.',
+      description: GIST_DESC,
       public: false,
       files: changed,
     });
@@ -412,7 +439,7 @@ async function publishPrivate(data) {
   if (!same) {
     if (data.token) {
       try { await writeRaw('feedConfig', cfg, data.token); console.log('Saved private feed links to Firebase /feedConfig.'); }
-      catch (e) { console.warn(`::warning::Could not save links to Firebase (${e.message}). Find the gist at gist.github.com (signed in as the token owner) and save its ID as the FEED_GIST_ID secret.`); }
+      catch (e) { console.warn(`::warning::Could not save the private feed links to Firebase (${e.message.slice(0, 60)}). Add a "feedConfig" rule to the Firebase Realtime Database rules — see FEED.md.`); }
     }
   }
   // Never print the links themselves — Action logs of a public repo are public.
