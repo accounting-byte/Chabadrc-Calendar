@@ -2,8 +2,8 @@
   "schema": 1,
   "calendar": "Chabad Russian Center",
   "timezone": "America/New_York",
-  "version": "cfaadeba4ad49d51",
-  "updatedAt": "2026-10-14T15:28:40.866Z",
+  "version": "7cbc28aa2d905f88",
+  "updatedAt": "2026-10-16T17:33:57.661Z",
   "count": 105,
   "rooms": [
     {
@@ -678,7 +678,7 @@
     {
       "id": "e_1785097407534_8g7v4",
       "title": "Wellness Morning Moms",
-      "start": "2026-10-19T12:00:00.000Z",
+      "start": "2026-10-19T10:00:00.000Z",
       "end": "2026-10-19T16:00:00.000Z",
       "status": "confirmed",
       "visibility": "public",
