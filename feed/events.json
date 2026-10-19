@@ -2,9 +2,9 @@
   "schema": 1,
   "calendar": "Chabad Russian Center",
   "timezone": "America/New_York",
-  "version": "7cbc28aa2d905f88",
-  "updatedAt": "2026-10-16T17:33:57.661Z",
-  "count": 105,
+  "version": "e82902b6abd95a46",
+  "updatedAt": "2026-10-19T01:40:25.642Z",
+  "count": 104,
   "rooms": [
     {
       "id": "r_1774223782080",
@@ -199,30 +199,6 @@
     }
   ],
   "events": [
-    {
-      "id": "e_1783369563428_kgk06",
-      "title": "Chassidus",
-      "start": "2026-08-20T00:15:00.000Z",
-      "end": "2026-08-20T01:30:00.000Z",
-      "status": "confirmed",
-      "visibility": "public",
-      "type": {
-        "id": "t2",
-        "name": "Classes and Lectures",
-        "color": "#2d5a3d"
-      },
-      "rooms": [
-        {
-          "id": "r9",
-          "name": "Daily Sanctuary",
-          "floor": "Floor 2"
-        }
-      ],
-      "organizer": "Chezky Altein",
-      "description": "",
-      "recurringGroupId": "grp_1783369563427",
-      "color": "#8a2a2a"
-    },
     {
       "id": "e_1783369563429_f4842",
       "title": "Chassidus",
