@@ -2,8 +2,8 @@
   "schema": 1,
   "calendar": "Chabad Russian Center",
   "timezone": "America/New_York",
-  "version": "e82902b6abd95a46",
-  "updatedAt": "2026-10-19T01:40:25.642Z",
+  "version": "97834fc836f10b79",
+  "updatedAt": "2026-10-20T20:45:25.173Z",
   "count": 104,
   "rooms": [
     {
@@ -1474,15 +1474,15 @@
       },
       "rooms": [
         {
-          "id": "r6",
-          "name": "Waterfront Ballroom",
-          "floor": "Floor 4"
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
         }
       ],
       "organizer": "Chanale Altein",
       "description": "",
       "recurringGroupId": null,
-      "color": "#1a5a7a"
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1783369563429_jz3ym",
