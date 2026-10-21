@@ -594,9 +594,15 @@ body{
 /* ── LIVE FEED (export modal) ────────────────────── */
 .live-feeds{margin-top:16px}
 .live-feeds-head{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-mid);margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.live-feed{padding:11px 13px;border:1px solid var(--gold);border-radius:var(--r-sm);background:var(--gold-pale);margin-bottom:8px}
+.live-feed{border:1px solid var(--gold);border-radius:var(--r-sm);background:var(--gold-pale);margin-bottom:8px}
+.live-feed-body{padding:0 13px 11px}
 .live-feed.private{border-color:#c9cde3;background:#eef0f8}
-.live-feed-head{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.live-feed-head{display:flex;align-items:center;gap:8px;padding:10px 13px;cursor:pointer;list-style:none;user-select:none;border-radius:var(--r-sm)}
+.live-feed-head::-webkit-details-marker{display:none}
+.live-feed-head:hover{background:rgba(255,255,255,.35)}
+.live-feed-head:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+.live-feed-chev{font-size:12px;color:var(--text-mid);transition:transform var(--t);margin-left:2px}
+.live-feed[open] .live-feed-chev{transform:rotate(180deg)}
 .live-dot{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 0 3px rgba(22,101,52,.18);flex-shrink:0}
 .live-dot.stale{background:var(--warn);box-shadow:0 0 0 3px rgba(146,64,14,.18)}
 .live-feed-title{font-weight:600;font-size:13px;color:var(--navy)}
@@ -4058,16 +4064,19 @@ const LIVE_FEEDS = [
 
 function renderLiveFeeds(){
   const wrap = document.getElementById('liveFeedCards');
+  // Each feed is a collapsed row; click it to show its links, click again to hide.
   wrap.innerHTML = LIVE_FEEDS.map(f => {
     const base = f.base() ? f.base().replace(/\/?$/, '/') : '';
-    const head = `<div class="live-feed-head"><span class="live-dot${base ? '' : ' stale'}"></span>
+    const head = `<summary class="live-feed-head"><span class="live-dot${base ? '' : ' stale'}"></span>
         <span class="live-feed-title">${f.title}</span>${f.tag ? `<span class="live-feed-tag">${f.tag}</span>` : ''}
-        <span class="live-feed-status" id="feedStatus_${f.key}">${base ? 'Checking…' : 'Link not added yet'}</span></div>`;
+        <span class="live-feed-status" id="feedStatus_${f.key}">${base ? 'Checking…' : 'Link not added yet'}</span>
+        <i class="bi bi-chevron-down live-feed-chev" aria-hidden="true"></i></summary>`;
+    const cls = `live-feed${f.tag ? ' private' : ''}`;
     if(!base){
-      return `<div class="live-feed private">${head}<div class="live-feed-missing">Add the private gist link to <code>PRIVATE_FEED_BASE</code> in index.html.</div></div>`;
+      return `<details class="${cls}">${head}<div class="live-feed-body"><div class="live-feed-missing">Add the private gist link to <code>PRIVATE_FEED_BASE</code> in index.html.</div></div></details>`;
     }
     const ics = base + f.file + '.ics', json = base + f.file + '.json';
-    return `<div class="live-feed${f.tag ? ' private' : ''}">${head}
+    return `<details class="${cls}">${head}<div class="live-feed-body">
       <div class="live-feed-row"><span class="live-feed-label">Calendar (.ics)</span>
         <input class="finput live-feed-url" id="feedIcs_${f.key}" value="${ics}" readonly onclick="this.select()">
         <button class="live-feed-btn" onclick="copyFeedUrl('feedIcs_${f.key}')" title="Copy"><i class="bi bi-clipboard"></i></button></div>
@@ -4075,7 +4084,7 @@ function renderLiveFeeds(){
         <input class="finput live-feed-url" id="feedJson_${f.key}" value="${json}" readonly onclick="this.select()">
         <button class="live-feed-btn" onclick="copyFeedUrl('feedJson_${f.key}')" title="Copy"><i class="bi bi-clipboard"></i></button></div>
       <a class="live-feed-sub" href="${ics.replace(/^https?:/, 'webcal:')}"><i class="bi bi-calendar-plus"></i> Subscribe in my calendar</a>
-    </div>`;
+    </div></details>`;
   }).join('');
 
   // Event count + last change for each feed
