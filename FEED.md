@@ -8,10 +8,10 @@ The calendar publishes three auto-updating feeds, matching the **Visibility** ch
 | **Internal only** | Internal reservations, including maintenance | Secret GitHub Gist: `internal.ics`, `internal.json` |
 | **Both** | Every booking — Public, Internal and not-yet-tagged | Secret GitHub Gist: `all.ics`, `all.json` |
 
-Admins see the links for whichever Visibility is selected under **Export** in the calendar, with copy buttons, a "Subscribe in my calendar" link and the time of the last change.
+Admins see all three under **Export** in the calendar, each with copy buttons, a "Subscribe in my calendar" link and the time of the last change.
 
 ### Why the Internal and Both feeds aren't in this repo
-This repository is public, so anything committed here can be read by anyone. The Internal and Both feeds are written to a **secret Gist** instead — it isn't listed or searchable, and only people who have the link can open it (the same idea as Google Calendar's "secret address"). The links are stored in Firebase under `/feedConfig`, so they only appear inside the calendar, never in the repo or in the Action logs. **Treat those links like a password:** share them with staff only. If one leaks, delete the gist at gist.github.com — the next run creates a new one with new links.
+This repository is public, so anything committed here can be read by anyone. The Internal and Both feeds are written to a **secret Gist** instead — it isn't listed or searchable, and only people who have the link can open it (the same idea as Google Calendar's "secret address"). The Action never prints the links in its logs. The Export screen shows them once they're added to `PRIVATE_FEED_BASE` in `index.html` — and because that file is public, anyone who reads it can find them. **Treat those links like a password:** share them with staff only. If one leaks, delete the gist at gist.github.com — the next run creates a new one with new links (then update `PRIVATE_FEED_BASE`).
 
 **Public URLs**
 - GitHub Pages: `https://accounting-byte.github.io/Chabadrc-Calendar/feed/events.json` (and `events.ics`)
@@ -35,14 +35,8 @@ Change these without editing code via repo **Settings → Secrets and variables 
    - Note: `CRC calendar feeds`. Expiration: your choice (if it expires, the private feeds stop updating until you replace it). Scope: tick **only `gist`**.
    - Copy the token and save it in this repo as the secret **`FEED_GIST_TOKEN`** (Settings → Secrets and variables → Actions → New repository secret).
    - The gist is created under the account that owns the token.
-4. **Firebase rules:** allow the job to save the private links. Firebase console → *Realtime Database* → *Rules*, and add a `feedConfig` entry next to the existing `rooms` / `events` / `users` entries:
-   ```json
-   "feedConfig": { ".read": "auth != null", ".write": "auth != null" }
-   ```
-   Mind the comma between entries, then click **Publish**. Without this the run log shows "Could not save the private feed links to Firebase" and the Export screen keeps saying "Not set up".
-5. Actions tab → **Build live calendar feed** → *Run workflow*. The first run creates the secret gist and saves its links to Firebase; reopen **Export** in the calendar to see them.
-
-If the job ever can't write to Firebase, it logs a warning. In that case open gist.github.com while signed in as the token owner, copy the gist's ID from its URL, and save it as the secret `FEED_GIST_ID`.
+4. Actions tab → **Build live calendar feed** → *Run workflow*. The first run creates the secret gist.
+5. **Show the private links on the Export screen:** open gist.github.com (signed in as the token owner), open the gist, click **Raw** on any file and copy the address up to and including `/raw/`, e.g. `https://gist.githubusercontent.com/USERNAME/GISTID/raw/`. Paste it into `PRIVATE_FEED_BASE` near the "Live feeds" section of `index.html`. Note: `index.html` is public, so anyone reading it can find these links.
 
 ## Using the public feed in the ChabadRC app
 ```

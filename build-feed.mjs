@@ -10,9 +10,9 @@
 //    Internal only → internal.ics, internal.json  ┐ written to a SECRET GitHub
 //    Both          → all.ics,      all.json       ┘ Gist, never to this repo
 //
-//  The secret Gist's links are saved in Firebase under /feedConfig, so the
-//  calendar's Export screen can show them to signed-in staff without the
-//  links ever appearing in the public repo.
+//  The Export screen shows the gist's links via PRIVATE_FEED_BASE in
+//  index.html (copied there by hand). That file is public, so anyone who
+//  reads it can find the Internal / Both links.
 //
 //  Runs on a schedule from .github/workflows/build-feed.yml. Files are only
 //  rewritten when their content actually changes.
@@ -108,7 +108,7 @@ function list(v, dflt) { return v == null || v === '' ? dflt : v.split(',').map(
 function num(v, dflt)  { const n = Number(v); return Number.isFinite(n) && v !== '' && v != null ? n : dflt; }
 
 // ── Firebase access (REST) ──────────────────────────────────────
-// Reads /rooms and /events; reads and writes only /feedConfig.
+// Reads /rooms and /events only.
 async function postJSON(url, body, form = false) {
   const res = await fetch(url, {
     method: 'POST',
@@ -149,12 +149,6 @@ async function readRaw(node, token) {
 async function readNode(node, token) {
   const val = await readRaw(node, token);
   return val ? Object.values(val) : [];
-}
-async function writeRaw(node, value, token) {
-  const res = await fetch(`${CFG.databaseURL}/${node}.json?auth=${encodeURIComponent(token)}`, {
-    method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(value),
-  });
-  if (!res.ok) throw new Error(`Write /${node} failed: ${res.status} ${await res.text()}`);
 }
 
 async function loadData(argv) {
@@ -375,13 +369,8 @@ async function publishPrivate(data) {
     return;
   }
 
-  // Where is the gist? env var → Firebase /feedConfig → search by description → create
-  let feedConfig = null;
-  if (data.token) {
-    try { feedConfig = await readRaw('feedConfig', data.token); }
-    catch (e) { console.warn(`::warning::Could not read /feedConfig (${e.message.slice(0, 60)}) — see FEED.md, "Firebase rules".`); }
-  }
-  let gistId = CFG.gistId || feedConfig?.gistId || '';
+  // Where is the gist? FEED_GIST_ID secret → search by description → create
+  let gistId = CFG.gistId || '';
   const mask = id => { if (id && process.env.GITHUB_ACTIONS) console.log(`::add-mask::${id}`); };
   mask(gistId);   // keep the secret link out of the (public) Action logs
   let gist = null;
@@ -428,20 +417,6 @@ async function publishPrivate(data) {
   const summary = variants.map(v => `${v.key}: ${v.items.length} events${changed[`${VARIANTS[v.key].file}.json`] ? ' (updated)' : ''}`).join(', ');
   console.log(`Private feeds — ${summary}.`);
 
-  // Save links to Firebase so the calendar can show them to staff
-  const owner = gist.owner?.login;
-  const cfg = {
-    gistId,
-    internal: { ics: rawUrl(owner, gistId, 'internal.ics'), json: rawUrl(owner, gistId, 'internal.json') },
-    all:      { ics: rawUrl(owner, gistId, 'all.ics'),      json: rawUrl(owner, gistId, 'all.json') },
-  };
-  const same = feedConfig && JSON.stringify({ gistId: feedConfig.gistId, internal: feedConfig.internal, all: feedConfig.all }) === JSON.stringify(cfg);
-  if (!same) {
-    if (data.token) {
-      try { await writeRaw('feedConfig', cfg, data.token); console.log('Saved private feed links to Firebase /feedConfig.'); }
-      catch (e) { console.warn(`::warning::Could not save the private feed links to Firebase (${e.message.slice(0, 60)}). Add a "feedConfig" rule to the Firebase Realtime Database rules — see FEED.md.`); }
-    }
-  }
   // Never print the links themselves — Action logs of a public repo are public.
 }
 

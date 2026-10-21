@@ -592,24 +592,24 @@ body{
 .exp-vis-note{margin-top:6px;font-size:11.5px;color:var(--warn)}
 
 /* ── LIVE FEED (export modal) ────────────────────── */
-.live-feed{margin-top:16px;padding:13px 14px;border:1px solid var(--gold);border-radius:var(--r-sm);background:var(--gold-pale)}
-.live-feed-head{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.live-feeds{margin-top:16px}
+.live-feeds-head{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-mid);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.live-feed{padding:11px 13px;border:1px solid var(--gold);border-radius:var(--r-sm);background:var(--gold-pale);margin-bottom:8px}
+.live-feed.private{border-color:#c9cde3;background:#eef0f8}
+.live-feed-head{display:flex;align-items:center;gap:8px;margin-bottom:7px}
 .live-dot{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 0 3px rgba(22,101,52,.18);flex-shrink:0}
 .live-dot.stale{background:var(--warn);box-shadow:0 0 0 3px rgba(146,64,14,.18)}
 .live-feed-title{font-weight:600;font-size:13px;color:var(--navy)}
-.live-feed-status{margin-left:auto;font-size:11px;color:var(--text-mid)}
-.live-feed-note{font-size:12px;color:var(--text-mid);margin:0 0 10px}
-.live-feed-row{display:flex;align-items:center;gap:6px;margin-bottom:6px}
-.live-feed-label{font-size:11.5px;font-weight:500;color:var(--text-mid);width:104px;flex-shrink:0}
+.live-feed-tag{font-size:10px;font-weight:600;padding:1px 7px;border-radius:10px;background:var(--navy);color:#fff;letter-spacing:.03em}
+.live-feed-status{margin-left:auto;font-size:11px;color:var(--text-mid);white-space:nowrap}
+.live-feed-row{display:flex;align-items:center;gap:6px;margin-bottom:5px}
+.live-feed-label{font-size:11.5px;font-weight:500;color:var(--text-mid);width:92px;flex-shrink:0}
 .live-feed-url{font-size:11.5px !important;padding:5px 8px !important;background:var(--white) !important;min-width:0;flex:1}
 .live-feed-btn{border:1px solid var(--border-mid);background:var(--white);border-radius:var(--r-sm);padding:4px 9px;cursor:pointer;color:var(--navy);transition:background var(--t)}
 .live-feed-btn:hover{background:var(--cream-mid)}
-.live-feed-sub{display:inline-flex;align-items:center;gap:6px;margin-top:4px;font-size:12.5px;font-weight:500;color:var(--navy);text-decoration:none}
+.live-feed-sub{display:inline-flex;align-items:center;gap:6px;margin-top:2px;font-size:12px;font-weight:500;color:var(--navy);text-decoration:none}
 .live-feed-sub:hover{text-decoration:underline}
-.live-feed.private{border-color:var(--navy);background:#eef0f8}
-.live-feed-warn{display:flex;gap:7px;align-items:flex-start;font-size:11.5px;color:var(--navy);background:var(--white);border:1px solid #c9cde3;border-radius:var(--r-sm);padding:7px 9px;margin:0 0 10px}
-.live-feed-missing{display:flex;gap:7px;align-items:flex-start;font-size:12px;color:var(--text-mid)}
-.live-feed-missing code{font-size:11px;background:var(--white);padding:1px 5px;border-radius:4px}
+.live-feed-missing{font-size:12px;color:var(--text-mid)}
 @media (max-width:480px){.live-feed-label{width:auto}.live-feed-row{flex-wrap:wrap}}
 
 /* ── CSV IMPORT ──────────────────────────────────── */
@@ -1703,29 +1703,10 @@ body{
           <span id="exportCountText">Set filters to preview export</span>
         </div>
 
-        <!-- Live feed (auto-updating) -->
-        <div class="live-feed" id="liveFeedBox">
-          <div class="live-feed-head">
-            <span class="live-dot"></span>
-            <span class="live-feed-title" id="liveFeedTitle">Live Feed — auto-updating</span>
-            <span class="live-feed-status" id="liveFeedStatus">Checking…</span>
-          </div>
-          <p class="live-feed-note" id="liveFeedNote">Confirmed public events, refreshed every ~15 minutes. Use these links in the ChabadRC app or any calendar — no manual export needed.</p>
-          <div class="live-feed-warn" id="liveFeedWarn" style="display:none"><i class="bi bi-shield-lock"></i><span>Private link — anyone who has it can see internal reservations. Share with staff only, never post it publicly.</span></div>
-          <div class="live-feed-missing" id="liveFeedMissing" style="display:none"><i class="bi bi-info-circle"></i><span>This private feed isn't set up yet. Add the <code>FEED_GIST_TOKEN</code> secret to the repository (see FEED.md) and the links will appear here after the next run.</span></div>
-          <div id="liveFeedLinks">
-          <div class="live-feed-row">
-            <span class="live-feed-label">Calendar (.ics)</span>
-            <input class="finput live-feed-url" id="feedIcsUrl" readonly onclick="this.select()">
-            <button class="live-feed-btn" onclick="copyFeedUrl('feedIcsUrl')" title="Copy"><i class="bi bi-clipboard"></i></button>
-          </div>
-          <div class="live-feed-row">
-            <span class="live-feed-label" id="liveFeedJsonLabel">App data (.json)</span>
-            <input class="finput live-feed-url" id="feedJsonUrl" readonly onclick="this.select()">
-            <button class="live-feed-btn" onclick="copyFeedUrl('feedJsonUrl')" title="Copy"><i class="bi bi-clipboard"></i></button>
-          </div>
-          <a class="live-feed-sub" id="feedWebcalLink" href="#"><i class="bi bi-calendar-plus"></i> Subscribe in my calendar</a>
-          </div>
+        <!-- Live feeds (auto-updating) -->
+        <div class="live-feeds">
+          <div class="live-feeds-head"><i class="bi bi-broadcast"></i> Live feeds — update automatically every ~15 minutes</div>
+          <div id="liveFeedCards"></div>
         </div>
 
       </div>
@@ -4043,21 +4024,25 @@ function openExportModal(){
     rooms.map(r=>`<option value="${r.id}">${r.name}</option>`).join('');
 
   updateExportPreview();
-  _feedConfigPromise = loadFeedConfig();
-  initLiveFeedPanel();
+  renderLiveFeeds();
 
   // Watch filter changes
   ['exportFrom','exportTo','expConfirmed','expPending','expCancelled','exportRoom']
     .forEach(id => document.getElementById(id)?.addEventListener('change', updateExportPreview));
-  document.querySelectorAll('input[name="expVis"]').forEach(r => r.onchange = () => { updateExportPreview(); initLiveFeedPanel(); });
+  document.querySelectorAll('input[name="expVis"]').forEach(r => r.onchange = updateExportPreview);
 
   new bootstrap.Modal(document.getElementById('exportModal')).show();
 }
 
-// ── Live feed (built by .github/workflows/build-feed.yml) ──
-// Leave empty to auto-detect: GitHub Pages → same site, otherwise raw GitHub.
+// ── Live feeds (built by .github/workflows/build-feed.yml) ──
+// Public feed: files in this repo. Leave FEED_BASE_URL empty to auto-detect
+// (GitHub Pages → same site, otherwise raw GitHub).
 const FEED_BASE_URL = '';
 const FEED_REPO_RAW = 'https://raw.githubusercontent.com/accounting-byte/Chabadrc-Calendar/main/feed/';
+// Internal / Both feeds: the secret gist's raw folder, ending in /raw/
+// e.g. 'https://gist.githubusercontent.com/USERNAME/GISTID/raw/'
+// NOTE: this file is public, so anyone reading it can find these links.
+const PRIVATE_FEED_BASE = '';
 
 function feedBase(){
   if(FEED_BASE_URL) return FEED_BASE_URL.replace(/\/?$/, '/');
@@ -4065,86 +4050,48 @@ function feedBase(){
   return FEED_REPO_RAW;
 }
 
-// Internal / Both feeds live in a secret Gist (never in the public repo).
-// The build job saves their links in Firebase under /feedConfig.
-let _feedConfigPromise = null;
-function loadFeedConfig(){
-  return db.ref('feedConfig').get()
-    .then(snap => snap.exists() ? snap.val() : null)
-    .catch(err => { console.warn('feedConfig', err); return null; });
-}
+const LIVE_FEEDS = [
+  {key:'public',   title:'Public only',   file:'events',   base:() => feedBase()},
+  {key:'internal', title:'Internal only', file:'internal', base:() => PRIVATE_FEED_BASE, tag:'Staff only'},
+  {key:'all',      title:'Both',          file:'all',      base:() => PRIVATE_FEED_BASE, tag:'Staff only'},
+];
 
-const FEED_TEXT = {
-  public:   { title:'Live Feed — Public only',
-              note:'Confirmed public events, refreshed every ~15 minutes. Use these links in the ChabadRC app or any calendar — no manual export needed.',
-              json:'App data (.json)' },
-  internal: { title:'Live Feed — Internal only',
-              note:'Confirmed internal reservations (including maintenance), refreshed every ~15 minutes. For management calendars and reports.',
-              json:'Data (.json)' },
-  both:     { title:'Live Feed — Public + Internal',
-              note:'Every confirmed booking, public and internal, refreshed every ~15 minutes.',
-              json:'Data (.json)' },
-};
+function renderLiveFeeds(){
+  const wrap = document.getElementById('liveFeedCards');
+  wrap.innerHTML = LIVE_FEEDS.map(f => {
+    const base = f.base() ? f.base().replace(/\/?$/, '/') : '';
+    const head = `<div class="live-feed-head"><span class="live-dot${base ? '' : ' stale'}"></span>
+        <span class="live-feed-title">${f.title}</span>${f.tag ? `<span class="live-feed-tag">${f.tag}</span>` : ''}
+        <span class="live-feed-status" id="feedStatus_${f.key}">${base ? 'Checking…' : 'Link not added yet'}</span></div>`;
+    if(!base){
+      return `<div class="live-feed private">${head}<div class="live-feed-missing">Add the private gist link to <code>PRIVATE_FEED_BASE</code> in index.html.</div></div>`;
+    }
+    const ics = base + f.file + '.ics', json = base + f.file + '.json';
+    return `<div class="live-feed${f.tag ? ' private' : ''}">${head}
+      <div class="live-feed-row"><span class="live-feed-label">Calendar (.ics)</span>
+        <input class="finput live-feed-url" id="feedIcs_${f.key}" value="${ics}" readonly onclick="this.select()">
+        <button class="live-feed-btn" onclick="copyFeedUrl('feedIcs_${f.key}')" title="Copy"><i class="bi bi-clipboard"></i></button></div>
+      <div class="live-feed-row"><span class="live-feed-label">Data (.json)</span>
+        <input class="finput live-feed-url" id="feedJson_${f.key}" value="${json}" readonly onclick="this.select()">
+        <button class="live-feed-btn" onclick="copyFeedUrl('feedJson_${f.key}')" title="Copy"><i class="bi bi-clipboard"></i></button></div>
+      <a class="live-feed-sub" href="${ics.replace(/^https?:/, 'webcal:')}"><i class="bi bi-calendar-plus"></i> Subscribe in my calendar</a>
+    </div>`;
+  }).join('');
 
-let _feedPanelSeq = 0;
-async function initLiveFeedPanel(){
-  const mode = getExportVisibility();            // public | internal | both
-  const seq  = ++_feedPanelSeq;                   // ignore stale async results
-  const txt  = FEED_TEXT[mode];
-  const box  = document.getElementById('liveFeedBox');
-  const statusEl = document.getElementById('liveFeedStatus');
-  const dot  = box.querySelector('.live-dot');
-  const isPrivate = mode !== 'public';
-
-  box.classList.toggle('private', isPrivate);
-  document.getElementById('liveFeedTitle').textContent = txt.title;
-  document.getElementById('liveFeedNote').textContent  = txt.note;
-  document.getElementById('liveFeedJsonLabel').textContent = txt.json;
-  document.getElementById('liveFeedWarn').style.display = isPrivate ? 'flex' : 'none';
-  statusEl.textContent = 'Checking…';
-  dot.classList.remove('stale');
-
-  let icsUrl, jsonUrl;
-  if(!isPrivate){
-    const base = feedBase();
-    icsUrl  = base + 'events.ics';
-    jsonUrl = base + 'events.json';
-  } else {
-    const cfg = await (_feedConfigPromise || (_feedConfigPromise = loadFeedConfig()));
-    if(seq !== _feedPanelSeq) return;
-    const links = cfg && cfg[mode === 'both' ? 'all' : 'internal'];
-    icsUrl  = links?.ics;
-    jsonUrl = links?.json;
-  }
-
-  const ready = !!(icsUrl && jsonUrl);
-  document.getElementById('liveFeedLinks').style.display   = ready ? 'block' : 'none';
-  document.getElementById('liveFeedMissing').style.display = ready ? 'none'  : 'flex';
-  if(isPrivate) document.getElementById('liveFeedWarn').style.display = ready ? 'flex' : 'none';
-  if(!ready){
-    dot.classList.add('stale');
-    statusEl.textContent = 'Not set up';
-    return;
-  }
-
-  document.getElementById('feedIcsUrl').value  = icsUrl;
-  document.getElementById('feedJsonUrl').value = jsonUrl;
-  document.getElementById('feedWebcalLink').href = icsUrl.replace(/^https?:/, 'webcal:');
-
-  fetch(jsonUrl + '?t=' + Date.now(), {cache:'no-store'})
-    .then(r => { if(!r.ok) throw new Error(r.status); return r.json(); })
-    .then(feed => {
-      if(seq !== _feedPanelSeq) return;
-      const mins = Math.round((Date.now() - new Date(feed.updatedAt)) / 60000);
-      const ago = mins < 1 ? 'just now' : mins < 60 ? `${mins} min ago`
-                : mins < 1440 ? `${Math.round(mins/60)} h ago` : `${Math.round(mins/1440)} d ago`;
-      statusEl.textContent = `${feed.count} events · changed ${ago}`;
-    })
-    .catch(() => {
-      if(seq !== _feedPanelSeq) return;
-      dot.classList.add('stale');
-      statusEl.textContent = isPrivate ? 'Status unavailable' : 'Not published yet';
-    });
+  // Event count + last change for each feed
+  LIVE_FEEDS.forEach(f => {
+    const base = f.base(); if(!base) return;
+    const el = document.getElementById('feedStatus_' + f.key);
+    fetch(base.replace(/\/?$/, '/') + f.file + '.json?t=' + Date.now(), {cache:'no-store'})
+      .then(r => { if(!r.ok) throw new Error(r.status); return r.json(); })
+      .then(feed => {
+        const mins = Math.round((Date.now() - new Date(feed.updatedAt)) / 60000);
+        const ago = mins < 1 ? 'just now' : mins < 60 ? `${mins} min ago`
+                  : mins < 1440 ? `${Math.round(mins/60)} h ago` : `${Math.round(mins/1440)} d ago`;
+        el.textContent = `${feed.count} events · changed ${ago}`;
+      })
+      .catch(() => { el.textContent = 'Not published yet'; });
+  });
 }
 
 function copyFeedUrl(inputId){
