@@ -4042,7 +4042,7 @@ const FEED_REPO_RAW = 'https://raw.githubusercontent.com/accounting-byte/Chabadr
 // Internal / Both feeds: the secret gist's raw folder, ending in /raw/
 // e.g. 'https://gist.githubusercontent.com/USERNAME/GISTID/raw/'
 // NOTE: this file is public, so anyone reading it can find these links.
-const PRIVATE_FEED_BASE = '';
+const PRIVATE_FEED_BASE = 'https://gist.githubusercontent.com/badhalfy/29f8ceb86e8caae62e8345dde2a9077d/raw/';
 
 function feedBase(){
   if(FEED_BASE_URL) return FEED_BASE_URL.replace(/\/?$/, '/');
