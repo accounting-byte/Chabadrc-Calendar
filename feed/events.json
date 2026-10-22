@@ -2,9 +2,9 @@
   "schema": 1,
   "calendar": "Chabad Russian Center",
   "timezone": "America/New_York",
-  "version": "97834fc836f10b79",
-  "updatedAt": "2026-10-20T20:45:25.173Z",
-  "count": 104,
+  "version": "8468034a61d3ebdd",
+  "updatedAt": "2026-10-22T18:47:53.038Z",
+  "count": 106,
   "rooms": [
     {
       "id": "r_1774223782080",
@@ -931,6 +931,30 @@
       "color": "#7a3a6b"
     },
     {
+      "id": "e_1792688505270_xj2fs",
+      "title": "Fashion Sara Eidelman",
+      "start": "2026-10-27T23:00:00.000Z",
+      "end": "2026-10-28T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t12",
+        "name": "Womens Programs",
+        "color": "#7a2a5a"
+      },
+      "rooms": [
+        {
+          "id": "r5",
+          "name": "2nd Fl Lobby",
+          "floor": "2nd Floor"
+        }
+      ],
+      "organizer": "Sonya Shilov",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#6b4a1a"
+    },
+    {
       "id": "e_1783369563429_xhhot",
       "title": "Chassidus",
       "start": "2026-10-29T00:15:00.000Z",
@@ -1579,6 +1603,30 @@
       "description": "",
       "recurringGroupId": "grp_1783369563427",
       "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1792085833535_n72aw",
+      "title": "CYP Chanukah party",
+      "start": "2026-12-07T00:00:00.000Z",
+      "end": "2026-12-07T05:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t5",
+        "name": "CYP",
+        "color": "#3a5a7a"
+      },
+      "rooms": [
+        {
+          "id": "r11",
+          "name": "Rooftop",
+          "floor": "Floor 6"
+        }
+      ],
+      "organizer": "Eitan Shilov",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#2a6a2a"
     },
     {
       "id": "e_1783522663277_4ff0w",
