@@ -2,9 +2,9 @@
   "schema": 1,
   "calendar": "Chabad Russian Center",
   "timezone": "America/New_York",
-  "version": "8468034a61d3ebdd",
-  "updatedAt": "2026-10-22T18:47:53.038Z",
-  "count": 106,
+  "version": "96990ab22cda10d6",
+  "updatedAt": "2026-10-25T16:18:24.160Z",
+  "count": 107,
   "rooms": [
     {
       "id": "r_1774223782080",
@@ -1579,6 +1579,30 @@
       "description": "",
       "recurringGroupId": "grp_1783369563427",
       "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1792940757256_a86th",
+      "title": "Grinberg Play & Rehearsal",
+      "start": "2026-11-29T15:00:00.000Z",
+      "end": "2026-11-30T04:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t8",
+        "name": "JCC",
+        "color": "#1a4a7a"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Natasha Grinberg",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1783369563429_ydtdw",
