@@ -2,9 +2,9 @@
   "schema": 1,
   "calendar": "Chabad Russian Center",
   "timezone": "America/New_York",
-  "version": "1c84cfe3df81ba69",
-  "updatedAt": "2026-11-03T16:11:11.237Z",
-  "count": 108,
+  "version": "8f548329ea60131b",
+  "updatedAt": "2026-11-03T21:44:58.189Z",
+  "count": 109,
   "rooms": [
     {
       "id": "r_1774223782080",
@@ -1348,6 +1348,30 @@
       "description": "",
       "recurringGroupId": "grp_1791905820958",
       "color": "#6b4a1a"
+    },
+    {
+      "id": "e_1793738992700_z07f7",
+      "title": "Shabbat Cartel",
+      "start": "2026-11-13T21:00:00.000Z",
+      "end": "2026-11-14T04:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t16",
+        "name": "Community Event",
+        "color": "#1a6a5a"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Shlomo",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1782833957813_dslyw",
