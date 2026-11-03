@@ -2,9 +2,9 @@
   "schema": 1,
   "calendar": "Chabad Russian Center",
   "timezone": "America/New_York",
-  "version": "0fd97611e1e9335b",
-  "updatedAt": "2026-11-02T01:40:34.870Z",
-  "count": 105,
+  "version": "1c84cfe3df81ba69",
+  "updatedAt": "2026-11-03T16:11:11.237Z",
+  "count": 108,
   "rooms": [
     {
       "id": "r_1774223782080",
@@ -2061,6 +2061,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1793713881724_hdalh",
+      "title": "Tamim Kinder/1st grade Birthdays",
+      "start": "2027-03-03T20:00:00.000Z",
+      "end": "2027-03-03T20:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t14",
+        "name": "Tamim",
+        "color": "#4a2a8a"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Myriam Banoun",
+      "description": "40 chairs\n3 long tables",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783369563430_pt0u0",
       "title": "Chassidus",
       "start": "2027-03-04T01:15:00.000Z",
@@ -2277,6 +2301,30 @@
       "color": "#7a3a6b"
     },
     {
+      "id": "e_1793713720965_fay7t",
+      "title": "Tamim Kinder/1st grade Birthdays",
+      "start": "2027-04-07T19:00:00.000Z",
+      "end": "2027-04-07T19:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t14",
+        "name": "Tamim",
+        "color": "#4a2a8a"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Myriam Banoun",
+      "description": "40 chairs\n3 long tables",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783369563430_pqgxn",
       "title": "Chassidus",
       "start": "2027-04-08T00:15:00.000Z",
@@ -2418,6 +2466,30 @@
       "organizer": "Emanuella Boroda",
       "description": "",
       "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1793713808886_s13f1",
+      "title": "Tamim Kinder/1st grade Birthdays",
+      "start": "2027-05-05T19:00:00.000Z",
+      "end": "2027-05-05T19:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t14",
+        "name": "Tamim",
+        "color": "#4a2a8a"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Myriam Banoun",
+      "description": "40 chairs\n3 long tables",
+      "recurringGroupId": null,
       "color": "#7a3a6b"
     },
     {
