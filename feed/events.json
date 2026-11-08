@@ -2,9 +2,9 @@
   "schema": 1,
   "calendar": "Chabad Russian Center",
   "timezone": "America/New_York",
-  "version": "c7fdc2beb8c9c0e9",
-  "updatedAt": "2026-11-05T08:44:56.929Z",
-  "count": 110,
+  "version": "852d0ec9a42970df",
+  "updatedAt": "2026-11-08T08:20:21.113Z",
+  "count": 109,
   "rooms": [
     {
       "id": "r_1774223782080",
@@ -199,30 +199,6 @@
     }
   ],
   "events": [
-    {
-      "id": "e_1783522663274_ucx43",
-      "title": "Women's Torah Class",
-      "start": "2026-09-08T23:30:00.000Z",
-      "end": "2026-09-09T02:30:00.000Z",
-      "status": "confirmed",
-      "visibility": "public",
-      "type": {
-        "id": "t2",
-        "name": "Classes and Lectures",
-        "color": "#2d5a3d"
-      },
-      "rooms": [
-        {
-          "id": "r4",
-          "name": "Kiddush Room",
-          "floor": "Floor 2"
-        }
-      ],
-      "organizer": "Emanuella Boroda",
-      "description": "",
-      "recurringGroupId": "grp_1783522663274",
-      "color": "#7a3a6b"
-    },
     {
       "id": "e_1783369563429_sozf2",
       "title": "Chassidus",
