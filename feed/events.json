@@ -2,9 +2,9 @@
   "schema": 1,
   "calendar": "Chabad Russian Center",
   "timezone": "America/New_York",
-  "version": "6c5070d6b8171ea8",
-  "updatedAt": "2026-11-09T02:50:08.800Z",
-  "count": 108,
+  "version": "3475086bf5c08820",
+  "updatedAt": "2026-11-12T22:44:39.121Z",
+  "count": 114,
   "rooms": [
     {
       "id": "r_1774223782080",
@@ -1389,6 +1389,30 @@
       "color": "#7a3a6b"
     },
     {
+      "id": "e_1794270330397_2eute",
+      "title": "Bar mitzva club",
+      "start": "2026-11-17T23:00:00.000Z",
+      "end": "2026-11-18T00:30:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t1",
+        "name": "Bar / Bat Mitzvah Club",
+        "color": "#1e3a6b"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Eitan Shilov",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783522663276_wyned",
       "title": "Women's Torah Class",
       "start": "2026-11-18T00:30:00.000Z",
@@ -1461,6 +1485,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1794444682079_c1epj",
+      "title": "Cyp Academy",
+      "start": "2026-11-20T01:00:00.000Z",
+      "end": "2026-11-20T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t5",
+        "name": "CYP",
+        "color": "#3a5a7a"
+      },
+      "rooms": [
+        {
+          "id": "r5",
+          "name": "2nd Fl Lobby",
+          "floor": "2nd Floor"
+        }
+      ],
+      "organizer": "Eitan Shilov",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#6b4a1a"
+    },
+    {
       "id": "e_1783522663277_gnde3",
       "title": "Women's Torah Class",
       "start": "2026-11-25T00:30:00.000Z",
@@ -1530,6 +1578,30 @@
       "organizer": "Natasha Grinberg",
       "description": "",
       "recurringGroupId": null,
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1794237482736_3zxir",
+      "title": "Seniors Music",
+      "start": "2026-12-02T15:00:00.000Z",
+      "end": "2026-12-02T16:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t10",
+        "name": "Seniors Program",
+        "color": "#6a3a2a"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "One table for tea, coffee, fruit, pastry",
+      "recurringGroupId": "grp_1794237482736",
       "color": "#7a3a6b"
     },
     {
@@ -1629,6 +1701,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1794237482736_xlj2h",
+      "title": "Seniors Music",
+      "start": "2026-12-16T15:00:00.000Z",
+      "end": "2026-12-16T16:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t10",
+        "name": "Seniors Program",
+        "color": "#6a3a2a"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "One table for tea, coffee, fruit, pastry",
+      "recurringGroupId": "grp_1794237482736",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783369563429_pgrj7",
       "title": "Chassidus",
       "start": "2026-12-17T01:15:00.000Z",
@@ -1677,6 +1773,30 @@
       "color": "#7a3a6b"
     },
     {
+      "id": "e_1794237482736_h7s63",
+      "title": "Seniors Music",
+      "start": "2026-12-23T15:00:00.000Z",
+      "end": "2026-12-23T16:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t10",
+        "name": "Seniors Program",
+        "color": "#6a3a2a"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "One table for tea, coffee, fruit, pastry",
+      "recurringGroupId": "grp_1794237482736",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783369563430_1v0ew",
       "title": "Chassidus",
       "start": "2026-12-24T01:15:00.000Z",
@@ -1722,6 +1842,30 @@
       "organizer": "Emanuella Boroda",
       "description": "",
       "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1794237482737_622ss",
+      "title": "Seniors Music",
+      "start": "2026-12-30T15:00:00.000Z",
+      "end": "2026-12-30T16:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t10",
+        "name": "Seniors Program",
+        "color": "#6a3a2a"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Chanale Altein",
+      "description": "One table for tea, coffee, fruit, pastry",
+      "recurringGroupId": "grp_1794237482736",
       "color": "#7a3a6b"
     },
     {
