@@ -2,9 +2,9 @@
   "schema": 1,
   "calendar": "Chabad Russian Center",
   "timezone": "America/New_York",
-  "version": "3475086bf5c08820",
-  "updatedAt": "2026-11-12T22:44:39.121Z",
-  "count": 114,
+  "version": "1aa40fdb424c0c74",
+  "updatedAt": "2026-11-16T03:10:49.860Z",
+  "count": 113,
   "rooms": [
     {
       "id": "r_1774223782080",
@@ -199,30 +199,6 @@
     }
   ],
   "events": [
-    {
-      "id": "e_1783369563429_ic7q4",
-      "title": "Chassidus",
-      "start": "2026-09-17T00:15:00.000Z",
-      "end": "2026-09-17T01:30:00.000Z",
-      "status": "confirmed",
-      "visibility": "public",
-      "type": {
-        "id": "t2",
-        "name": "Classes and Lectures",
-        "color": "#2d5a3d"
-      },
-      "rooms": [
-        {
-          "id": "r9",
-          "name": "Daily Sanctuary",
-          "floor": "Floor 2"
-        }
-      ],
-      "organizer": "Chezky Altein",
-      "description": "",
-      "recurringGroupId": "grp_1783369563427",
-      "color": "#8a2a2a"
-    },
     {
       "id": "e_1783522663275_dvr8t",
       "title": "Women's Torah Class",
