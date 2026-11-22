@@ -2,9 +2,9 @@
   "schema": 1,
   "calendar": "Chabad Russian Center",
   "timezone": "America/New_York",
-  "version": "7d49abb925c7a384",
-  "updatedAt": "2026-11-22T03:10:10.802Z",
-  "count": 116,
+  "version": "2479b296c91fa192",
+  "updatedAt": "2026-11-22T23:49:06.484Z",
+  "count": 117,
   "rooms": [
     {
       "id": "r_1774223782080",
@@ -1767,6 +1767,30 @@
       "description": "",
       "recurringGroupId": "grp_1783369563427",
       "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1795371420769_yu8ik",
+      "title": "Cyp girls",
+      "start": "2026-12-20T16:00:00.000Z",
+      "end": "2026-12-20T19:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t5",
+        "name": "CYP",
+        "color": "#3a5a7a"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Sonya Shilov",
+      "description": "",
+      "recurringGroupId": null,
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1794850212272_w1sry",
