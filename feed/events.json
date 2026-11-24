@@ -2,9 +2,9 @@
   "schema": 1,
   "calendar": "Chabad Russian Center",
   "timezone": "America/New_York",
-  "version": "a2805a4f776eac12",
-  "updatedAt": "2026-11-23T04:49:35.714Z",
-  "count": 116,
+  "version": "c6b370d2d1645cea",
+  "updatedAt": "2026-11-24T02:34:27.524Z",
+  "count": 161,
   "rooms": [
     {
       "id": "r_1774223782080",
@@ -41,6 +41,12 @@
       "name": "Kitchen Side Ballroom",
       "floor": "4th Floor",
       "color": "#a9bf3b"
+    },
+    {
+      "id": "r_1795456588871",
+      "name": "2nd Floor Elevator Room",
+      "floor": "2nd Floor",
+      "color": "#bf3bb4"
     },
     {
       "id": "r1",
@@ -1437,6 +1443,30 @@
       "color": "#6b4a1a"
     },
     {
+      "id": "e_1795403085748_2upir",
+      "title": "Tora",
+      "start": "2026-11-24T01:00:00.000Z",
+      "end": "2026-11-24T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783522663277_gnde3",
       "title": "Women's Torah Class",
       "start": "2026-11-25T00:30:00.000Z",
@@ -1613,6 +1643,30 @@
       "description": "",
       "recurringGroupId": null,
       "color": "#2a6a2a"
+    },
+    {
+      "id": "e_1795403085751_6wihr",
+      "title": "Tora",
+      "start": "2026-12-08T01:00:00.000Z",
+      "end": "2026-12-08T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1783522663277_4ff0w",
@@ -1803,6 +1857,30 @@
       "color": "#6b4a1a"
     },
     {
+      "id": "e_1795403085751_x2tnr",
+      "title": "Tora",
+      "start": "2026-12-22T01:00:00.000Z",
+      "end": "2026-12-22T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783522663277_h1bsu",
       "title": "Women's Torah Class",
       "start": "2026-12-23T00:30:00.000Z",
@@ -1907,6 +1985,30 @@
       "description": "",
       "recurringGroupId": "grp_1794850212271",
       "color": "#6b4a1a"
+    },
+    {
+      "id": "e_1795403085752_70he3",
+      "title": "Tora",
+      "start": "2026-12-29T01:00:00.000Z",
+      "end": "2026-12-29T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1783522663277_ji8y1",
@@ -2101,6 +2203,30 @@
       "color": "#1e3a6b"
     },
     {
+      "id": "e_1795403085753_piqox",
+      "title": "Tora",
+      "start": "2027-01-26T01:00:00.000Z",
+      "end": "2027-01-26T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783522663278_icvye",
       "title": "Women's Torah Class",
       "start": "2027-01-27T00:30:00.000Z",
@@ -2173,6 +2299,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1795403085753_9aamo",
+      "title": "Tora",
+      "start": "2027-02-09T01:00:00.000Z",
+      "end": "2027-02-09T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783522663278_ce3i9",
       "title": "Women's Torah Class",
       "start": "2027-02-10T00:30:00.000Z",
@@ -2219,6 +2369,30 @@
       "description": "",
       "recurringGroupId": "grp_1783369563427",
       "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1795403085754_z3fr9",
+      "title": "Tora",
+      "start": "2027-02-16T01:00:00.000Z",
+      "end": "2027-02-16T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1783369563430_j35cd",
@@ -2293,6 +2467,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1795403085754_j0xdu",
+      "title": "Tora",
+      "start": "2027-03-02T01:00:00.000Z",
+      "end": "2027-03-02T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1793713881724_hdalh",
       "title": "Tamim Kinder/1st grade Birthdays",
       "start": "2027-03-03T20:00:00.000Z",
@@ -2339,6 +2537,30 @@
       "description": "",
       "recurringGroupId": "grp_1783369563427",
       "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1795403085754_74q8i",
+      "title": "Tora",
+      "start": "2027-03-09T01:00:00.000Z",
+      "end": "2027-03-09T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1783522663279_wd42m",
@@ -2413,6 +2635,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1795403085755_rkcqy",
+      "title": "Tora",
+      "start": "2027-03-23T00:00:00.000Z",
+      "end": "2027-03-23T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783522663279_2ylh9",
       "title": "Women's Torah Class",
       "start": "2027-03-23T23:30:00.000Z",
@@ -2461,6 +2707,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1795403085755_b1j3z",
+      "title": "Tora",
+      "start": "2027-03-30T00:00:00.000Z",
+      "end": "2027-03-30T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783522663279_1sdhq",
       "title": "Women's Torah Class",
       "start": "2027-03-30T23:30:00.000Z",
@@ -2507,6 +2777,30 @@
       "description": "",
       "recurringGroupId": "grp_1783369563427",
       "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1795403085756_gown7",
+      "title": "Tora",
+      "start": "2027-04-06T00:00:00.000Z",
+      "end": "2027-04-06T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1783522663279_4aksx",
@@ -2581,6 +2875,54 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1795403085756_kwf0a",
+      "title": "Tora",
+      "start": "2027-04-13T00:00:00.000Z",
+      "end": "2027-04-13T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085756_7kvim",
+      "title": "Tora",
+      "start": "2027-04-20T00:00:00.000Z",
+      "end": "2027-04-20T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783522663280_7xmqq",
       "title": "Women's Torah Class",
       "start": "2027-04-20T23:30:00.000Z",
@@ -2629,6 +2971,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1795403085757_g5lut",
+      "title": "Tora",
+      "start": "2027-04-27T00:00:00.000Z",
+      "end": "2027-04-27T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783522663280_bm53g",
       "title": "Women's Torah Class",
       "start": "2027-04-27T23:30:00.000Z",
@@ -2675,6 +3041,30 @@
       "description": "",
       "recurringGroupId": "grp_1783369563427",
       "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1795403085757_12gee",
+      "title": "Tora",
+      "start": "2027-05-04T00:00:00.000Z",
+      "end": "2027-05-04T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1783522663280_n9pf8",
@@ -2749,6 +3139,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1795403085758_g9tfs",
+      "title": "Tora",
+      "start": "2027-05-11T00:00:00.000Z",
+      "end": "2027-05-11T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783522663280_wlict",
       "title": "Women's Torah Class",
       "start": "2027-05-11T23:30:00.000Z",
@@ -2795,6 +3209,30 @@
       "description": "",
       "recurringGroupId": "grp_1783369563427",
       "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1795403085758_du71w",
+      "title": "Tora",
+      "start": "2027-05-18T00:00:00.000Z",
+      "end": "2027-05-18T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1783522663280_eowb1",
@@ -2845,6 +3283,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1795403085758_hhzuh",
+      "title": "Tora",
+      "start": "2027-05-25T00:00:00.000Z",
+      "end": "2027-05-25T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783522663280_jhxpe",
       "title": "Women's Torah Class",
       "start": "2027-05-25T23:30:00.000Z",
@@ -2891,6 +3353,30 @@
       "description": "",
       "recurringGroupId": "grp_1783369563427",
       "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1795403085759_q6vxm",
+      "title": "Tora",
+      "start": "2027-06-01T00:00:00.000Z",
+      "end": "2027-06-01T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1783522663280_rzcr0",
@@ -2941,6 +3427,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1795403085759_kfu6e",
+      "title": "Tora",
+      "start": "2027-06-08T00:00:00.000Z",
+      "end": "2027-06-08T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783522663281_ebpjk",
       "title": "Women's Torah Class",
       "start": "2027-06-08T23:30:00.000Z",
@@ -2987,6 +3497,30 @@
       "description": "",
       "recurringGroupId": "grp_1783369563427",
       "color": "#8a2a2a"
+    },
+    {
+      "id": "e_1795403085759_sdvyn",
+      "title": "Tora",
+      "start": "2027-06-15T00:00:00.000Z",
+      "end": "2027-06-15T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1783522663281_lhfpc",
@@ -3037,6 +3571,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1795403085760_6um3c",
+      "title": "Tora",
+      "start": "2027-06-22T00:00:00.000Z",
+      "end": "2027-06-22T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783522663281_pad2x",
       "title": "Women's Torah Class",
       "start": "2027-06-22T23:30:00.000Z",
@@ -3085,6 +3643,30 @@
       "color": "#8a2a2a"
     },
     {
+      "id": "e_1795403085760_3yoei",
+      "title": "Tora",
+      "start": "2027-06-29T00:00:00.000Z",
+      "end": "2027-06-29T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
       "id": "e_1783522663281_4m84y",
       "title": "Women's Torah Class",
       "start": "2027-06-29T23:30:00.000Z",
@@ -3106,6 +3688,510 @@
       "organizer": "Emanuella Boroda",
       "description": "",
       "recurringGroupId": "grp_1783522663274",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085760_amvoz",
+      "title": "Tora",
+      "start": "2027-07-06T00:00:00.000Z",
+      "end": "2027-07-06T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085761_ljdej",
+      "title": "Tora",
+      "start": "2027-07-13T00:00:00.000Z",
+      "end": "2027-07-13T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085761_yv4zv",
+      "title": "Tora",
+      "start": "2027-07-20T00:00:00.000Z",
+      "end": "2027-07-20T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085761_ozsfv",
+      "title": "Tora",
+      "start": "2027-07-27T00:00:00.000Z",
+      "end": "2027-07-27T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085762_gffay",
+      "title": "Tora",
+      "start": "2027-08-03T00:00:00.000Z",
+      "end": "2027-08-03T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085762_0e1hj",
+      "title": "Tora",
+      "start": "2027-08-10T00:00:00.000Z",
+      "end": "2027-08-10T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085762_9ahx1",
+      "title": "Tora",
+      "start": "2027-08-17T00:00:00.000Z",
+      "end": "2027-08-17T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085763_7b6iv",
+      "title": "Tora",
+      "start": "2027-08-24T00:00:00.000Z",
+      "end": "2027-08-24T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085763_t38at",
+      "title": "Tora",
+      "start": "2027-08-31T00:00:00.000Z",
+      "end": "2027-08-31T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085763_jwbqu",
+      "title": "Tora",
+      "start": "2027-09-07T00:00:00.000Z",
+      "end": "2027-09-07T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085763_zwrck",
+      "title": "Tora",
+      "start": "2027-09-14T00:00:00.000Z",
+      "end": "2027-09-14T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085764_1n1d4",
+      "title": "Tora",
+      "start": "2027-09-21T00:00:00.000Z",
+      "end": "2027-09-21T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085764_77y3c",
+      "title": "Tora",
+      "start": "2027-09-28T00:00:00.000Z",
+      "end": "2027-09-28T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085764_ay7rt",
+      "title": "Tora",
+      "start": "2027-10-05T00:00:00.000Z",
+      "end": "2027-10-05T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085765_dfo6r",
+      "title": "Tora",
+      "start": "2027-10-12T00:00:00.000Z",
+      "end": "2027-10-12T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085765_kuc40",
+      "title": "Tora",
+      "start": "2027-10-19T00:00:00.000Z",
+      "end": "2027-10-19T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085765_mw611",
+      "title": "Tora",
+      "start": "2027-10-26T00:00:00.000Z",
+      "end": "2027-10-26T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085765_4kizo",
+      "title": "Tora",
+      "start": "2027-11-02T00:00:00.000Z",
+      "end": "2027-11-02T02:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085766_ldtkc",
+      "title": "Tora",
+      "start": "2027-11-09T01:00:00.000Z",
+      "end": "2027-11-09T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085766_do8mr",
+      "title": "Tora",
+      "start": "2027-11-16T01:00:00.000Z",
+      "end": "2027-11-16T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
+      "color": "#7a3a6b"
+    },
+    {
+      "id": "e_1795403085766_t7wzc",
+      "title": "Tora",
+      "start": "2027-11-23T01:00:00.000Z",
+      "end": "2027-11-23T03:00:00.000Z",
+      "status": "confirmed",
+      "visibility": "public",
+      "type": {
+        "id": "t2",
+        "name": "Classes and Lectures",
+        "color": "#2d5a3d"
+      },
+      "rooms": [
+        {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        }
+      ],
+      "organizer": "Menachem",
+      "description": "Drinks cups, forks, water, and hot water tea",
+      "recurringGroupId": "grp_1795403085748",
       "color": "#7a3a6b"
     }
   ]
