@@ -2,9 +2,9 @@
   "schema": 1,
   "calendar": "Chabad Russian Center",
   "timezone": "America/New_York",
-  "version": "c6b370d2d1645cea",
-  "updatedAt": "2026-11-24T02:34:27.524Z",
-  "count": 161,
+  "version": "62859af0bd8ca7c7",
+  "updatedAt": "2026-11-25T15:32:15.684Z",
+  "count": 159,
   "rooms": [
     {
       "id": "r_1774223782080",
@@ -1539,64 +1539,6 @@
       "color": "#7a3a6b"
     },
     {
-      "id": "e_1794850212271_vibkg",
-      "title": "Seniors Workshops",
-      "start": "2026-11-30T14:00:00.000Z",
-      "end": "2026-11-30T15:00:00.000Z",
-      "status": "confirmed",
-      "visibility": "public",
-      "type": {
-        "id": "t10",
-        "name": "Seniors Program",
-        "color": "#6a3a2a"
-      },
-      "rooms": [
-        {
-          "id": "r5",
-          "name": "2nd Fl Lobby",
-          "floor": "2nd Floor"
-        },
-        {
-          "id": "r9",
-          "name": "Daily Sanctuary",
-          "floor": "Floor 2"
-        },
-        {
-          "id": "r_1784045439894",
-          "name": "Kitchen Side Ballroom",
-          "floor": "4th Floor"
-        }
-      ],
-      "organizer": "Chanale Altein",
-      "description": "",
-      "recurringGroupId": "grp_1794850212271",
-      "color": "#6b4a1a"
-    },
-    {
-      "id": "e_1794237482736_3zxir",
-      "title": "Seniors Music",
-      "start": "2026-12-02T15:00:00.000Z",
-      "end": "2026-12-02T16:00:00.000Z",
-      "status": "confirmed",
-      "visibility": "public",
-      "type": {
-        "id": "t10",
-        "name": "Seniors Program",
-        "color": "#6a3a2a"
-      },
-      "rooms": [
-        {
-          "id": "r4",
-          "name": "Kiddush Room",
-          "floor": "Floor 2"
-        }
-      ],
-      "organizer": "Chanale Altein",
-      "description": "One table for tea, coffee, fruit, pastry",
-      "recurringGroupId": "grp_1794237482736",
-      "color": "#7a3a6b"
-    },
-    {
       "id": "e_1783369563429_ydtdw",
       "title": "Chassidus",
       "start": "2026-12-03T01:15:00.000Z",
@@ -1730,6 +1672,11 @@
       },
       "rooms": [
         {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        },
+        {
           "id": "r5",
           "name": "2nd Fl Lobby",
           "floor": "2nd Floor"
@@ -1738,17 +1685,12 @@
           "id": "r9",
           "name": "Daily Sanctuary",
           "floor": "Floor 2"
-        },
-        {
-          "id": "r_1784045439894",
-          "name": "Kitchen Side Ballroom",
-          "floor": "4th Floor"
         }
       ],
       "organizer": "Chanale Altein",
       "description": "",
       "recurringGroupId": "grp_1794850212271",
-      "color": "#6b4a1a"
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1794237482736_xlj2h",
@@ -1836,6 +1778,11 @@
       },
       "rooms": [
         {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        },
+        {
           "id": "r5",
           "name": "2nd Fl Lobby",
           "floor": "2nd Floor"
@@ -1844,17 +1791,12 @@
           "id": "r9",
           "name": "Daily Sanctuary",
           "floor": "Floor 2"
-        },
-        {
-          "id": "r_1784045439894",
-          "name": "Kitchen Side Ballroom",
-          "floor": "4th Floor"
         }
       ],
       "organizer": "Chanale Altein",
       "description": "",
       "recurringGroupId": "grp_1794850212271",
-      "color": "#6b4a1a"
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1795403085751_x2tnr",
@@ -1955,8 +1897,8 @@
     {
       "id": "e_1794850212272_eg2s3",
       "title": "Seniors Workshops",
-      "start": "2026-12-28T14:00:00.000Z",
-      "end": "2026-12-28T15:00:00.000Z",
+      "start": "2026-12-28T15:00:00.000Z",
+      "end": "2026-12-28T16:00:00.000Z",
       "status": "confirmed",
       "visibility": "public",
       "type": {
@@ -1966,6 +1908,11 @@
       },
       "rooms": [
         {
+          "id": "r4",
+          "name": "Kiddush Room",
+          "floor": "Floor 2"
+        },
+        {
           "id": "r5",
           "name": "2nd Fl Lobby",
           "floor": "2nd Floor"
@@ -1974,17 +1921,12 @@
           "id": "r9",
           "name": "Daily Sanctuary",
           "floor": "Floor 2"
-        },
-        {
-          "id": "r_1784045439894",
-          "name": "Kitchen Side Ballroom",
-          "floor": "4th Floor"
         }
       ],
       "organizer": "Chanale Altein",
       "description": "",
       "recurringGroupId": "grp_1794850212271",
-      "color": "#6b4a1a"
+      "color": "#7a3a6b"
     },
     {
       "id": "e_1795403085752_70he3",

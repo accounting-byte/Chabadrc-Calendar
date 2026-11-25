@@ -639,32 +639,6 @@ STATUS:CONFIRMED
 TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
-UID:e_1794850212271_vibkg@chabadrc-calendar
-DTSTAMP:20261130T140000Z
-DTSTART:20261130T140000Z
-DTEND:20261130T150000Z
-SUMMARY:Seniors Workshops
-LOCATION:2nd Fl Lobby (2nd Floor)\, Daily Sanctuary (Floor 2)\, Kitchen Sid
- e Ballroom (4th Floor)
-DESCRIPTION:Organizer: Chanale Altein
-CATEGORIES:Seniors Program
-STATUS:CONFIRMED
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
-UID:e_1794237482736_3zxir@chabadrc-calendar
-DTSTAMP:20261202T150000Z
-DTSTART:20261202T150000Z
-DTEND:20261202T160000Z
-SUMMARY:Seniors Music
-LOCATION:Kiddush Room (Floor 2)
-DESCRIPTION:One table for tea\, coffee\, fruit\, pastry\n\nOrganizer: Chana
- le Altein
-CATEGORIES:Seniors Program
-STATUS:CONFIRMED
-TRANSP:OPAQUE
-END:VEVENT
-BEGIN:VEVENT
 UID:e_1783369563429_ydtdw@chabadrc-calendar
 DTSTAMP:20261203T011500Z
 DTSTART:20261203T011500Z
@@ -731,8 +705,8 @@ DTSTAMP:20261214T140000Z
 DTSTART:20261214T140000Z
 DTEND:20261214T150000Z
 SUMMARY:Seniors Workshops
-LOCATION:2nd Fl Lobby (2nd Floor)\, Daily Sanctuary (Floor 2)\, Kitchen Sid
- e Ballroom (4th Floor)
+LOCATION:Kiddush Room (Floor 2)\, 2nd Fl Lobby (2nd Floor)\, Daily Sanctuar
+ y (Floor 2)
 DESCRIPTION:Organizer: Chanale Altein
 CATEGORIES:Seniors Program
 STATUS:CONFIRMED
@@ -781,8 +755,8 @@ DTSTAMP:20261221T140000Z
 DTSTART:20261221T140000Z
 DTEND:20261221T150000Z
 SUMMARY:Seniors Workshops
-LOCATION:2nd Fl Lobby (2nd Floor)\, Daily Sanctuary (Floor 2)\, Kitchen Sid
- e Ballroom (4th Floor)
+LOCATION:Kiddush Room (Floor 2)\, 2nd Fl Lobby (2nd Floor)\, Daily Sanctuar
+ y (Floor 2)
 DESCRIPTION:Organizer: Chanale Altein
 CATEGORIES:Seniors Program
 STATUS:CONFIRMED
@@ -840,12 +814,12 @@ TRANSP:OPAQUE
 END:VEVENT
 BEGIN:VEVENT
 UID:e_1794850212272_eg2s3@chabadrc-calendar
-DTSTAMP:20261228T140000Z
-DTSTART:20261228T140000Z
-DTEND:20261228T150000Z
+DTSTAMP:20261228T150000Z
+DTSTART:20261228T150000Z
+DTEND:20261228T160000Z
 SUMMARY:Seniors Workshops
-LOCATION:2nd Fl Lobby (2nd Floor)\, Daily Sanctuary (Floor 2)\, Kitchen Sid
- e Ballroom (4th Floor)
+LOCATION:Kiddush Room (Floor 2)\, 2nd Fl Lobby (2nd Floor)\, Daily Sanctuar
+ y (Floor 2)
 DESCRIPTION:Organizer: Chanale Altein
 CATEGORIES:Seniors Program
 STATUS:CONFIRMED
